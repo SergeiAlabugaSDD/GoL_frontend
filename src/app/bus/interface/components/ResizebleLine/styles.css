@@ -1,0 +1,40 @@
+.resizeble-line {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  background-color: #e3e3e3;
+  width: 4px;
+  outline: none;
+  overflow: visible;
+  transition: all 0.4s;
+
+  &:hover {
+    width: 7px;
+
+    & button {
+      opacity: 1;
+      width: 20px;
+    }
+  }
+}
+
+.resizeble_button {
+  opacity: 0;
+  border: none;
+  background: inherit;
+  border-radius: 10px;
+  width: 4px;
+  height: 40px;
+  padding: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  cursor: col-resize;
+  outline: none;
+  transition: all 0.4s;
+}
+
+.bg_red {
+  background-color: #45fc70;
+}

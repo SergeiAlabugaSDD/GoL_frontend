@@ -1,0 +1,20 @@
+body {
+  --main-bg-color: #212121;
+  --main-font-color: #ebebeb;
+  --main-fz: 0.9em;
+  --title-fz: 2.4em;
+  --subtitle-fz: 1.7em;
+  color: var(--main-font-color);
+}
+
+.full_w {
+  width: 100%;
+}
+
+.full_h {
+  height: 100%;
+}
+
+.absolute {
+  position: absolute;
+}
