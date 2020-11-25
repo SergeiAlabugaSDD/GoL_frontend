@@ -4,14 +4,26 @@ import { createReducer } from '@reduxjs/toolkit';
 import { actions } from './actions';
 
 let innerWidth;
+let innerHeight;
+
 if (window) {
   innerWidth = window.innerWidth;
+  innerHeight = window.innerHeight;
 }
 
 const initialState = {
+  userView: {
+    innerWidth,
+    innerHeight,
+  },
   buttonOK: {
     top: 20,
     left: 20,
+  },
+  rangeBorn: {
+    top: 60,
+    left: 20,
+    value: 2,
   },
   resizeble: {
     isStartResizing: false,
@@ -46,7 +58,9 @@ export const interfaceReducer = createReducer(initialState, (builder) => {
     .addDefaultCase((state) => state);
 });
 
+// selectors
 export const interfaceSelectors = {
-  getButtonOK: (state) => state.userInterface.buttonOK,
+  getInterface: (state) => state.userInterface,
   getResizeble: (state) => state.userInterface.resizeble,
+  getUserView: (state) => state.userInterface.userView,
 };
