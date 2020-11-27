@@ -8,3 +8,17 @@
   background: #000000bd;
   box-shadow: 0 2px 15px #fff;
 }
+
+.form_wrapper {
+  width: 100%;
+  height: 100%;
+  padding: 50px 30px;
+  justify-content: center;
+}
+
+.or_insert {
+  text-align: center;
+  margin: 10px 0 0 0;
+  font-size: var(--main-fz);
+  line-height: var(--main-fz);
+}
