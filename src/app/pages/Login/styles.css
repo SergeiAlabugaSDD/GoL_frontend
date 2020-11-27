@@ -1,0 +1,10 @@
+.content_wrapper {
+  position: relative;
+  z-index: 1;
+  width: fit-content;
+  height: 100%;
+  border-right: 2px solid #fff;
+  border-left: 2px solid #fff;
+  background: #000000bd;
+  box-shadow: 0 2px 15px #fff;
+}

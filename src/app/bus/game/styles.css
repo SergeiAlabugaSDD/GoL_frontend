@@ -1,0 +1,23 @@
+.grid_game {
+  z-index: 1;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.game_wrapper {
+  position: relative;
+  padding: 15px;
+  overflow: hidden;
+}
+
+.life {
+  border: 1px solid #fff;
+  background-color: #2eef98;
+}
+
+.dead {
+  border: 1px solid #fff;
+  background-color: #666666;
+}
