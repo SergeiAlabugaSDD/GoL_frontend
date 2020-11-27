@@ -4,6 +4,7 @@ body {
   --main-fz: 0.9em;
   --title-fz: 2.4em;
   --subtitle-fz: 1.7em;
+  --transition-base: all 0.3s;
   color: var(--main-font-color);
 }
 
@@ -33,4 +34,8 @@ body {
 
 .relative {
   position: relative;
+}
+
+.transition {
+  transition: var(--transition-base);
 }
