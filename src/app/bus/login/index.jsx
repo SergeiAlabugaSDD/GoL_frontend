@@ -1,27 +1,11 @@
-import { useState } from 'react';
-
-import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 
 // styles
 import './styles.css';
 
-// components
-import { Logo } from '../../components/Logo';
-
 export const LoginForm = () => {
-  const [displayReg, setDisplayReg] = useState(false);
-
-  const regDisplayHandle = () => {
-    setDisplayReg(true);
-  };
-
-  const loginDisplayHandle = () => {
-    setDisplayReg(false);
-  };
-
   // form login
-  const { register, handleSubmit, errors, reset } = useForm();
+  const { register, handleSubmit, errors, reset, clearErrors } = useForm();
 
   const onLoginSubmit = (data) => {
     console.log(data);
@@ -32,50 +16,50 @@ export const LoginForm = () => {
   // form registration
 
   return (
-    <div className="login_wrapper flex d-column relative">
-      {displayReg ? (
+    <form
+      className="flex d-column"
+      onSubmit={handleSubmit(onLoginSubmit, onLoginError)}
+    >
+      <div className="relative">
         <input
-          className="button_primary"
-          type="button"
-          value="back"
-          onClick={loginDisplayHandle}
+          className="input_text"
+          name="name"
+          placeholder="Name or E-Mail"
+          ref={register({
+            required: 'this is a required',
+            minLength: {
+              value: 2,
+              message: 'Your name is too short',
+            },
+          })}
+          onInput={() => clearErrors('name')}
         />
-      ) : (
-        <form
-          className="flex d-column"
-          onSubmit={handleSubmit(onLoginSubmit, onLoginError)}
-        >
-          <Logo title="Game of Life" />
-          <input
-            className="input_text"
-            name="name"
-            placeholder="Name or E-Mail"
-            ref={register({ required: true })}
-          />
-          {errors.name && <span>This field is required</span>}
-          <input
-            className="input_text"
-            name="password"
-            ref={register({ required: true })}
-            placeholder="Password"
-            type="password"
-          />
-          {errors.mail && <span>This field is required</span>}
+        {errors.name && (
+          <span className="input_error">{errors.name.message}</span>
+        )}
+      </div>
+      <div className="relative">
+        <input
+          className="input_text"
+          name="password"
+          ref={register({
+            required: 'this is a required',
+            pattern: {
+              value: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/,
+              message:
+                'Your password least 8 characters, 1 number, 1 upper and 1 lowercase',
+            },
+          })}
+          placeholder="Password"
+          type="password"
+          onInput={() => clearErrors('password')}
+        />
+        {errors.password && (
+          <span className="input_error">{errors.password.message}</span>
+        )}
+      </div>
 
-          <input className="button_primary" type="submit" value="login" />
-          <input
-            className="button_primary"
-            type="submit"
-            value="registration"
-            onClick={regDisplayHandle}
-          />
-        </form>
-      )}
-
-      <span className="or_insert">or</span>
-      <Link className="button_primary" to="/game">
-        Try it Now!
-      </Link>
-    </div>
+      <input className="button_primary" type="submit" value="login" />
+    </form>
   );
 };
