@@ -1,6 +1,6 @@
 body {
   --main-bg-color: #212121;
-  --main-font-color: #ebebeb;
+  --main-font-color: #f0f0f0;
   --main-fz: 0.9em;
   --title-fz: 2.4em;
   --subtitle-fz: 1.7em;
@@ -17,4 +17,20 @@ body {
 
 .absolute {
   position: absolute;
+}
+
+.flex {
+  display: flex;
+}
+
+.d-column {
+  flex-direction: column;
+}
+
+.zIndex {
+  z-index: 1;
+}
+
+.relative {
+  position: relative;
 }

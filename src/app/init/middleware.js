@@ -19,17 +19,15 @@ export const logger = createLogger({
   },
 });
 
-const DEV = process.env.NODE_ENV === 'development';
-
 const history = createBrowserHistory();
 const sagaMiddleware = createSagaMiddleware();
 const routerMiddleware = createRouterMiddleware(history);
 const devtools = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__;
-const composeEnhancers = DEV && devtools ? devtools : compose;
+const composeEnhancers = __DEV__ && devtools ? devtools : compose;
 
 const middleware = [sagaMiddleware, routerMiddleware];
 
-if (DEV) {
+if (__DEV__) {
   middleware.push(logger);
 }
 

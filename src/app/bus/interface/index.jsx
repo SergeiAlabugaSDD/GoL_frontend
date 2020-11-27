@@ -1,30 +1,32 @@
 import { useSelector, useDispatch } from 'react-redux';
 
+// drag'n'drop
 import { useDrop } from 'react-dnd';
 import { dndItemTypes } from './dndItemTypes';
 
 import './styles.css';
 
-import videoSource from './assets/bg_video.mp4';
-
 // actions
 import { actions } from './actions';
 import { interfaceSelectors } from './reducer';
 
-// dropable components
-import { Button, ItemPreview, ResizebleLine, BGvideo } from './components';
+// components
+import { Button, ItemPreview, ResizebleLine, InputRange } from './components';
+
+// another bus
+import { Game } from '../game';
 
 export const Interface = () => {
   // redux hooks
   const dispatch = useDispatch();
-  const buttonOK = useSelector(interfaceSelectors.getButtonOK);
+  const { buttonOK, rangeBorn } = useSelector(interfaceSelectors.getInterface);
   const { width, isStartResizing } = useSelector(
     interfaceSelectors.getResizeble
   );
 
   // drag'n'drop hook
   const [, drop] = useDrop({
-    accept: dndItemTypes.BUTTON,
+    accept: Object.values(dndItemTypes),
     drop(item, monitor) {
       const delta = monitor.getDifferenceFromInitialOffset();
       const left = Math.round(item.left + delta.x);
@@ -38,11 +40,9 @@ export const Interface = () => {
   const mouseDownHandler = () => {
     dispatch(actions.startResizing());
   };
-
   const mouseUpHandler = () => {
     dispatch(actions.endResizing());
   };
-
   const mouseMoveHandler = (e) => {
     if (isStartResizing) {
       dispatch(actions.moveResizeble(e.nativeEvent.pageX));
@@ -58,7 +58,7 @@ export const Interface = () => {
       onMouseUp={mouseUpHandler}
       onMouseMove={mouseMoveHandler}
     >
-      <div className="game">GAME</div>
+      <Game />
       <ResizebleLine mouseDownHandler={mouseDownHandler} />
       <div className="custom" ref={drop}>
         <Button
@@ -69,10 +69,18 @@ export const Interface = () => {
           }}
           {...buttonOK}
         />
+        <InputRange
+          id="rangeBorn"
+          {...rangeBorn}
+          label="Born"
+          max={8}
+          min={0}
+          value={2}
+          dndItemType={dndItemTypes.RANGE_BORN}
+          className="input_range"
+        />
         <ItemPreview />
       </div>
-
-      <BGvideo source={videoSource} />
     </div>
   );
 };

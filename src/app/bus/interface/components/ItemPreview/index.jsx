@@ -9,6 +9,8 @@ export const ItemPreview = () => {
           {itemType}
         </button>
       );
+    case 'RANGE_BORN':
+      return <input className="input_range" type="range" style={style} />;
 
     default:
       return null;

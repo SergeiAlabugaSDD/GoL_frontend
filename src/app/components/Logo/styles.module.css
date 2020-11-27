@@ -6,6 +6,7 @@
   border-radius: 10px;
   cursor: pointer;
   transition: all 0.4s;
+  width: fit-content;
 }
 
 .logo:hover {

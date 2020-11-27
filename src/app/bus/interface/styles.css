@@ -13,12 +13,8 @@
       height: 100%;
     }
   }
+}
 
-  & .game {
-    z-index: 1;
-    background-color: violet;
-    position: relative;
-    height: 100%;
-    max-width: 80vw;
-  }
+.input_range {
+  position: absolute;
 }
