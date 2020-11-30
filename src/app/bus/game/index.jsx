@@ -16,10 +16,9 @@ import { actions } from './actions';
 export const Game = () => {
   const dispatch = useDispatch();
   const grid = useSelector(gameSelectors.getGrid);
-  const { width, isStartResizing } = useSelector(
-    interfaceSelectors.getResizeble
+  const { innerHeight, innerWidth } = useSelector(
+    interfaceSelectors.getUserView
   );
-  const { innerHeight } = useSelector(interfaceSelectors.getUserView);
 
   const Cell = ({ columnIndex, rowIndex, style }) => (
     <div
@@ -39,21 +38,19 @@ export const Game = () => {
 
   return (
     <div className="game_wrapper">
-      {isStartResizing ? null : (
-        <Grid
-          className="grid_game"
-          columnCount={100}
-          columnWidth={26}
-          height={innerHeight - 110}
-          rowCount={100}
-          rowHeight={26}
-          width={width - 30}
-          overscanColumnCount={15}
-          overscanRowCount={15}
-        >
-          {Cell}
-        </Grid>
-      )}
+      <Grid
+        className="grid_game"
+        columnCount={100}
+        columnWidth={26}
+        height={innerHeight}
+        rowCount={100}
+        rowHeight={26}
+        width={innerWidth}
+        overscanColumnCount={15}
+        overscanRowCount={15}
+      >
+        {Cell}
+      </Grid>
     </div>
   );
 };

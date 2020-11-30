@@ -1,8 +1,5 @@
 import { useForm } from 'react-hook-form';
 
-// styles
-import './styles.css';
-
 export const RegistrationForm = () => {
   // form login
   const {
@@ -22,6 +19,9 @@ export const RegistrationForm = () => {
 
   // form registration
 
+  const emailRegex = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[а-яёa-z0-9](?:[а-яёa-z0-9-]*[ёа-яa-z0-9])?\.)+([a-z0-9]{2,}$|[а-яё0-9]{2,}$)/;
+  const passRegex = /^(?=.*\d)(?=.*[a-zа-я])(?=.*[A-ZА-Я])[0-9a-zA-Zа-яА-Я]{8,}$/;
+
   return (
     <form
       className="flex d-column"
@@ -34,10 +34,10 @@ export const RegistrationForm = () => {
           name="name"
           placeholder="Name"
           ref={register({
-            required: 'this is a required',
+            required: 'this is a required!',
             minLength: {
               value: 2,
-              message: 'Your name is too short',
+              message: 'Your name is too short.',
             },
           })}
           onInput={() => clearErrors('name')}
@@ -53,9 +53,9 @@ export const RegistrationForm = () => {
           name="email"
           placeholder="E-Mail"
           ref={register({
-            required: 'this is a required',
+            required: 'this is a required!',
             pattern: {
-              value: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/,
+              value: emailRegex,
               message: 'Please, enter valid an email address.',
             },
           })}
@@ -72,7 +72,7 @@ export const RegistrationForm = () => {
           ref={register({
             required: 'this is a required!',
             pattern: {
-              value: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/,
+              value: passRegex,
               message:
                 'Your password least 8 characters, 1 number, 1 upper and 1 lowercase',
             },
