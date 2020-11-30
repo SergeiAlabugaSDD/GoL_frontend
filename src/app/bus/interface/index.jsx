@@ -11,7 +11,7 @@ import { actions } from './actions';
 import { interfaceSelectors } from './reducer';
 
 // components
-import { Button, ItemPreview, ResizebleLine, InputRange } from './components';
+import { Button, ItemPreview, ResizebleLine } from './components';
 
 // another bus
 import { Game } from '../game';
@@ -19,10 +19,10 @@ import { Game } from '../game';
 export const Interface = () => {
   // redux hooks
   const dispatch = useDispatch();
-  const { buttonOK, rangeBorn } = useSelector(interfaceSelectors.getInterface);
-  const { width, isStartResizing } = useSelector(
-    interfaceSelectors.getResizeble
-  );
+  const { buttonOK } = useSelector(interfaceSelectors.getInterface);
+  // const { width, isStartResizing } = useSelector(
+  //   interfaceSelectors.getResizeble
+  // );
 
   // drag'n'drop hook
   const [, drop] = useDrop({
@@ -40,24 +40,9 @@ export const Interface = () => {
   const mouseDownHandler = () => {
     dispatch(actions.startResizing());
   };
-  const mouseUpHandler = () => {
-    dispatch(actions.endResizing());
-  };
-  const mouseMoveHandler = (e) => {
-    if (isStartResizing) {
-      dispatch(actions.moveResizeble(e.nativeEvent.pageX));
-    }
-  };
 
   return (
-    <div
-      className="interface"
-      style={{
-        gridTemplateColumns: `${width}px 6px 1fr`,
-      }}
-      onMouseUp={mouseUpHandler}
-      onMouseMove={mouseMoveHandler}
-    >
+    <>
       <Game />
       <ResizebleLine mouseDownHandler={mouseDownHandler} />
       <div className="custom" ref={drop}>
@@ -69,18 +54,8 @@ export const Interface = () => {
           }}
           {...buttonOK}
         />
-        <InputRange
-          id="rangeBorn"
-          {...rangeBorn}
-          label="Born"
-          max={8}
-          min={0}
-          value={2}
-          dndItemType={dndItemTypes.RANGE_BORN}
-          className="input_range"
-        />
         <ItemPreview />
       </div>
-    </div>
+    </>
   );
 };
