@@ -7,6 +7,13 @@
   border-left: 2px solid #fff;
   background: #000000bd;
   box-shadow: 0 2px 15px #fff;
+
+  @media (--tabletPortrait) {
+    background: #ffffff00;
+    overflow-y: scroll;
+    display: flex;
+    align-items: center;
+  }
 }
 
 .form_wrapper {
@@ -14,6 +21,11 @@
   height: 100%;
   padding: 50px 30px;
   justify-content: center;
+
+  @media (--tabletPortrait) {
+    height: auto;
+    padding: 20px 15px;
+  }
 }
 
 .or_insert {

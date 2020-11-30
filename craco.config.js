@@ -19,7 +19,7 @@ module.exports = {
                   '--phoneLandscape': '(max-width: 415px)',
                   '--tabletPortrait': '(max-width: 668px)',
                   '--tabletLandscape': '(max-width: 796px)',
-                  '--desktopS': '(max-width: 1025px)',
+                  '--desktopS': '(max-width: 960px)',
                   '--desktopM': '(max-width: 1376px)',
                   '--desktopL': '(max-width: 1680px)',
                   '--desktopXL': '(max-width: 1921px)',

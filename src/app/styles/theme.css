@@ -2,6 +2,8 @@ body {
   --main-bg-color: #212121;
   --main-font-color: #f0f0f0;
   --main-fz: 0.9em;
+  --phone-fz: 0.7em;
+  --desktopS-fz: 0.8em;
   --title-fz: 2.4em;
   --subtitle-fz: 1.7em;
   --transition-base: all 0.3s;
