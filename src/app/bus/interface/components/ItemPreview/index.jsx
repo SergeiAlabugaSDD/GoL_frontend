@@ -1,18 +1,28 @@
 import { usePreview } from 'react-dnd-preview';
 
+// lodash
+import { throttle } from 'lodash-es';
+
+// components
+
+import { GameBar } from '../GameBar';
+
 export const ItemPreview = () => {
   const { itemType, style } = usePreview();
-  switch (itemType) {
-    case 'BUTTON':
-      return (
-        <button className="button" type="button" style={style}>
-          {itemType}
-        </button>
-      );
-    case 'RANGE_BORN':
-      return <input className="input_range" type="range" style={style} />;
 
-    default:
-      return null;
-  }
+  const renderPreview = throttle(() => {
+    switch (itemType) {
+      case 'GAME_BAR':
+        return (
+          <GameBar className="game_bar" {...style}>
+            GAME BAR
+          </GameBar>
+        );
+
+      default:
+        return null;
+    }
+  }, 100);
+
+  return <>{renderPreview()}</>;
 };

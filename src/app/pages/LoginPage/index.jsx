@@ -4,7 +4,7 @@ import { Motion, spring, presets } from 'react-motion';
 import { Link } from 'react-router-dom';
 
 // components
-import { BGvideo, Logo } from '../../components';
+import { BGvideo, Logo, Button } from '../../components';
 
 // styles
 import './styles.css';
@@ -16,7 +16,7 @@ import { RegistrationForm } from '../../bus/registration';
 // background video
 import videoSource from '../../assets/video/bg_video.mp4';
 
-export const Login = () => {
+export const LoginPage = () => {
   const [displayReg, setDisplayReg] = useState(false);
 
   const regDisplayHandle = () => {
@@ -44,12 +44,13 @@ export const Login = () => {
                   <div style={{ transform: `translateX(${value.x}px)` }}>
                     <div className="flex d-column">
                       <RegistrationForm />
-                      <input
-                        className="button_primary"
+                      <Button
                         type="button"
-                        value="back"
+                        className="button_primary"
                         onClick={loginDisplayHandle}
-                      />
+                      >
+                        back
+                      </Button>
                     </div>
                   </div>
                 )}
@@ -69,12 +70,13 @@ export const Login = () => {
                     className="flex d-column"
                   >
                     <LoginForm />
-                    <input
+                    <Button
                       className="button_primary"
-                      type="submit"
-                      value="registration"
+                      type="button"
                       onClick={regDisplayHandle}
-                    />
+                    >
+                      registration
+                    </Button>
                   </div>
                 );
               }}

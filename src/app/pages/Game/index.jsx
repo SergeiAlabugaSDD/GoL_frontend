@@ -1,21 +1,13 @@
-import { useSelector } from 'react-redux';
-
 import './styles.css';
 
 // bus
 import { Interface } from '../../bus/interface';
+// import { Game } from '../../bus/game';
 
-// selectors
-import { interfaceSelectors } from '../../bus/interface/reducer';
-
-export const Game = () => {
-  const { innerHeight } = useSelector(interfaceSelectors.getUserView);
-
+export const GamePage = () => {
   return (
-    <div className="game" style={{ gridTemplateRows: `${innerHeight}px` }}>
-      <div className="span2">
-        <Interface />
-      </div>
+    <div className="game">
+      <Interface />
     </div>
   );
 };

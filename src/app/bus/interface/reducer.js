@@ -1,4 +1,8 @@
 import { createReducer } from '@reduxjs/toolkit';
+import update from 'immutability-helper';
+
+// helpers
+import { generateGrid, shortUUID } from './helpers';
 
 // actions
 import { actions } from './actions';
@@ -12,6 +16,11 @@ if (window) {
 }
 
 const initialState = {
+  grid: generateGrid(100, 100, shortUUID),
+  options: {
+    born: 3,
+    surv: 2,
+  },
   userView: {
     innerWidth,
     innerHeight,
@@ -19,6 +28,11 @@ const initialState = {
   buttonOK: {
     top: 20,
     left: 20,
+  },
+  gameBar: {
+    top: 20,
+    left: innerWidth / 2 - 40,
+    width: innerWidth / 2,
   },
   rangeBorn: {
     top: 60,
@@ -32,9 +46,47 @@ const initialState = {
 };
 
 export const interfaceReducer = createReducer(initialState, (builder) => {
+  let row = 0;
+  let column = 0;
   builder
+    .addCase(actions.nextTickAction, (state, { payload }) => {
+      try {
+        row = Math.round(Math.random() * 50);
+        column = Math.round(Math.random() * 50);
+        const newData = update(state, {
+          grid: { [row]: { [column]: { $set: payload } } },
+        });
+        return newData;
+      } catch (error) {
+        return state;
+      }
+    })
     .addCase(actions.moveItemOfInterface, (state, { payload }) => {
-      state[payload.id] = { top: payload.top, left: payload.left };
+      try {
+        let topPosition = payload.top;
+        let leftPosition = payload.left;
+        if (leftPosition < 0) {
+          leftPosition = 0;
+        }
+        if (leftPosition > state.gameBar.width) {
+          leftPosition = state.gameBar.width;
+        }
+        if (topPosition > innerHeight - 100) {
+          topPosition = innerHeight - 100;
+        }
+        if (topPosition < 0) {
+          topPosition = 0;
+        }
+        const newData = update(state, {
+          gameBar: {
+            top: { $set: topPosition },
+            left: { $set: leftPosition },
+          },
+        });
+        return newData;
+      } catch (error) {
+        return state;
+      }
     })
     .addCase(actions.moveResizeble, (state, { payload }) => {
       const viewWidth = (payload / innerWidth) * 100;
@@ -60,6 +112,7 @@ export const interfaceReducer = createReducer(initialState, (builder) => {
 
 // selectors
 export const interfaceSelectors = {
+  getGrid: (state) => state.userInterface.grid,
   getInterface: (state) => state.userInterface,
   getResizeble: (state) => state.userInterface.resizeble,
   getUserView: (state) => state.userInterface.userView,
