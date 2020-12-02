@@ -7,4 +7,5 @@ export const actions = {
   moveResizeble: createAction(interfaceTypes.MOVE_RESIZEBLE),
   startResizing: createAction(interfaceTypes.START_RESIZING),
   endResizing: createAction(interfaceTypes.END_RESIZING),
+  nextTickAction: createAction(interfaceTypes.NEXT_TICK),
 };

@@ -1,2 +1,2 @@
-export { Game } from './Game';
-export { Login } from './Login';
+export { GamePage } from './Game';
+export { LoginPage } from './LoginPage';
