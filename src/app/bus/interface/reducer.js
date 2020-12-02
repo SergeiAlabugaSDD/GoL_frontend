@@ -16,28 +16,26 @@ if (window) {
 }
 
 const initialState = {
-  grid: generateGrid(100, 100, shortUUID),
+  grid: generateGrid(100, 100, shortUUID), // grid of game
   options: {
+    // options of game
     born: 3,
     surv: 2,
   },
   userView: {
+    // height and width of user view
     innerWidth,
     innerHeight,
-  },
-  buttonOK: {
-    top: 20,
-    left: 20,
   },
   gameBar: {
     top: 20,
     left: innerWidth / 2 - 40,
     width: innerWidth / 2,
   },
-  rangeBorn: {
-    top: 60,
+  themeBar: {
+    top: 20,
     left: 20,
-    value: 2,
+    show: true,
   },
   resizeble: {
     isStartResizing: false,

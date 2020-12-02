@@ -8,13 +8,17 @@ import { throttle } from 'lodash-es';
 import { GameBar } from '../GameBar';
 
 export const ItemPreview = () => {
-  const { itemType, style } = usePreview();
+  const { display, itemType, style } = usePreview();
+
+  if (!display) {
+    return null;
+  }
 
   const renderPreview = throttle(() => {
     switch (itemType) {
       case 'GAME_BAR':
         return (
-          <GameBar className="game_bar" {...style}>
+          <GameBar className="game_bar" displayPreview={display} {...style}>
             GAME BAR
           </GameBar>
         );

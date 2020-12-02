@@ -35,7 +35,15 @@ function buttonReducer(state, { type, payload }) {
 }
 
 export const Button = (props) => {
-  const { className, onClick = () => {}, riple, children, type } = props;
+  const {
+    className,
+    onClick = () => {},
+    riple,
+    children,
+    type,
+    icon,
+    tooltip,
+  } = props;
   const [state, dispatch] = useReducer(buttonReducer, initialState);
 
   const rippleEffect = (event) => {
@@ -88,6 +96,10 @@ export const Button = (props) => {
       className={`btn ${className}`}
     >
       {children}
+      {tooltip && (
+        <span className="absolute btn_tooltip flex a_c j_c">{tooltip}</span>
+      )}
+      {icon && <img className="btn_img" src={icon} alt={icon} />}
       {state.clicked && (
         <div
           className="riple"
@@ -105,17 +117,22 @@ export const Button = (props) => {
 
 Button.propTypes = {
   type: PropTypes.string,
+  icon: PropTypes.string,
+  tooltip: PropTypes.string,
   riple: PropTypes.bool,
   className: PropTypes.string.isRequired,
   onClick: PropTypes.func,
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,
-  ]).isRequired,
+  ]),
 };
 
 Button.defaultProps = {
   riple: false,
   type: 'button',
   onClick: () => {},
+  icon: '',
+  children: '',
+  tooltip: '',
 };
