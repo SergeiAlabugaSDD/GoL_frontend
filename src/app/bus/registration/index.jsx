@@ -1,5 +1,8 @@
 import { useForm } from 'react-hook-form';
 
+// components
+import { Button } from '../../components';
+
 export const RegistrationForm = () => {
   // form login
   const {
@@ -11,11 +14,14 @@ export const RegistrationForm = () => {
     getValues,
   } = useForm();
 
-  const onRegistrationSubmit = (data) => {
-    console.log(data);
+  const onRegistrationSubmit = () => {
+    // data
     reset();
   };
-  const onRegistrationError = (errorsSubmit, e) => console.log(errorsSubmit, e);
+  const onRegistrationError = () => {
+    // errorsSubmit, e
+    return undefined;
+  };
 
   // form registration
 
@@ -104,7 +110,9 @@ export const RegistrationForm = () => {
         )}
       </div>
 
-      <input className="button_primary" type="submit" value="submit" />
+      <Button className="button_primary" type="submit" riple>
+        submit
+      </Button>
     </form>
   );
 };

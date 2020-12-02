@@ -3,15 +3,21 @@ import { useForm } from 'react-hook-form';
 // styles
 import './styles.css';
 
+// components
+import { Button } from '../../components';
+
 export const LoginForm = () => {
   // form login
   const { register, handleSubmit, errors, reset, clearErrors } = useForm();
 
-  const onLoginSubmit = (data) => {
-    console.log(data);
+  const onLoginSubmit = () => {
+    // data
     reset();
   };
-  const onLoginError = (errorsSubmit, e) => console.log(errorsSubmit, e);
+  const onLoginError = () => {
+    // errorsSubmit, e
+    return undefined;
+  };
 
   // form registration
 
@@ -59,7 +65,9 @@ export const LoginForm = () => {
         )}
       </div>
 
-      <input className="button_primary" type="submit" value="login" />
+      <Button className="button_primary" type="submit" riple>
+        log in
+      </Button>
     </form>
   );
 };
