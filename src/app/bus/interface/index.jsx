@@ -2,9 +2,6 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { FixedSizeGrid as Grid } from 'react-window';
 
-// lodash
-import { throttle } from 'lodash-es';
-
 // drag'n'drop
 import { useDrop } from 'react-dnd';
 import { dndItemTypes } from './dndItemTypes';
@@ -16,20 +13,24 @@ import { actions } from './actions';
 import { interfaceSelectors } from './reducer';
 
 // components
-import { ItemPreview, GameBar } from './components';
+import { ItemPreview, GameBar, ThemeBar } from './components';
 import { Button } from '../../components';
 // selectors
 
 // assets
-import presetSVG from './assets/presets.svg';
-import optionsSVG from './assets/cogwheel.svg';
-import profileSVG from './assets/user.svg';
+import presetSVG from './assets/icons/presets.svg';
+import optionsSVG from './assets/icons/cogwheel.svg';
+import profileSVG from './assets/icons/user.svg';
 
 export const Interface = () => {
-  const grid = useSelector(interfaceSelectors.getGrid);
-  const { innerHeight, innerWidth } = useSelector(
-    interfaceSelectors.getUserView
-  );
+  // redux hooks
+  const dispatch = useDispatch();
+  const {
+    gameBar,
+    grid,
+    themeBar,
+    userView: { innerHeight, innerWidth },
+  } = useSelector(interfaceSelectors.getInterface);
 
   const Cell = ({ columnIndex, rowIndex, style }) => (
     <div
@@ -37,36 +38,46 @@ export const Interface = () => {
       className={`${grid[columnIndex][rowIndex] === 1 ? 'life' : 'dead'}`}
     />
   );
-  // redux hooks
-  const dispatch = useDispatch();
-  const { gameBar } = useSelector(interfaceSelectors.getInterface);
 
   // drag'n'drop hook
   const [, drop] = useDrop({
     accept: Object.values(dndItemTypes),
-    drop: throttle((item, monitor) => {
+    drop: (item, monitor) => {
       const delta = monitor.getDifferenceFromInitialOffset();
       const left = Math.round(item.left + delta.x);
       const top = Math.round(item.top + delta.y);
       dispatch(actions.moveItemOfInterface({ id: item.id, left, top }));
       return undefined;
-    }, 100),
+    },
   });
 
   return (
     <div ref={drop} className="game_wrapper">
       <GameBar {...gameBar}>
-        <Button className="btn_interface" riple>
-          <img className="btn_img" src={presetSVG} alt="presets" />
-        </Button>
-        <Button className="btn_interface" riple>
-          <img className="btn_img" src={optionsSVG} alt="options" />
-        </Button>
-        <Button className="btn_interface" riple>
-          <img className="btn_img" src={profileSVG} alt="profile" />
-        </Button>
+        <Button
+          tooltip="Presets"
+          className="btn_interface"
+          icon={presetSVG}
+          riple
+          description="Presets"
+        />
+        <Button
+          tooltip="Profile"
+          className="btn_interface"
+          icon={profileSVG}
+          riple
+          description="Profile"
+        />
+        <Button
+          tooltip="Options"
+          className="btn_interface"
+          icon={optionsSVG}
+          riple
+          description="Options"
+        />
       </GameBar>
-      <ItemPreview />
+      <ThemeBar {...themeBar}>THEME BAR</ThemeBar>
+      <ItemPreview themeBar={themeBar} gameBar={gameBar} />
       <Grid
         className="grid_game"
         columnCount={100}

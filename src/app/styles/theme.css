@@ -1,5 +1,5 @@
 body {
-  --main-bg-color: #212121;
+  --main-bg-color: #000000ba;
   --main-font-color: #f0f0f0;
   --main-fz: 0.9em;
   --phone-fz: 0.7em;
@@ -24,6 +24,22 @@ body {
 
 .flex {
   display: flex;
+}
+
+.a_c {
+  align-items: center;
+}
+
+.j_c {
+  justify-content: center;
+}
+
+.j_b {
+  justify-content: space-between;
+}
+
+.j_a {
+  justify-content: space-around;
 }
 
 .d-column {

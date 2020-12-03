@@ -20,4 +20,9 @@ function generateGrid(columns, rows) {
   return resultArray;
 }
 
-export { shortUUID, generateGrid };
+function setTheme(property, value) {
+  document.documentElement.style.setProperty(property, value);
+  return undefined;
+}
+
+export { shortUUID, generateGrid, setTheme };
