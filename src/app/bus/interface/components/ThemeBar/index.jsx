@@ -2,8 +2,6 @@ import { useState } from 'react';
 import { useDrag } from 'react-dnd';
 import PropTypes from 'prop-types';
 
-import './styles.css';
-
 // types
 import { dndItemTypes } from '../../dndItemTypes';
 
@@ -11,16 +9,20 @@ import { dndItemTypes } from '../../dndItemTypes';
 
 import { CanDragButton } from '../CanDragButton';
 
-export const GameBar = ({
-  width,
-  height,
-  left,
-  top,
-  transform,
-  id,
-  children,
-  displayPreview,
-}) => {
+import './styles.css';
+
+export const ThemeBar = (props) => {
+  const {
+    show,
+    width,
+    height,
+    left,
+    top,
+    transform,
+    id,
+    children,
+    displayPreview,
+  } = props;
   const [canDrag, toggleCanDrag] = useState(false);
 
   const canDragHandler = () => {
@@ -28,7 +30,7 @@ export const GameBar = ({
   };
 
   const [{ isDragging }, drag] = useDrag({
-    item: { type: dndItemTypes.GAME_BAR, id, left, top },
+    item: { type: dndItemTypes.THEME_BAR, id, left, top },
     end: (item, monitor) => {
       if (monitor.didDrop()) toggleCanDrag(!canDrag);
     },
@@ -37,11 +39,10 @@ export const GameBar = ({
     }),
   });
 
-  if (isDragging) return null;
+  if (!show || isDragging) return null;
 
   return (
     <div
-      className="game_bar"
       ref={canDrag ? drag : null}
       style={{
         left,
@@ -51,8 +52,9 @@ export const GameBar = ({
         transform,
         cursor: `${displayPreview ? 'grabbing' : 'default'}`,
       }}
+      className="theme_bar"
     >
-      <div className="full_h full_w relative flex a_c j_b">
+      <div className="full_h full_w relative flex a_c j_c">
         {canDrag ? null : children}
         <CanDragButton
           show={displayPreview}
@@ -66,7 +68,8 @@ export const GameBar = ({
   );
 };
 
-GameBar.propTypes = {
+ThemeBar.propTypes = {
+  show: PropTypes.bool.isRequired,
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
   displayPreview: PropTypes.bool,
@@ -80,8 +83,8 @@ GameBar.propTypes = {
   ]).isRequired,
 };
 
-GameBar.defaultProps = {
-  id: 'gameBar',
+ThemeBar.defaultProps = {
+  id: 'themeBar',
   transform: 'none',
   displayPreview: false,
 };

@@ -8,4 +8,5 @@ export const actions = {
   startResizing: createAction(interfaceTypes.START_RESIZING),
   endResizing: createAction(interfaceTypes.END_RESIZING),
   nextTickAction: createAction(interfaceTypes.NEXT_TICK),
+  toggleThemeBarAction: createAction(interfaceTypes.TOGGLE_THEME_BAR),
 };

@@ -16,28 +16,29 @@ if (window) {
 }
 
 const initialState = {
-  grid: generateGrid(100, 100, shortUUID),
+  grid: generateGrid(100, 100, shortUUID), // grid of game
   options: {
+    // options of game
     born: 3,
     surv: 2,
   },
   userView: {
+    // height and width of user view
     innerWidth,
     innerHeight,
-  },
-  buttonOK: {
-    top: 20,
-    left: 20,
   },
   gameBar: {
     top: 20,
     left: innerWidth / 2 - 40,
     width: innerWidth / 2,
+    height: 100,
   },
-  rangeBorn: {
-    top: 60,
+  themeBar: {
+    top: 20,
     left: 20,
-    value: 2,
+    show: true,
+    height: innerHeight / 2 - 100,
+    width: 300,
   },
   resizeble: {
     isStartResizing: false,
@@ -66,19 +67,21 @@ export const interfaceReducer = createReducer(initialState, (builder) => {
         let topPosition = payload.top;
         let leftPosition = payload.left;
         if (leftPosition < 0) {
+          //
           leftPosition = 0;
         }
-        if (leftPosition > state.gameBar.width) {
-          leftPosition = state.gameBar.width;
+        if (leftPosition + state[payload.id].width > innerWidth) {
+          leftPosition = innerWidth - state[payload.id].width;
         }
-        if (topPosition > innerHeight - 100) {
-          topPosition = innerHeight - 100;
+        if (topPosition > innerHeight - state[payload.id].height) {
+          topPosition = innerHeight - state[payload.id].height;
         }
         if (topPosition < 0) {
           topPosition = 0;
         }
+
         const newData = update(state, {
-          gameBar: {
+          [payload.id]: {
             top: { $set: topPosition },
             left: { $set: leftPosition },
           },
@@ -88,25 +91,7 @@ export const interfaceReducer = createReducer(initialState, (builder) => {
         return state;
       }
     })
-    .addCase(actions.moveResizeble, (state, { payload }) => {
-      const viewWidth = (payload / innerWidth) * 100;
-      if (viewWidth > 80 || viewWidth < 40) {
-        return;
-      }
-      state.resizeble = { ...state.resizeble, width: payload };
-    })
-    .addCase(actions.startResizing, (state) => {
-      state.resizeble = {
-        ...state.resizeble,
-        isStartResizing: true,
-      };
-    })
-    .addCase(actions.endResizing, (state) => {
-      state.resizeble = {
-        ...state.resizeble,
-        isStartResizing: false,
-      };
-    })
+
     .addDefaultCase((state) => state);
 });
 
