@@ -13,6 +13,7 @@ import { CanDragButton } from '../CanDragButton';
 
 export const GameBar = ({
   width,
+  height,
   left,
   top,
   transform,
@@ -28,6 +29,9 @@ export const GameBar = ({
 
   const [{ isDragging }, drag] = useDrag({
     item: { type: dndItemTypes.GAME_BAR, id, left, top },
+    end: (item, monitor) => {
+      if (monitor.didDrop()) toggleCanDrag(!canDrag);
+    },
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
     }),
@@ -43,11 +47,12 @@ export const GameBar = ({
         left,
         top,
         width: `${width}px`,
+        height: `${height}px`,
         transform,
         cursor: `${displayPreview ? 'grabbing' : 'default'}`,
       }}
     >
-      <div className="full_h full_w relative flex a_c j_a">
+      <div className="full_h full_w relative flex a_c j_b">
         {canDrag ? null : children}
         <CanDragButton
           show={displayPreview}
@@ -62,7 +67,8 @@ export const GameBar = ({
 };
 
 GameBar.propTypes = {
-  width: PropTypes.number,
+  width: PropTypes.number.isRequired,
+  height: PropTypes.number.isRequired,
   displayPreview: PropTypes.bool,
   left: PropTypes.number.isRequired,
   top: PropTypes.number.isRequired,
@@ -77,6 +83,5 @@ GameBar.propTypes = {
 GameBar.defaultProps = {
   id: 'gameBar',
   transform: 'none',
-  width: window.innerWidth / 2,
   displayPreview: false,
 };

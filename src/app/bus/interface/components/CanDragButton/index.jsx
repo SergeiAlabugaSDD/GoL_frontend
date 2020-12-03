@@ -19,7 +19,7 @@ export const CanDragButton = ({ show, clickHandler, canDrag, top, right }) => {
       type="button"
       onClick={clickHandler}
     >
-      {canDrag ? '' : 'able to drag'}
+      {canDrag ? '' : <span>able to drag</span>}
       <img
         style={{
           height: `${canDrag ? '50px' : '30px'}`,

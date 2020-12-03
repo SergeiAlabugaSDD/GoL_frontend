@@ -5,10 +5,22 @@
   height: fit-content;
   padding: 0;
   cursor: pointer;
-  color: var(--main-font-color);
-  font-size: var(--phone-fz);
+  font-size: var(--main-fz);
 
   & img {
     margin-left: 7px;
+  }
+
+  & span {
+    padding: 7px 15px;
+    border-radius: 4px;
+    opacity: 0;
+    transition: var(--transition-base);
+  }
+
+  &:hover > span {
+    opacity: 1;
+    background-color: var(--main-font-color);
+    color: var(--main-bg-color);
   }
 }

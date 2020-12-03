@@ -76,8 +76,8 @@ export const Interface = () => {
           description="Options"
         />
       </GameBar>
-      <ThemeBar {...themeBar} />
-      <ItemPreview />
+      <ThemeBar {...themeBar}>THEME BAR</ThemeBar>
+      <ItemPreview themeBar={themeBar} gameBar={gameBar} />
       <Grid
         className="grid_game"
         columnCount={100}

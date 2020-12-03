@@ -1,10 +1,11 @@
 .game_bar {
   position: absolute;
-  height: 100px;
   background-color: var(--main-bg-color);
   border: 1px solid var(--main-font-color);
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
   z-index: 1;
+  user-select: none;
+
+  & > div {
+    padding: 10px 50px;
+  }
 }
