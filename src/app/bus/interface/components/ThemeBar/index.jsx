@@ -13,15 +13,15 @@ import './styles.css';
 
 export const ThemeBar = (props) => {
   const {
-    show,
     width,
     height,
     left,
     top,
     transform,
-    id,
+    id, // id for react d'n'd
     children,
-    displayPreview,
+    displayPreview, // check when ItemPreview component render
+    closeHandler, // action for toggle @param show in reducer
   } = props;
   const [canDrag, toggleCanDrag] = useState(false);
 
@@ -39,7 +39,7 @@ export const ThemeBar = (props) => {
     }),
   });
 
-  if (!show || isDragging) return null;
+  if (isDragging) return null;
 
   return (
     <div
@@ -55,13 +55,24 @@ export const ThemeBar = (props) => {
       className="theme_bar"
     >
       <div className="full_h full_w relative flex a_c j_c">
-        {canDrag ? null : children}
+        {canDrag || displayPreview ? null : (
+          <>
+            {children}
+            <span
+              className="close_bar"
+              onClick={closeHandler}
+              onKeyPress={closeHandler}
+            >
+              &times;
+            </span>
+          </>
+        )}
         <CanDragButton
           show={displayPreview}
           clickHandler={canDragHandler}
           canDrag={canDrag}
-          top={15}
-          right={10}
+          top={8}
+          right={4}
         />
       </div>
     </div>
@@ -69,7 +80,7 @@ export const ThemeBar = (props) => {
 };
 
 ThemeBar.propTypes = {
-  show: PropTypes.bool.isRequired,
+  closeHandler: PropTypes.func,
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
   displayPreview: PropTypes.bool,
@@ -87,4 +98,5 @@ ThemeBar.defaultProps = {
   id: 'themeBar',
   transform: 'none',
   displayPreview: false,
+  closeHandler: () => {},
 };

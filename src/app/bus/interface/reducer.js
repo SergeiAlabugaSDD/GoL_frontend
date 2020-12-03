@@ -91,7 +91,14 @@ export const interfaceReducer = createReducer(initialState, (builder) => {
         return state;
       }
     })
-
+    .addCase(actions.toggleThemeBarAction, (state) => {
+      const newData = update(state, {
+        themeBar: {
+          show: { $set: !state.themeBar.show },
+        },
+      });
+      return newData;
+    })
     .addDefaultCase((state) => state);
 });
 

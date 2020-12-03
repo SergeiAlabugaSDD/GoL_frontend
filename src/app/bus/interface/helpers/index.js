@@ -21,7 +21,7 @@ function generateGrid(columns, rows) {
 }
 
 function setTheme(property, value) {
-  document.documentElement.style.setProperty(property, value);
+  document.body.style.setProperty(property, value);
   return undefined;
 }
 
