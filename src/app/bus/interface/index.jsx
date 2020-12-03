@@ -13,9 +13,8 @@ import { actions } from './actions';
 import { interfaceSelectors } from './reducer';
 
 // components
-import { ItemPreview, GameBar, ThemeBar } from './components';
+import { ItemPreview, GameBar, ThemeBar, ColorPicker } from './components';
 import { Button } from '../../components';
-// selectors
 
 // assets
 import presetSVG from './assets/icons/presets.svg';
@@ -82,9 +81,11 @@ export const Interface = () => {
           onClick={toggleOptionsHandler}
         />
       </GameBar>
-      <ThemeBar {...themeBar} closeHandler={toggleOptionsHandler}>
-        THEME BAR
-      </ThemeBar>
+      {themeBar.show && (
+        <ThemeBar {...themeBar} closeHandler={toggleOptionsHandler}>
+          <ColorPicker />
+        </ThemeBar>
+      )}
       <ItemPreview themeBar={themeBar} gameBar={gameBar} />
       <Grid
         className="grid_game"

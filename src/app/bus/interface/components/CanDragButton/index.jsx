@@ -9,26 +9,38 @@ import canDragSvg from './images/drag.svg';
 
 export const CanDragButton = ({ show, clickHandler, canDrag, top, right }) => {
   return (
-    <button
-      className="can-drag-button absolute flex a_c"
+    <div
+      className="can-drag-wrap absolute flex a_c"
       style={{
         opacity: show ? 0 : 1,
         top: `${canDrag ? '50%' : `${top}px`}`,
         right: `${canDrag ? '50%' : `${right}px`}`,
       }}
-      type="button"
-      onClick={clickHandler}
     >
-      {canDrag ? '' : <span>able to drag</span>}
-      <img
-        style={{
-          height: `${canDrag ? '50px' : '30px'}`,
-          transform: `${canDrag ? 'translate(50%, -50%)' : 'none'}`,
-        }}
-        src={canDrag ? canDragSvg : ableToDragSvg}
-        alt="canDrag"
-      />
-    </button>
+      <div className="relative full_h full_w">
+        <button
+          className="can-drag-button"
+          type="button"
+          onClick={clickHandler}
+        >
+          <img
+            style={{
+              height: `${canDrag ? '50px' : '30px'}`,
+              transform: `${canDrag ? 'translate(50%, -50%)' : 'none'}`,
+            }}
+            src={canDrag ? canDragSvg : ableToDragSvg}
+            alt="canDrag"
+          />
+        </button>
+        {canDrag ? (
+          ''
+        ) : (
+          <span className="absolute can-drag-descr flex a_c j_c">
+            able to drag
+          </span>
+        )}
+      </div>
+    </div>
   );
 };
 

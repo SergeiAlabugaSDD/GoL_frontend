@@ -1,26 +1,37 @@
-.can-drag-button {
-  border: none;
-  background: none;
+.can-drag-wrap {
   width: fit-content;
   height: fit-content;
   padding: 0;
-  cursor: pointer;
   font-size: var(--main-fz);
+}
+
+.can-drag-button {
+  border: none;
+  background: none;
+  cursor: pointer;
+  padding: 0;
+  height: 30px;
 
   & img {
-    margin-left: 7px;
+    margin-left: 6px;
   }
 
-  & span {
-    padding: 7px 15px;
-    border-radius: 4px;
-    opacity: 0;
-    transition: var(--transition-base);
-  }
-
-  &:hover > span {
+  &:hover + span {
     opacity: 1;
     background-color: var(--main-font-color);
-    color: var(--main-bg-color);
+    color: #1f1f1f;
   }
+}
+
+.can-drag-descr {
+  width: 100px;
+  left: 0;
+  top: 50%;
+  transform: translate(-100%, -50%);
+  padding: 5px 0;
+  flex-wrap: nowrap;
+  border-radius: 4px;
+  opacity: 0;
+  transition: var(--transition-base);
+  font-size: var(--main-fz);
 }

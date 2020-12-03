@@ -3,6 +3,7 @@
   height: 70px;
   width: 70px;
   background: none;
+  border-radius: 0.2em;
 
   &:hover {
     box-shadow: 0 0px 10px var(--main-font-color);
