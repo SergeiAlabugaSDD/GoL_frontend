@@ -32,6 +32,11 @@ export const Interface = () => {
     userView: { innerHeight, innerWidth },
   } = useSelector(interfaceSelectors.getInterface);
 
+  const toggleOptionsHandler = (e) => {
+    e.stopPropagation();
+    dispatch(actions.toggleThemeBarAction());
+  };
+
   const Cell = ({ columnIndex, rowIndex, style }) => (
     <div
       style={style}
@@ -74,9 +79,12 @@ export const Interface = () => {
           icon={optionsSVG}
           riple
           description="Options"
+          onClick={toggleOptionsHandler}
         />
       </GameBar>
-      <ThemeBar {...themeBar}>THEME BAR</ThemeBar>
+      <ThemeBar {...themeBar} closeHandler={toggleOptionsHandler}>
+        THEME BAR
+      </ThemeBar>
       <ItemPreview themeBar={themeBar} gameBar={gameBar} />
       <Grid
         className="grid_game"
