@@ -1,0 +1,24 @@
+.color-picker {
+}
+
+.color-picker_btn {
+  width: 80px;
+  height: 80px;
+  border-radius: 0.2em;
+  background: var(--main-bg-color);
+  border: 1px solid #fff;
+
+  &:hover {
+    box-shadow: 0 0 10px var(--main-bg-color);
+  }
+}
+
+.color-picker_wrap {
+  padding: 15px;
+  overflow: hidden;
+  border-radius: 10px;
+  right: -15px;
+  top: 50%;
+  transform: translate(100%, -50%);
+  background: #e8e8e8d6;
+}

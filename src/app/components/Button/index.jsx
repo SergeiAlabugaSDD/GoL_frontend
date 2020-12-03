@@ -43,6 +43,7 @@ export const Button = (props) => {
     type,
     icon,
     tooltip,
+    styles,
   } = props;
   const [state, dispatch] = useReducer(buttonReducer, initialState);
 
@@ -88,12 +89,13 @@ export const Button = (props) => {
       type={type}
       onClick={(e) => {
         e.stopPropagation();
+        onClick(e);
         if (riple) {
           rippleEffect(e);
         }
-        onClick(e);
       }}
       className={`btn ${className}`}
+      style={{ ...styles }}
     >
       {children}
       {tooltip && (
@@ -120,6 +122,7 @@ Button.propTypes = {
   icon: PropTypes.string,
   tooltip: PropTypes.string,
   riple: PropTypes.bool,
+  styles: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   className: PropTypes.string.isRequired,
   onClick: PropTypes.func,
   children: PropTypes.oneOfType([
@@ -135,4 +138,5 @@ Button.defaultProps = {
   icon: '',
   children: '',
   tooltip: '',
+  styles: {},
 };

@@ -13,9 +13,8 @@ import { actions } from './actions';
 import { interfaceSelectors } from './reducer';
 
 // components
-import { ItemPreview, GameBar, ThemeBar } from './components';
+import { ItemPreview, GameBar, ThemeBar, ColorPicker } from './components';
 import { Button } from '../../components';
-// selectors
 
 // assets
 import presetSVG from './assets/icons/presets.svg';
@@ -31,6 +30,11 @@ export const Interface = () => {
     themeBar,
     userView: { innerHeight, innerWidth },
   } = useSelector(interfaceSelectors.getInterface);
+
+  const toggleOptionsHandler = (e) => {
+    e.stopPropagation();
+    dispatch(actions.toggleThemeBarAction());
+  };
 
   const Cell = ({ columnIndex, rowIndex, style }) => (
     <div
@@ -74,9 +78,14 @@ export const Interface = () => {
           icon={optionsSVG}
           riple
           description="Options"
+          onClick={toggleOptionsHandler}
         />
       </GameBar>
-      <ThemeBar {...themeBar}>THEME BAR</ThemeBar>
+      {themeBar.show && (
+        <ThemeBar {...themeBar} closeHandler={toggleOptionsHandler}>
+          <ColorPicker />
+        </ThemeBar>
+      )}
       <ItemPreview themeBar={themeBar} gameBar={gameBar} />
       <Grid
         className="grid_game"
