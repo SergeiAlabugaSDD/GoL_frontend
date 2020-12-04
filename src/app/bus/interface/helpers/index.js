@@ -13,7 +13,7 @@ function generateGrid(columns, rows) {
   for (let i = 0; i < resultArray.length; i += 1) {
     const nestedArray = new Array(rows);
     for (let j = 0; j < nestedArray.length; j += 1) {
-      nestedArray[j] = 0;
+      nestedArray[j] = Math.round(Math.random());
     }
     resultArray[i] = nestedArray;
   }

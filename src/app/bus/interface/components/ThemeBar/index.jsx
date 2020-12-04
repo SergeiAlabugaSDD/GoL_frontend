@@ -54,7 +54,7 @@ export const ThemeBar = (props) => {
       }}
       className="theme_bar"
     >
-      <div className="full_h full_w relative flex a_c j_c">
+      <div className="theme_bar_inside full_h full_w relative flex a_c j_a d-column">
         {canDrag || displayPreview ? null : (
           <>
             {children}
@@ -71,8 +71,8 @@ export const ThemeBar = (props) => {
           show={displayPreview}
           clickHandler={canDragHandler}
           canDrag={canDrag}
-          top={8}
           right={4}
+          bottom={4}
         />
       </div>
     </div>
