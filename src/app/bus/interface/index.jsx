@@ -20,6 +20,9 @@ import { Button } from '../../components';
 import presetSVG from './assets/icons/presets.svg';
 import optionsSVG from './assets/icons/cogwheel.svg';
 import profileSVG from './assets/icons/user.svg';
+import aliveSVG from './assets/icons/heart.svg';
+import deadSVG from './assets/icons/skull.svg';
+import colorsPaleteSVG from './assets/icons/color-palette.svg';
 
 export const Interface = () => {
   // redux hooks
@@ -30,6 +33,9 @@ export const Interface = () => {
     themeBar,
     userView: { innerHeight, innerWidth },
   } = useSelector(interfaceSelectors.getInterface);
+
+  const colorPickerShowRight =
+    themeBar.width + 250 + themeBar.left < innerWidth;
 
   const toggleOptionsHandler = (e) => {
     e.stopPropagation();
@@ -78,12 +84,60 @@ export const Interface = () => {
           icon={optionsSVG}
           riple
           description="Options"
+        />
+        <Button
+          tooltip="Colors"
+          className="btn_interface"
+          icon={colorsPaleteSVG}
+          riple
+          description="Colors"
           onClick={toggleOptionsHandler}
         />
       </GameBar>
       {themeBar.show && (
         <ThemeBar {...themeBar} closeHandler={toggleOptionsHandler}>
-          <ColorPicker />
+          <ColorPicker
+            colors={[
+              '#b31449bf',
+              '#9c27b0bf',
+              '#673ab7bf',
+              '#3f51b5bf',
+              '#2196f3bf',
+              '#00bcd4bf',
+              '#4caf50bf',
+              '#609721bf',
+              '#b86e00bf',
+              '#1f1f1fbf',
+            ]}
+            variableOfTheme="--main-bg-color"
+            tooltip="Theme Color"
+            showRight={colorPickerShowRight}
+          />
+          <ColorPicker
+            colors={['#5b1084', '#0f41a3', '#7d540c', '#1f1f1f', '#8b272b']}
+            variableOfTheme="--dead-color"
+            tooltip="Dead Color"
+            icon={deadSVG}
+            showRight={colorPickerShowRight}
+          />
+          <ColorPicker
+            colors={[
+              '#ff7a7a',
+              '#a8a8a8',
+              '#404040',
+              '#ff6bbf',
+              '#ff9a6b',
+              '#ee80ff',
+              '#8880ff',
+              '#6bfffd',
+              '#efff61',
+              '#61ff79',
+            ]}
+            variableOfTheme="--alive-color"
+            tooltip="Alive Color"
+            icon={aliveSVG}
+            showRight={colorPickerShowRight}
+          />
         </ThemeBar>
       )}
       <ItemPreview themeBar={themeBar} gameBar={gameBar} />

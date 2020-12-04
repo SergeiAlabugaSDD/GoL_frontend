@@ -38,7 +38,7 @@ const initialState = {
     left: 20,
     show: true,
     height: innerHeight / 2 - 100,
-    width: 300,
+    width: 100,
   },
   resizeble: {
     isStartResizing: false,

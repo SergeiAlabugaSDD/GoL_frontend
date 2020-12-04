@@ -1,10 +1,13 @@
 .theme_bar {
   position: absolute;
-  height: 40vh;
   background-color: var(--main-bg-color);
   border: 1px solid var(--main-font-color);
   z-index: 1;
   user-select: none;
+}
+
+.theme_bar_inside {
+  padding: 25px 0;
 }
 
 .close_bar {
