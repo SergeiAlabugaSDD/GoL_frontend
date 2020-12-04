@@ -7,14 +7,24 @@ import './styles.css';
 import ableToDragSvg from './images/move.svg';
 import canDragSvg from './images/drag.svg';
 
-export const CanDragButton = ({ show, clickHandler, canDrag, top, right }) => {
+export const CanDragButton = ({
+  show,
+  clickHandler,
+  canDrag,
+  top,
+  right,
+  bottom,
+  left,
+}) => {
   return (
     <div
       className="can-drag-wrap absolute flex a_c"
       style={{
         opacity: show ? 0 : 1,
-        top: `${canDrag ? '50%' : `${top}px`}`,
-        right: `${canDrag ? '50%' : `${right}px`}`,
+        top: `${canDrag && !bottom ? '50%' : `${top}px`}`,
+        right: `${canDrag && !left ? '50%' : `${right}px`}`,
+        bottom: `${canDrag && !top ? '50%' : `${bottom}px`}`,
+        left: `${canDrag && !right ? '50%' : `${left}px`}`,
       }}
     >
       <div className="relative full_h full_w">
@@ -48,14 +58,18 @@ CanDragButton.propTypes = {
   show: PropTypes.bool,
   canDrag: PropTypes.bool,
   clickHandler: PropTypes.func,
-  top: PropTypes.number,
-  right: PropTypes.number,
+  top: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  right: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  bottom: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  left: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 };
 
 CanDragButton.defaultProps = {
   show: true,
   clickHandler: () => {},
   canDrag: false,
-  top: 15,
-  right: 10,
+  top: '',
+  right: '',
+  bottom: '',
+  left: '',
 };

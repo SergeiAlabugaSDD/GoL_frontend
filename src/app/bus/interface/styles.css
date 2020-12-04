@@ -24,10 +24,10 @@
 
 .life {
   border: 1px solid #fff;
-  background-color: #2eef98;
+  background-color: var(--alive-color);
 }
 
 .dead {
   border: 1px solid #fff;
-  background-color: #666666;
+  background-color: var(--dead-color);
 }
