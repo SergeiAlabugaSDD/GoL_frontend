@@ -20,7 +20,7 @@ export const ColorPicker = ({
   variableOfTheme,
   tooltip,
   colors,
-  icon,
+  icon = colorPickerSVG,
   showRight,
 }) => {
   const wrapperRef = useRef(null);

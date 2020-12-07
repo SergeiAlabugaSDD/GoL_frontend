@@ -34,9 +34,9 @@ const initialState = {
     height: 100,
   },
   themeBar: {
-    top: 20,
-    left: 20,
-    show: true,
+    top: 140,
+    left: innerWidth - 140,
+    show: false,
     height: innerHeight / 2 - 100,
     width: 100,
   },

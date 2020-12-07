@@ -72,11 +72,12 @@ export const Interface = () => {
           description="Presets"
         />
         <Button
-          tooltip="Profile"
+          tooltip="Colors"
           className="btn_interface"
-          icon={profileSVG}
+          icon={colorsPaleteSVG}
           riple
-          description="Profile"
+          description="Colors"
+          onClick={toggleOptionsHandler}
         />
         <Button
           tooltip="Options"
@@ -86,12 +87,11 @@ export const Interface = () => {
           description="Options"
         />
         <Button
-          tooltip="Colors"
+          tooltip="Profile"
           className="btn_interface"
-          icon={colorsPaleteSVG}
+          icon={profileSVG}
           riple
-          description="Colors"
-          onClick={toggleOptionsHandler}
+          description="Profile"
         />
       </GameBar>
       {themeBar.show && (
