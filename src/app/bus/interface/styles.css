@@ -1,24 +1,33 @@
-.interface {
+.btn_interface {
+  border: 1px solid var(--main-font-color);
+  height: 70px;
+  width: 70px;
+  background: none;
+  border-radius: 0.2em;
+
+  &:hover {
+    box-shadow: 0 0px 10px var(--main-font-color);
+  }
+}
+
+.grid_game {
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.game_wrapper {
   position: relative;
-  display: grid;
-  width: 100%;
-  height: 100%;
+  padding: 15px;
+  overflow: hidden;
+}
 
-  & .custom {
-    z-index: 1;
-    position: relative;
-    height: 100%;
+.life {
+  border: 1px solid #fff;
+  background-color: var(--alive-color);
+}
 
-    @media (--desktopXL) {
-      height: 100%;
-    }
-  }
-
-  & .game {
-    z-index: 1;
-    background-color: violet;
-    position: relative;
-    height: 100%;
-    max-width: 80vw;
-  }
+.dead {
+  border: 1px solid #fff;
+  background-color: var(--dead-color);
 }

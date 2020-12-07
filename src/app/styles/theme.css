@@ -1,9 +1,14 @@
 body {
-  --main-bg-color: #212121;
-  --main-font-color: #ebebeb;
+  --main-bg-color: #1f1f1fbf;
+  --main-font-color: #f0f0f0;
+  --dead-color: #707070;
+  --alive-color: #57ff7b;
   --main-fz: 0.9em;
+  --phone-fz: 0.7em;
+  --desktopS-fz: 0.8em;
   --title-fz: 2.4em;
   --subtitle-fz: 1.7em;
+  --transition-base: all 0.3s;
   color: var(--main-font-color);
 }
 
@@ -17,4 +22,40 @@ body {
 
 .absolute {
   position: absolute;
+}
+
+.flex {
+  display: flex;
+}
+
+.a_c {
+  align-items: center;
+}
+
+.j_c {
+  justify-content: center;
+}
+
+.j_b {
+  justify-content: space-between;
+}
+
+.j_a {
+  justify-content: space-around;
+}
+
+.d-column {
+  flex-direction: column;
+}
+
+.zIndex {
+  z-index: 1;
+}
+
+.relative {
+  position: relative;
+}
+
+.transition {
+  transition: var(--transition-base);
 }

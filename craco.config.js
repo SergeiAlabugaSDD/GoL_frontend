@@ -1,6 +1,7 @@
-// const { DefinePlugin } = require('webpack');
+/* eslint-disable import/no-extraneous-dependencies */
+const { DefinePlugin } = require('webpack');
 
-// const { NODE_ENV } = process.env;
+const { NODE_ENV } = process.env;
 
 module.exports = {
   style: {
@@ -18,7 +19,7 @@ module.exports = {
                   '--phoneLandscape': '(max-width: 415px)',
                   '--tabletPortrait': '(max-width: 668px)',
                   '--tabletLandscape': '(max-width: 796px)',
-                  '--desktopS': '(max-width: 1025px)',
+                  '--desktopS': '(max-width: 960px)',
                   '--desktopM': '(max-width: 1376px)',
                   '--desktopL': '(max-width: 1680px)',
                   '--desktopXL': '(max-width: 1921px)',
@@ -30,18 +31,16 @@ module.exports = {
       },
     },
   },
-  // webpack: {
-  //   plugins: [
-  //     new DefinePlugin({
-  //       // "process.env.URI":  JSON.stringify('https://www.google.com'),
-  //       __ENV__:     JSON.stringify(NODE_ENV),
-  //       __DEV__:     NODE_ENV === 'development',
-  //       __STAGE__:   NODE_ENV === 'stage',
-  //       __PROD__:    NODE_ENV === 'production',
-  //     }),
-  //   ],
-  //   configure: (webpackConfig, { env, paths }) => {
-  //     return webpackConfig;
-  //   },
-  // },
+  webpack: {
+    plugins: [
+      new DefinePlugin({
+        __URI__: JSON.stringify('https://www.google.com'),
+        __ENV__: JSON.stringify(NODE_ENV),
+        __DEV__: NODE_ENV === 'development',
+        __STAGE__: NODE_ENV === 'stage',
+        __PROD__: NODE_ENV === 'production',
+        GoL: JSON.stringify('GOGLGOLGOGOLGOG'),
+      }),
+    ],
+  },
 };

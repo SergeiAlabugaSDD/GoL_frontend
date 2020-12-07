@@ -1,3 +1,4 @@
 export const dndItemTypes = {
-  BUTTON: 'BUTTON',
+  GAME_BAR: 'GAME_BAR',
+  THEME_BAR: 'THEME_BAR',
 };

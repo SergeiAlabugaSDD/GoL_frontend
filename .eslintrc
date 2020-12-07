@@ -22,5 +22,13 @@
     "jsx-a11y/no-static-element-interactions": "off",
     "jsx-a11y/media-has-caption": "off"
   },
-  "root": true
+  "root": true,
+  "globals": {
+    "GoL": "readonly",
+    "__DEV__": "readonly",
+    "__ENV__": "readonly",
+    "__STAGE__": "readonly",
+    "__PROD__": "readonly",
+    "__URI__": "readonly"
+  }
 }
