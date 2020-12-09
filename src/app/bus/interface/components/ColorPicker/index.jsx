@@ -1,4 +1,5 @@
 import { useState, useRef } from 'react';
+import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import { CirclePicker } from 'react-color';
 
@@ -22,7 +23,10 @@ export const ColorPicker = ({
   colors,
   icon = colorPickerSVG,
   showRight,
+  onChange,
+  canvas,
 }) => {
+  const dispatch = useDispatch();
   const wrapperRef = useRef(null);
   const [show, setShow] = useState(false);
 
@@ -48,8 +52,13 @@ export const ColorPicker = ({
   };
 
   const changeHandler = ({ rgb }, event) => {
+    const changedColor = `rgba(${rgb.r},${rgb.g},${rgb.b},${rgb.a})`;
     event.stopPropagation();
-    setTheme(variableOfTheme, `rgba(${rgb.r},${rgb.g},${rgb.b},${rgb.a})`);
+    if (canvas) {
+      dispatch(onChange({ type: variableOfTheme, color: changedColor }));
+      return;
+    }
+    setTheme(variableOfTheme, changedColor);
   };
 
   return (
@@ -81,9 +90,13 @@ ColorPicker.propTypes = {
   colors: PropTypes.arrayOf(PropTypes.string).isRequired,
   icon: PropTypes.string,
   showRight: PropTypes.bool,
+  onChange: PropTypes.func,
+  canvas: PropTypes.bool,
 };
 
 ColorPicker.defaultProps = {
   icon: colorPickerSVG,
   showRight: true,
+  onChange: () => {},
+  canvas: false,
 };

@@ -1,6 +1,5 @@
 /* eslint-disable react/prop-types */
 import { useSelector, useDispatch } from 'react-redux';
-import { FixedSizeGrid as Grid } from 'react-window';
 
 // drag'n'drop
 import { useDrop } from 'react-dnd';
@@ -11,10 +10,14 @@ import './styles.css';
 // actions
 import { actions } from './actions';
 import { interfaceSelectors } from './reducer';
+import { gameActions } from '../gameCell/ations';
 
 // components
 import { ItemPreview, GameBar, ThemeBar, ColorPicker } from './components';
 import { Button } from '../../components';
+
+// bus
+import { GameCell } from '../gameCell';
 
 // assets
 import presetSVG from './assets/icons/presets.svg';
@@ -23,13 +26,13 @@ import profileSVG from './assets/icons/user.svg';
 import aliveSVG from './assets/icons/heart.svg';
 import deadSVG from './assets/icons/skull.svg';
 import colorsPaleteSVG from './assets/icons/color-palette.svg';
+import randomSVG from './assets/icons/shuffle.svg';
 
 export const Interface = () => {
   // redux hooks
   const dispatch = useDispatch();
   const {
     gameBar,
-    grid,
     themeBar,
     userView: { innerHeight, innerWidth },
   } = useSelector(interfaceSelectors.getInterface);
@@ -42,12 +45,10 @@ export const Interface = () => {
     dispatch(actions.toggleThemeBarAction());
   };
 
-  const Cell = ({ columnIndex, rowIndex, style }) => (
-    <div
-      style={style}
-      className={`${grid[columnIndex][rowIndex] === 1 ? 'life' : 'dead'}`}
-    />
-  );
+  const randomClickHandler = (e) => {
+    e.stopPropagation();
+    dispatch(gameActions.generateRandomAction());
+  };
 
   // drag'n'drop hook
   const [, drop] = useDrop({
@@ -70,6 +71,14 @@ export const Interface = () => {
           icon={presetSVG}
           riple
           description="Presets"
+        />
+        <Button
+          tooltip="Random"
+          className="btn_interface"
+          icon={randomSVG}
+          riple
+          description="Random"
+          onClick={randomClickHandler}
         />
         <Button
           tooltip="Colors"
@@ -115,10 +124,12 @@ export const Interface = () => {
           />
           <ColorPicker
             colors={['#5b1084', '#0f41a3', '#7d540c', '#1f1f1f', '#8b272b']}
-            variableOfTheme="--dead-color"
+            variableOfTheme="dead"
             tooltip="Dead Color"
             icon={deadSVG}
             showRight={colorPickerShowRight}
+            onChange={gameActions.setCanvasColor}
+            canvas
           />
           <ColorPicker
             colors={[
@@ -133,27 +144,25 @@ export const Interface = () => {
               '#efff61',
               '#61ff79',
             ]}
-            variableOfTheme="--alive-color"
+            canvas
+            variableOfTheme="alive"
             tooltip="Alive Color"
             icon={aliveSVG}
             showRight={colorPickerShowRight}
+            onChange={gameActions.setCanvasColor}
           />
         </ThemeBar>
       )}
       <ItemPreview themeBar={themeBar} gameBar={gameBar} />
-      <Grid
+      <div
         className="grid_game"
-        columnCount={100}
-        columnWidth={35}
-        height={innerHeight - 30}
-        rowCount={100}
-        rowHeight={35}
-        width={innerWidth - 30}
-        overscanColumnCount={15}
-        overscanRowCount={15}
+        style={{
+          height: `${innerHeight - 30}px`,
+          width: `${innerWidth - 30}px`,
+        }}
       >
-        {Cell}
-      </Grid>
+        <GameCell width={innerWidth - 30} height={innerHeight - 30} />
+      </div>
     </div>
   );
 };

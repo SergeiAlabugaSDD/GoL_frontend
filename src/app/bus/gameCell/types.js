@@ -1,0 +1,4 @@
+export const gameCellTypes = {
+  GENERATE_RANDOM: 'GENERATE_RANDOM',
+  SET_CANVAS_COLOR: 'SET_CANVAS_COLOR',
+};

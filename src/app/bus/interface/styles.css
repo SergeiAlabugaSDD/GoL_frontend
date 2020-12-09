@@ -11,6 +11,11 @@
 }
 
 .grid_game {
+  position: relative;
+  overflow: auto;
+  will-change: transform;
+  background-color: var(--main-bg-color);
+
   &::-webkit-scrollbar {
     display: none;
   }
@@ -20,14 +25,5 @@
   position: relative;
   padding: 15px;
   overflow: hidden;
-}
-
-.life {
-  border: 1px solid #fff;
-  background-color: var(--alive-color);
-}
-
-.dead {
-  border: 1px solid #fff;
-  background-color: var(--dead-color);
+  background-color: var(--main-bg-color);
 }
