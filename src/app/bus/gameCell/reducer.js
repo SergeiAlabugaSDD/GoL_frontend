@@ -21,23 +21,28 @@ function create2DArray(x, y) {
   return res;
 }
 
-export const columns = Math.round((innerWidth - 35) / 21);
-export const rows = Math.round((innerHeight - 32) / 21);
+const initColumns = Math.round((innerWidth - 35) / 21);
+const initRows = Math.round((innerHeight - 32) / 21);
 
 const initialState = {
-  columns, // grid columns
-  rows, // grid rows
-  waitTime: 1000, // time of next step
+  columns: initColumns, // grid columns
+  rows: initRows, // grid rows
+  waitTime: 30, // time of next step
   generation: 0, // counter of generations
   running: false, // playing or not
   triger: 0,
 
-  field: create2DArray(columns, rows),
+  field: create2DArray(initColumns, initRows),
 
   // Zoom level
   zoom: {
     cellSize: 20,
     cellSpace: 1,
+  },
+
+  rules: {
+    born: 3,
+    alive: [2, 3],
   },
 
   // Cell colors
@@ -99,18 +104,32 @@ export const gameCellReducer = createReducer(initialState, (builder) => {
 
 // selectors
 export const gameCellSelectors = {
-  getCellConfig: ({ gameCell }) => {
+  getCellConfig: ({
+    gameCell: {
+      columns,
+      rows,
+      colors,
+      zoom,
+      waitTime,
+      running,
+      generation,
+      triger,
+      rules,
+    },
+  }) => {
     return {
-      columns: gameCell.columns,
-      rows: gameCell.rows,
-      colors: gameCell.colors,
-      zoom: gameCell.zoom,
-      waitTime: gameCell.waitTime,
-      autoplay: gameCell.autoplay,
-      running: gameCell.running,
-      generation: gameCell.generation,
-      field: gameCell.field,
-      triger: gameCell.triger,
+      columns,
+      rows,
+      colors,
+      zoom,
+      waitTime,
+      running,
+      generation,
+      triger,
+      rules,
     };
+  },
+  getField: ({ gameCell }) => {
+    return gameCell.field;
   },
 };
