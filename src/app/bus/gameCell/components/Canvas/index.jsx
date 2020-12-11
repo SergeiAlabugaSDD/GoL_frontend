@@ -1,70 +1,71 @@
-import { useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
+import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import './styles.css';
 
-// helpers
-import { isAlive, drawCell } from '../../helpers';
+// actions
+// import { gameActions } from '../../actions';
+import { toggleGame, getResultGrid } from './algorithm';
 
-export const Canvas = ({ gameCell }) => {
+export const Canvas = React.memo(({ gameCell }) => {
+  const dispatch = useDispatch();
   const canvasRef = useRef(null);
-  const { columns, rows, listLife, colors, trail, zoom } = gameCell;
-  const width = columns * zoom.cellSpace + columns * zoom.cellSize;
-  const height = rows * zoom.cellSpace + rows * zoom.cellSize;
+  const {
+    columns,
+    rows,
+    colors,
+    waitTime,
+    zoom: { cellSpace, cellSize },
+    generation,
+    running,
+    triger,
+  } = gameCell;
+  const width = columns * cellSpace + columns * cellSize;
+  const height = rows * cellSpace + rows * cellSize;
 
   useEffect(() => {
+    const field = getResultGrid();
     if (canvasRef) {
       const context = canvasRef.current.getContext('2d');
-      const { actualState, age } = listLife;
-      for (let i = 0; i < columns; i += 1) {
-        for (let j = 0; j < rows; j += 1) {
-          if (isAlive(i, j, actualState)) {
-            drawCell(
-              i,
-              j,
-              true,
-              age,
-              colors,
-              context,
-              trail,
-              zoom.cellSpace,
-              zoom.cellSize
-            );
-          } else {
-            drawCell(
-              i,
-              j,
-              false,
-              age,
-              colors,
-              context,
-              trail,
-              zoom.cellSpace,
-              zoom.cellSize
-            );
-          }
+      for (let i = 0; i < field.length; i += 1) {
+        for (let j = 0; j < field[i].length; j += 1) {
+          if (field[i][j] === 1) {
+            context.fillStyle = colors.alive;
+          } else context.fillStyle = colors.dead;
+
+          context.fillRect(
+            cellSpace + cellSpace * i + cellSize * i,
+            cellSpace + cellSpace * j + cellSize * j,
+            cellSize,
+            cellSize
+          );
         }
       }
     }
+    if (running) {
+      toggleGame(dispatch, running, waitTime);
+    }
   }, [
-    gameCell,
-    columns,
-    listLife,
-    rows,
     colors,
-    trail,
-    zoom.cellSize,
-    zoom.cellSpace,
+    triger,
+    running,
+    generation,
+    dispatch,
+    cellSpace,
+    cellSize,
+    waitTime,
   ]);
   return (
     <canvas
+      id="canvas"
       className="canvas-game"
       ref={canvasRef}
       width={width}
       height={height}
     />
   );
-};
+});
 
 Canvas.propTypes = {
   gameCell: PropTypes.shape().isRequired,

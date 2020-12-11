@@ -10,7 +10,7 @@ import './styles.css';
 // actions
 import { actions } from './actions';
 import { interfaceSelectors } from './reducer';
-import { gameActions } from '../gameCell/ations';
+import { gameActions } from '../gameCell/actions';
 
 // components
 import { ItemPreview, GameBar, ThemeBar, ColorPicker } from './components';
@@ -50,6 +50,11 @@ export const Interface = () => {
     dispatch(gameActions.generateRandomAction());
   };
 
+  const runHandler = (e) => {
+    e.stopPropagation();
+    dispatch(gameActions.toggleRun());
+  };
+
   // drag'n'drop hook
   const [, drop] = useDrop({
     accept: Object.values(dndItemTypes),
@@ -71,6 +76,21 @@ export const Interface = () => {
           icon={presetSVG}
           riple
           description="Presets"
+        />
+        <Button
+          tooltip="RUN"
+          className="btn_interface"
+          icon={presetSVG}
+          riple
+          description="RUN"
+          onClick={runHandler}
+        />
+        <Button
+          tooltip="Step"
+          className="btn_interface"
+          icon={presetSVG}
+          riple
+          description="Step"
         />
         <Button
           tooltip="Random"

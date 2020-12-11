@@ -4,41 +4,35 @@ import update from 'immutability-helper';
 import { innerWidth, innerHeight } from '../../init/clientBrowser';
 
 // actions
-import { gameActions } from './ations';
+import { gameActions } from './actions';
 
-// helpers
-import { generateAge, generateActualState } from './helpers';
+function create2DArray(x, y) {
+  const res = [];
+  for (let i = 0; i < x; i += 1) {
+    const nested = new Uint8Array(y);
+    for (let j = 0; j < y; j += 1) {
+      nested[j] = 0;
+    }
+    res[i] = nested;
+  }
+  res[0][1] = 1;
+  res[1][1] = 1;
+  res[2][1] = 1;
+  return res;
+}
 
-const columns = Math.round((innerWidth - 35) / 21);
-const rows = Math.round((innerHeight - 32) / 21);
+export const columns = Math.round((innerWidth - 35) / 21);
+export const rows = Math.round((innerHeight - 32) / 21);
+
 const initialState = {
   columns, // grid columns
   rows, // grid rows
-  waitTime: 0, // time of next step
+  waitTime: 1000, // time of next step
   generation: 0, // counter of generations
   running: false, // playing or not
-  autoplay: false,
-  initialRender: '[{"39":[110]},{"40":[112]},{"41":[109,110,113,114,115]}]',
+  triger: 0,
 
-  listLife: {
-    actualState: generateActualState(rows, columns),
-    redrawList: [],
-    age: generateAge(rows, columns, 'random'),
-  },
-
-  times: {
-    algorithm: 0,
-    gui: 0,
-  },
-
-  // Trail state
-  trail: true,
-
-  // Grid style
-  grid: {
-    current: 0,
-    bgColor: '#fff',
-  },
+  field: create2DArray(columns, rows),
 
   // Zoom level
   zoom: {
@@ -49,47 +43,74 @@ const initialState = {
   // Cell colors
   colors: {
     dead: '#4d4d4d',
-    trail: '#43fed2',
     alive: '#3863ff',
   },
 };
 
 export const gameCellReducer = createReducer(initialState, (builder) => {
   builder
-    .addCase(gameActions.generateRandomAction, (state) => {
+    .addCase(gameActions.generateRandomAction, (state, { payload }) => {
       try {
-        const newData = update(state, {
-          listLife: {
-            actualState: {
-              $set: generateActualState(
-                state.rows,
-                state.columns,
-                state.listLife.actualState
-              ),
-            },
+        return update(state, {
+          field: {
+            $set: payload,
           },
         });
-        return newData;
       } catch (error) {
         return state;
       }
     })
     .addCase(gameActions.setCanvasColor, (state, { payload }) => {
       try {
-        const newData = update(state, {
+        return update(state, {
           colors: {
             [payload.type]: { $set: payload.color },
           },
         });
+      } catch (error) {
+        return state;
+      }
+    })
+    .addCase(gameActions.toggleRun, (state) => {
+      return {
+        ...state,
+        running: !state.running,
+      };
+    })
+    .addCase(gameActions.fillField, (state, { payload }) => {
+      try {
+        const newData = update(state, {
+          field: { $set: payload },
+        });
+
         return newData;
       } catch (error) {
         return state;
       }
+    })
+    .addCase(gameActions.setTriger, (state) => {
+      return {
+        ...state,
+        triger: state.triger + 1,
+      };
     })
     .addDefaultCase((state) => state);
 });
 
 // selectors
 export const gameCellSelectors = {
-  getCell: (state) => state.gameCell,
+  getCellConfig: ({ gameCell }) => {
+    return {
+      columns: gameCell.columns,
+      rows: gameCell.rows,
+      colors: gameCell.colors,
+      zoom: gameCell.zoom,
+      waitTime: gameCell.waitTime,
+      autoplay: gameCell.autoplay,
+      running: gameCell.running,
+      generation: gameCell.generation,
+      field: gameCell.field,
+      triger: gameCell.triger,
+    };
+  },
 };

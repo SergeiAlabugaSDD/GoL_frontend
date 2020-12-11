@@ -1,14 +1,16 @@
 import { useSelector } from 'react-redux';
 
-// component
+// // component
 import { Canvas } from './components';
 
-// selectors
+// // selectors
 import { gameCellSelectors } from './reducer';
 import { interfaceSelectors } from '../interface/reducer';
 
+import './components/Canvas/algorithm';
+
 export const GameCell = () => {
-  const gameCell = useSelector(gameCellSelectors.getCell);
+  const gameCell = useSelector(gameCellSelectors.getCellConfig);
   const { innerWidth, innerHeight } = useSelector(
     interfaceSelectors.getUserView
   );
