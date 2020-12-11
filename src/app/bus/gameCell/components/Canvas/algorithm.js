@@ -8,11 +8,15 @@
 
 import { throttle } from 'lodash-es';
 import { gameActions } from '../../actions';
-import { columns, rows } from '../../reducer';
+// import { columns, rows } from '../../reducer';
 
+let columns = 0;
+let rows = 0;
 let waitTime = 0;
 let started = false;
 let disp;
+let born = 3;
+let keepAlive = [2, 3];
 
 // let oldOn;
 
@@ -28,18 +32,17 @@ function create2DArray(x, y) {
   return res;
 }
 
-let field = create2DArray(columns, rows);
+let field = [];
 
 const getResultGrid = () => {
   return field;
 };
 
-function set(x, y) {
-  if (field[x][y] === 1) {
+function set(x, y, mousePressed) {
+  if (field[x][y] === 1 && !mousePressed) {
     field[x][y] = 0;
-    return undefined;
-  }
-  field[x][y] = 1;
+  } else field[x][y] = 1;
+  disp(gameActions.setTriger());
   return undefined;
 }
 
@@ -77,13 +80,16 @@ const tick = () => {
     for (let j = 0; j < rows; j += 1) {
       const neighbors = countLiveNeighbors(field, i, j);
 
-      if (neighbors < 2 || neighbors > 3) {
+      if (neighbors < keepAlive[0] || neighbors > keepAlive[1]) {
         // die
         next[i][j] = 0;
-      } else if (field[i][j] === 0 && neighbors === 3) {
+      } else if (field[i][j] === 0 && neighbors === born) {
         // born
         next[i][j] = 1;
-      } else if (field[i][j] === 1 && (neighbors === 3 || neighbors === 2)) {
+      } else if (
+        field[i][j] === 1 &&
+        (neighbors <= keepAlive[1] || neighbors >= keepAlive[0])
+      ) {
         // keep alive
         next[i][j] = 1;
       } else next[i][j] = 0;
@@ -94,14 +100,22 @@ const tick = () => {
   disp(gameActions.setTriger());
 };
 
-const toggleGame = (dispatch, running, time) => {
+const toggleGame = (running, time) => {
   waitTime = time;
   started = running;
-  disp = dispatch;
   if (started) {
     const throttleTick = throttle(tick, waitTime, { leading: false });
     throttleTick();
   }
 };
 
-export { toggleGame, set, getResultGrid, tick, clearCanvas };
+const prepare = (currentCols, currentRows, rules, dispatch) => {
+  columns = currentCols;
+  rows = currentRows;
+  born = rules.born;
+  keepAlive = rules.alive;
+  disp = dispatch;
+  field = create2DArray(columns, rows);
+};
+
+export { toggleGame, set, getResultGrid, tick, clearCanvas, prepare };
