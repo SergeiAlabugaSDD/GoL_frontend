@@ -41,7 +41,6 @@ export const Button = (props) => {
     riple,
     children,
     type,
-    icon,
     tooltip,
     styles,
   } = props;
@@ -97,11 +96,10 @@ export const Button = (props) => {
       className={`btn ${className}`}
       style={{ ...styles }}
     >
-      {children}
       {tooltip && (
         <span className="absolute btn_tooltip flex a_c j_c">{tooltip}</span>
       )}
-      {icon && <img className="btn_img" src={icon} alt={icon} />}
+      {children}
       {state.clicked && (
         <div
           className="riple"
@@ -119,7 +117,6 @@ export const Button = (props) => {
 
 Button.propTypes = {
   type: PropTypes.string,
-  icon: PropTypes.string,
   tooltip: PropTypes.string,
   riple: PropTypes.bool,
   styles: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
@@ -135,8 +132,7 @@ Button.defaultProps = {
   riple: false,
   type: 'button',
   onClick: () => {},
-  icon: '',
-  children: '',
+  children: null,
   tooltip: '',
   styles: {},
 };

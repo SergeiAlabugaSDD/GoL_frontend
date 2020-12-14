@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 import './styles.css';
 
 // images
-import ableToDragSvg from './images/move.svg';
-import canDragSvg from './images/drag.svg';
+import { ReactComponent as AbleToDragIcon } from './images/able_to_drag.svg';
+import { ReactComponent as CanDragIcon } from './images/can_drag.svg';
 
 export const CanDragButton = ({
   show,
@@ -33,14 +33,22 @@ export const CanDragButton = ({
           type="button"
           onClick={clickHandler}
         >
-          <img
-            style={{
-              height: `${canDrag ? '50px' : '30px'}`,
-              transform: `${canDrag ? 'translate(50%, -50%)' : 'none'}`,
-            }}
-            src={canDrag ? canDragSvg : ableToDragSvg}
-            alt="canDrag"
-          />
+          {canDrag ? (
+            <CanDragIcon
+              fill="var(--main-font-color)"
+              width={50}
+              height={50}
+              style={{
+                transform: 'translate(50%, -50%)',
+              }}
+            />
+          ) : (
+            <AbleToDragIcon
+              fill="var(--main-font-color)"
+              width={25}
+              height={25}
+            />
+          )}
         </button>
         {canDrag ? (
           ''

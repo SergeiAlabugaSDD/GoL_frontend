@@ -14,17 +14,14 @@ import { useOutsideAlerter } from '../../hooks';
 // components
 import { Button } from '../../../../components';
 
-// assets
-import colorPickerSVG from './images/color-picker.svg';
-
 export const ColorPicker = ({
   variableOfTheme,
   tooltip,
   colors,
-  icon = colorPickerSVG,
   showRight,
   onChange,
   canvas,
+  children,
 }) => {
   const dispatch = useDispatch();
   const wrapperRef = useRef(null);
@@ -65,11 +62,12 @@ export const ColorPicker = ({
     <div ref={wrapperRef} className="color-picker relative">
       <Button
         tooltip={tooltip}
-        icon={icon}
         className="color-picker_btn"
         onClick={toggleHideHandler}
         riple
-      />
+      >
+        {children}
+      </Button>
       {show && (
         <div style={{ ...styles }} className="color-picker_wrap absolute">
           <CirclePicker
@@ -88,15 +86,18 @@ ColorPicker.propTypes = {
   variableOfTheme: PropTypes.string.isRequired,
   tooltip: PropTypes.string.isRequired,
   colors: PropTypes.arrayOf(PropTypes.string).isRequired,
-  icon: PropTypes.string,
   showRight: PropTypes.bool,
   onChange: PropTypes.func,
   canvas: PropTypes.bool,
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]),
 };
 
 ColorPicker.defaultProps = {
-  icon: colorPickerSVG,
   showRight: true,
   onChange: () => {},
   canvas: false,
+  children: null,
 };

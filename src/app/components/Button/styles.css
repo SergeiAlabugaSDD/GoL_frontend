@@ -30,7 +30,7 @@
   }
 }
 
-.btn_tooltip:hover ~ img {
+.btn_tooltip:hover ~ svg {
   opacity: 0;
 }
 
