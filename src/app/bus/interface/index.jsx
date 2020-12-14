@@ -32,6 +32,7 @@ import { ReactComponent as RunSVG } from './assets/icons/pixels_run.svg';
 import { ReactComponent as StopSVG } from './assets/icons/pixels_stop.svg';
 import { ReactComponent as StepSVG } from './assets/icons/next_step.svg';
 import { ReactComponent as ThemeSVG } from './assets/icons/theme.svg';
+import { ReactComponent as ClearSVG } from './assets/icons/pixels_clear.svg';
 
 export const Interface = () => {
   // redux hooks
@@ -57,13 +58,23 @@ export const Interface = () => {
     dispatch(gameActions.generateRandomAction());
   };
 
+  const clearClickHandler = (e) => {
+    e.stopPropagation();
+    dispatch(gameActions.clearField());
+  };
+
+  const nextStepHandler = (e) => {
+    e.stopPropagation();
+    dispatch(gameActions.goOneStep());
+  };
+
   const runHandler = (e) => {
     e.stopPropagation();
     dispatch(gameActions.toggleRun());
   };
 
   // drag'n'drop hook
-  const [, drop] = useDrop({
+  const [{ isDragging }, drop] = useDrop({
     accept: Object.values(dndItemTypes),
     drop: (item, monitor) => {
       const delta = monitor.getDifferenceFromInitialOffset();
@@ -72,6 +83,9 @@ export const Interface = () => {
       dispatch(actions.moveItemOfInterface({ id: item.id, left, top }));
       return undefined;
     },
+    collect: (monitor) => ({
+      isDragging: monitor.isOver(),
+    }),
   });
 
   return (
@@ -95,6 +109,7 @@ export const Interface = () => {
           className="btn_interface"
           riple
           description="Step"
+          onClick={nextStepHandler}
         >
           <StepSVG width="80%" height="80%" fill="var(--main-font-color)" />
         </Button>
@@ -114,6 +129,15 @@ export const Interface = () => {
           onClick={randomClickHandler}
         >
           <RandomSVG width="80%" height="80%" fill="var(--main-font-color)" />
+        </Button>
+        <Button
+          tooltip="Clear"
+          className="btn_interface"
+          riple
+          description="Clear"
+          onClick={clearClickHandler}
+        >
+          <ClearSVG width="80%" height="80%" fill="var(--main-font-color)" />
         </Button>
         <Button
           tooltip="Colors"
@@ -205,6 +229,7 @@ export const Interface = () => {
         style={{
           height: `${innerHeight - 30}px`,
           width: `${innerWidth - 30}px`,
+          zIndex: `${isDragging ? '-1' : 'auto'} `,
         }}
       >
         <GameCell width={innerWidth - 30} height={innerHeight - 30} />

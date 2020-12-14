@@ -7,10 +7,9 @@ import { Canvas } from './components';
 import { gameCellSelectors } from './reducer';
 import { interfaceSelectors } from '../interface/reducer';
 
-import './components/Canvas/algorithm';
-
 export const GameCell = () => {
   const gameCell = useSelector(gameCellSelectors.getCellConfig);
+  const field = useSelector(gameCellSelectors.getField);
   const { innerWidth, innerHeight } = useSelector(
     interfaceSelectors.getUserView
   );
@@ -21,6 +20,7 @@ export const GameCell = () => {
         innerWidth={innerWidth}
         innerHeight={innerHeight}
         gameCell={gameCell}
+        field={field}
       />
     </div>
   );
