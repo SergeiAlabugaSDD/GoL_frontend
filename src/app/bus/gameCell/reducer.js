@@ -1,23 +1,21 @@
 import { createReducer } from '@reduxjs/toolkit';
 import update from 'immutability-helper';
+// import { clone } from 'lodash-es';
 
 import { innerWidth, innerHeight } from '../../init/clientBrowser';
 
 // actions
 import { gameActions } from './actions';
 
-function create2DArray(x, y) {
+export function create2DArray(x, y, type) {
   const res = [];
   for (let i = 0; i < x; i += 1) {
     const nested = new Uint8Array(y);
     for (let j = 0; j < y; j += 1) {
-      nested[j] = 0;
+      nested[j] = type === 'random' ? Math.round(Math.random()) : 0;
     }
     res[i] = nested;
   }
-  res[0][1] = 1;
-  res[1][1] = 1;
-  res[2][1] = 1;
   return res;
 }
 
@@ -27,12 +25,14 @@ const initRows = Math.round((innerHeight - 32) / 21);
 const initialState = {
   columns: initColumns, // grid columns
   rows: initRows, // grid rows
-  waitTime: 30, // time of next step
+  waitTime: 100, // time of next step
   generation: 0, // counter of generations
   running: false, // playing or not
+  goOneStep: false,
+  changed: false, // flag for record field to state
   triger: 0,
 
-  field: create2DArray(initColumns, initRows),
+  field: create2DArray(initColumns, initRows, 'random'),
 
   // Zoom level
   zoom: {
@@ -54,12 +54,14 @@ const initialState = {
 
 export const gameCellReducer = createReducer(initialState, (builder) => {
   builder
-    .addCase(gameActions.generateRandomAction, (state, { payload }) => {
+    .addCase(gameActions.generateRandomAction, (state) => {
       try {
         return update(state, {
+          running: { $set: false },
           field: {
-            $set: payload,
+            $set: create2DArray(initColumns, initRows, 'random'),
           },
+          changed: { $set: true },
         });
       } catch (error) {
         return state;
@@ -80,12 +82,40 @@ export const gameCellReducer = createReducer(initialState, (builder) => {
       return {
         ...state,
         running: !state.running,
+        changed: state.running,
+      };
+    })
+    .addCase(gameActions.setChangedFalse, (state) => {
+      return {
+        ...state,
+        changed: false,
+      };
+    })
+    .addCase(gameActions.goOneStep, (state) => {
+      return {
+        ...state,
+        running: false,
+        goOneStep: !state.goOneStep,
       };
     })
     .addCase(gameActions.fillField, (state, { payload }) => {
       try {
         const newData = update(state, {
           field: { $set: payload },
+          changed: { $set: true },
+        });
+
+        return newData;
+      } catch (error) {
+        return state;
+      }
+    })
+    .addCase(gameActions.clearField, (state) => {
+      try {
+        const newData = update(state, {
+          field: { $set: create2DArray(initColumns, initRows) },
+          running: { $set: false },
+          changed: { $set: true },
         });
 
         return newData;
@@ -112,6 +142,8 @@ export const gameCellSelectors = {
       zoom,
       waitTime,
       running,
+      changed,
+      goOneStep,
       generation,
       triger,
       rules,
@@ -124,6 +156,8 @@ export const gameCellSelectors = {
       zoom,
       waitTime,
       running,
+      changed,
+      goOneStep,
       generation,
       triger,
       rules,
