@@ -133,7 +133,7 @@ export const Canvas = React.memo(({ gameCell }) => {
       width={width}
       height={height}
       onMouseDownCapture={mouseDownHandler}
-      onMouseMoveCapture={mouseMoveHandler}
+      onMouseMove={mouseMoveHandler}
       onMouseUpCapture={mouseUpHandler}
     />
   );
