@@ -137,6 +137,32 @@ export const gameCellReducer = createReducer(initialState, (builder) => {
         triger: state.triger + 1,
       };
     })
+    .addCase(gameActions.setZoom, (state, { payload }) => {
+      try {
+        return update(state, {
+          running: { $set: false },
+          zoom: {
+            cellSize: { $set: payload.cellSize },
+            cellSpace: { $set: payload.cellSpace },
+          },
+        });
+      } catch (error) {
+        return state;
+      }
+    })
+    .addCase(gameActions.setRules, (state, { payload }) => {
+      try {
+        return update(state, {
+          running: { $set: false },
+          rules: {
+            born: { $set: payload.born },
+            alive: { $set: payload.alive },
+          },
+        });
+      } catch (error) {
+        return state;
+      }
+    })
     .addDefaultCase((state) => state);
 });
 
