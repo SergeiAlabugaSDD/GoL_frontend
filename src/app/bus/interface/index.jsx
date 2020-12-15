@@ -1,4 +1,4 @@
-/* eslint-disable react/prop-types */
+import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 // drag'n'drop
@@ -87,6 +87,10 @@ export const Interface = () => {
       isDragging: monitor.isOver(),
     }),
   });
+
+  useEffect(() => {
+    if (running && isDragging) dispatch(gameActions.toggleRun());
+  }, [running, isDragging, dispatch]);
 
   return (
     <div ref={drop} className="game_wrapper">
