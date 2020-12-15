@@ -25,11 +25,13 @@ const initRows = Math.round((innerHeight - 32) / 21);
 const initialState = {
   columns: initColumns, // grid columns
   rows: initRows, // grid rows
-  waitTime: 100, // time of next step
+  waitTime: 0, // time of next step
   generation: 0, // counter of generations
   running: false, // playing or not
-  goOneStep: false,
-  changed: false, // flag for record field to state
+  goOneStep: false, // this flag we use in Canvas component for checking events
+  changed: false, // this flag we use in Canvas component for checking events
+  random: false, // this flag we use in Canvas component for checking events
+  clear: false, // flag for record field to state
   triger: 0,
 
   field: create2DArray(initColumns, initRows, 'random'),
@@ -58,10 +60,8 @@ export const gameCellReducer = createReducer(initialState, (builder) => {
       try {
         return update(state, {
           running: { $set: false },
-          field: {
-            $set: create2DArray(initColumns, initRows, 'random'),
-          },
           changed: { $set: true },
+          random: { $set: !state.random },
         });
       } catch (error) {
         return state;
@@ -79,30 +79,40 @@ export const gameCellReducer = createReducer(initialState, (builder) => {
       }
     })
     .addCase(gameActions.toggleRun, (state) => {
-      return {
-        ...state,
-        running: !state.running,
-        changed: state.running,
-      };
+      try {
+        return update(state, {
+          running: { $set: !state.running },
+          changed: { $set: state.running },
+        });
+      } catch (error) {
+        return state;
+      }
     })
     .addCase(gameActions.setChangedFalse, (state) => {
-      return {
-        ...state,
-        changed: false,
-      };
+      try {
+        return update(state, {
+          changed: { $set: false },
+        });
+      } catch (error) {
+        return state;
+      }
     })
     .addCase(gameActions.goOneStep, (state) => {
-      return {
-        ...state,
-        running: false,
-        goOneStep: !state.goOneStep,
-      };
+      try {
+        return update(state, {
+          running: { $set: false },
+          changed: { $set: true },
+          goOneStep: { $set: !state.goOneStep },
+        });
+      } catch (error) {
+        return state;
+      }
     })
     .addCase(gameActions.fillField, (state, { payload }) => {
       try {
         const newData = update(state, {
           field: { $set: payload },
-          changed: { $set: true },
+          changed: { $set: false },
         });
 
         return newData;
@@ -112,13 +122,11 @@ export const gameCellReducer = createReducer(initialState, (builder) => {
     })
     .addCase(gameActions.clearField, (state) => {
       try {
-        const newData = update(state, {
-          field: { $set: create2DArray(initColumns, initRows) },
+        return update(state, {
           running: { $set: false },
           changed: { $set: true },
+          clear: { $set: !state.clear },
         });
-
-        return newData;
       } catch (error) {
         return state;
       }
@@ -143,6 +151,8 @@ export const gameCellSelectors = {
       waitTime,
       running,
       changed,
+      clear,
+      random,
       goOneStep,
       generation,
       triger,
@@ -157,6 +167,8 @@ export const gameCellSelectors = {
       waitTime,
       running,
       changed,
+      clear,
+      random,
       goOneStep,
       generation,
       triger,
