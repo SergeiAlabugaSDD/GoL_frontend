@@ -7,11 +7,6 @@ import { innerWidth, innerHeight } from '../../init/clientBrowser';
 import { actions } from './actions';
 
 const initialState = {
-  options: {
-    // options of game
-    born: 3,
-    surv: 2,
-  },
   userView: {
     // height and width of user view
     innerWidth,
@@ -21,10 +16,11 @@ const initialState = {
     top: 20,
     left: innerWidth / 2 - 40,
     width: innerWidth / 2,
-    height: 100,
+    height: 200,
+    toggleConfig: true,
   },
   themeBar: {
-    top: 140,
+    top: 240,
     left: innerWidth - 140,
     show: false,
     height: innerHeight / 2 - 100,
@@ -64,12 +60,28 @@ export const interfaceReducer = createReducer(initialState, (builder) => {
       }
     })
     .addCase(actions.toggleThemeBarAction, (state) => {
-      const newData = update(state, {
-        themeBar: {
-          show: { $set: !state.themeBar.show },
-        },
-      });
-      return newData;
+      try {
+        const newData = update(state, {
+          themeBar: {
+            show: { $set: !state.themeBar.show },
+          },
+        });
+        return newData;
+      } catch (error) {
+        return state;
+      }
+    })
+    .addCase(actions.toggleConfigBar, (state) => {
+      try {
+        const newData = update(state, {
+          gameBar: {
+            toggleConfig: { $set: !state.gameBar.toggleConfig },
+          },
+        });
+        return newData;
+      } catch (error) {
+        return state;
+      }
     })
     .addDefaultCase((state) => state);
 });

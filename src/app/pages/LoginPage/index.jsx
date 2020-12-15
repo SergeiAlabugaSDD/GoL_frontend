@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Motion, spring, presets } from 'react-motion';
 
 import { Link } from 'react-router-dom';
