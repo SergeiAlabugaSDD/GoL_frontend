@@ -8,6 +8,7 @@ import { throttle } from 'lodash-es';
 import { gameActions } from '../../actions';
 import { create2DArray } from '../../reducer';
 
+// we need pure mutating JS for better perfomance
 let currentField = [];
 
 export const Canvas = ({ gameCell, field }) => {
@@ -23,6 +24,8 @@ export const Canvas = ({ gameCell, field }) => {
     zoom: { cellSpace, cellSize },
     running,
     changed,
+    clear,
+    random,
     goOneStep,
     triger,
     rules: { born, alive },
@@ -143,17 +146,43 @@ export const Canvas = ({ gameCell, field }) => {
         } else next[i][j] = 0;
       }
     }
+
     currentField = next;
-    dispatch(gameActions.setTriger());
+
+    if (running) {
+      // triggering for rerender component
+      dispatch(gameActions.setTriger());
+    }
   };
+
   const throttleTick = throttle(tick, waitTime, { leading: false });
 
   useEffect(() => {
-    if (changed || !currentField.length) {
+    if (!running && changed) {
+      if (clear) {
+        // clear field
+        const nextField = create2DArray(columns, rows);
+        currentField = nextField;
+        dispatch(gameActions.fillField(nextField));
+        dispatch(gameActions.clearField());
+      }
+      if (random) {
+        // generate random
+        const nextField = create2DArray(columns, rows, 'random');
+        currentField = nextField;
+        dispatch(gameActions.fillField(nextField));
+        dispatch(gameActions.generateRandomAction());
+      }
+      // this action set flag changed to false
+      dispatch(gameActions.fillField(currentField));
+    }
+    if (!currentField.length) {
+      // init current field from store
       currentField = field;
-      // dispatch(gameActions.setChangedFalse());
     }
     const context = canvasRef.current.getContext('2d');
+
+    // render canvas
     for (let i = 0; i < currentField.length; i += 1) {
       for (let j = 0; j < currentField[i].length; j += 1) {
         if (currentField[i][j] === 1) {
@@ -175,22 +204,13 @@ export const Canvas = ({ gameCell, field }) => {
     }
     if (goOneStep) {
       // flag for just one step
-      throttleTick();
+      tick();
       dispatch(gameActions.goOneStep());
-      return;
-    }
-    if (changed) {
-      // flag for set data in store
-      dispatch(gameActions.fillField(currentField)); // action for set data
-    }
-    if (!running && changed) {
-      // stop rerendering component
-      dispatch(gameActions.setChangedFalse());
     }
   }, [
     changed,
-    colors,
     field,
+    colors,
     triger,
     running,
     goOneStep,
