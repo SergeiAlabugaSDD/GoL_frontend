@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useState } from 'react';
 import { useDrag } from 'react-dnd';
 import { Motion, spring, presets } from 'react-motion';
@@ -50,18 +51,12 @@ export const GameBar = ({
           left,
           top,
           width: `${width}px`,
-          height: `${toggleConfig ? height : height / 2}px`,
-          transform,
           cursor: `${displayPreview ? 'grabbing' : 'default'}`,
+          transform,
+          height: `${height}px`,
         }}
       >
-        <div
-          style={{
-            height: `${toggleConfig ? height / 2 : '100%'}px`,
-            transform,
-          }}
-          className="game_bar_bg full_w relative flex a_c j_b"
-        >
+        <div className="game_bar_bg game_bar_wrapper full_h full_w relative flex a_c j_b">
           {canDrag ? null : children}
           <CanDragButton
             show={displayPreview}
@@ -71,29 +66,31 @@ export const GameBar = ({
             right={4}
           />
         </div>
-        <Motion
-          style={{
-            transform: spring(toggleConfig ? 0 : -(height / 2), presets.stiff),
-            opacity: spring(toggleConfig ? 1 : 0, presets.stiff),
-          }}
-        >
-          {(value) => {
-            return (
-              <div
-                className="game_bar_bg full_w relative flex a_c j_c"
-                style={{
-                  height: `${height / 2}px`,
-                  transform: `translateY(${value.transform}px)`,
-                  zIndex: `${toggleConfig ? 0 : -1}`,
-                  opacity: value.opacity,
-                  borderTop: 'none',
-                }}
-              >
-                <ConfigBar />
-              </div>
-            );
-          }}
-        </Motion>
+        {!displayPreview && (
+          <Motion
+            style={{
+              transform: spring(toggleConfig ? 0 : -height, presets.stiff),
+              opacity: spring(toggleConfig ? 1 : 0, presets.stiff),
+            }}
+          >
+            {(value) => {
+              return (
+                <div
+                  className="game_bar_bg full_w relative flex a_c j_c"
+                  style={{
+                    height: `${height}px`,
+                    transform: `translateY(${value.transform}px)`,
+                    zIndex: `${toggleConfig ? 0 : -1}`,
+                    opacity: value.opacity,
+                    borderTop: 'none',
+                  }}
+                >
+                  <ConfigBar />
+                </div>
+              );
+            }}
+          </Motion>
+        )}
       </div>
     </>
   );
@@ -103,7 +100,7 @@ GameBar.propTypes = {
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
   displayPreview: PropTypes.bool,
-  toggleConfig: PropTypes.bool.isRequired,
+  toggleConfig: PropTypes.bool,
   left: PropTypes.number.isRequired,
   top: PropTypes.number.isRequired,
   id: PropTypes.string,
@@ -118,4 +115,5 @@ GameBar.defaultProps = {
   id: 'gameBar',
   transform: 'none',
   displayPreview: false,
+  toggleConfig: false,
 };

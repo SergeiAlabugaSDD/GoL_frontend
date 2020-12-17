@@ -3,7 +3,7 @@
   z-index: 1;
   user-select: none;
 
-  & > div {
+  & .game_bar_wrapper {
     padding: 10px 50px;
   }
 }

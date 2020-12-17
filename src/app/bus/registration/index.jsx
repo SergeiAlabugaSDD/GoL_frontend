@@ -30,7 +30,7 @@ export const RegistrationForm = () => {
 
   return (
     <form
-      className="flex d-column"
+      className="flex d_column"
       onSubmit={handleSubmit(onRegistrationSubmit, onRegistrationError)}
     >
       <div className="relative">

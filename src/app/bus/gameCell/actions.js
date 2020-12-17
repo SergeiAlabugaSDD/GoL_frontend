@@ -13,5 +13,4 @@ export const gameActions = {
   toggleAlive: createAction(gameCellTypes.TOGGLE_ALIVE),
   setChangedFalse: createAction(gameCellTypes.SET_CHANGED_FALSE),
   setZoom: createAction(gameCellTypes.SET_ZOOM),
-  setRules: createAction(gameCellTypes.SET_RULES),
 };

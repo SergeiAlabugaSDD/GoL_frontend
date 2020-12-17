@@ -49,33 +49,27 @@ export const Interface = () => {
     themeBar.width + 250 + themeBar.left < innerWidth;
 
   // handlers
-  const toggleThemeBarHandler = (e) => {
-    e.stopPropagation();
+  const toggleThemeBarHandler = () => {
     dispatch(actions.toggleThemeBarAction());
   };
 
-  const toggleConfigHandler = (e) => {
-    e.stopPropagation();
+  const toggleConfigHandler = () => {
     dispatch(actions.toggleConfigBar());
   };
 
-  const randomClickHandler = (e) => {
-    e.stopPropagation();
+  const randomClickHandler = () => {
     dispatch(gameActions.generateRandomAction());
   };
 
-  const clearClickHandler = (e) => {
-    e.stopPropagation();
+  const clearClickHandler = () => {
     dispatch(gameActions.clearField());
   };
 
-  const nextStepHandler = (e) => {
-    e.stopPropagation();
+  const nextStepHandler = () => {
     dispatch(gameActions.goOneStep());
   };
 
-  const runHandler = (e) => {
-    e.stopPropagation();
+  const runHandler = () => {
     dispatch(gameActions.toggleRun());
   };
 

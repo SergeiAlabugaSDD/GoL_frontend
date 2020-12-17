@@ -1,6 +1,7 @@
 body {
   --main-bg-color: #1f1f1fbf;
   --main-font-color: #d9d9d9;
+  --radio-btn-color: #ff5252;
   --main-fz: 0.9em;
   --phone-fz: 0.7em;
   --desktopS-fz: 0.8em;
@@ -24,6 +25,7 @@ body {
 
 .flex {
   display: flex;
+  flex-shrink: 1;
 }
 
 .a_c {
@@ -42,8 +44,15 @@ body {
   justify-content: space-around;
 }
 
-.d-column {
+.d_column {
   flex-direction: column;
+}
+
+.tac {
+  text-align: center;
+  font-size: var(--main-font-sz);
+  text-transform: uppercase;
+  margin: 0 0 0.5em 0;
 }
 
 .zIndex {

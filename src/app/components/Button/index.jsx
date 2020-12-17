@@ -87,7 +87,6 @@ export const Button = (props) => {
     <button
       type={type}
       onClick={(e) => {
-        e.stopPropagation();
         onClick(e);
         if (riple) {
           rippleEffect(e);

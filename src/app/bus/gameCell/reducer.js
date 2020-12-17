@@ -42,11 +42,6 @@ const initialState = {
     cellSpace: 1,
   },
 
-  rules: {
-    born: 3,
-    alive: [2, 3],
-  },
-
   // Cell colors
   colors: {
     dead: '#4d4d4d',
@@ -150,19 +145,6 @@ export const gameCellReducer = createReducer(initialState, (builder) => {
         return state;
       }
     })
-    .addCase(gameActions.setRules, (state, { payload }) => {
-      try {
-        return update(state, {
-          running: { $set: false },
-          rules: {
-            born: { $set: payload.born },
-            alive: { $set: payload.alive },
-          },
-        });
-      } catch (error) {
-        return state;
-      }
-    })
     .addDefaultCase((state) => state);
 });
 
@@ -182,7 +164,6 @@ export const gameCellSelectors = {
       goOneStep,
       generation,
       triger,
-      rules,
     },
   }) => {
     return {
@@ -198,7 +179,6 @@ export const gameCellSelectors = {
       goOneStep,
       generation,
       triger,
-      rules,
     };
   },
   getField: ({ gameCell }) => {

@@ -30,7 +30,7 @@ export const LoginPage = () => {
   return (
     <>
       <div className="content_wrapper">
-        <div className="form_wrapper flex d-column relative">
+        <div className="form_wrapper flex d_column relative">
           <Logo title="Game of Life" />
           {displayReg ? (
             <div>
@@ -42,7 +42,7 @@ export const LoginPage = () => {
               >
                 {(value) => (
                   <div style={{ transform: `translateX(${value.x}px)` }}>
-                    <div className="flex d-column">
+                    <div className="flex d_column">
                       <RegistrationForm />
                       <Button
                         type="button"
@@ -67,7 +67,7 @@ export const LoginPage = () => {
                 return (
                   <div
                     style={{ transform: `translateX(${value.y}px)` }}
-                    className="flex d-column"
+                    className="flex d_column"
                   >
                     <LoginForm />
                     <Button

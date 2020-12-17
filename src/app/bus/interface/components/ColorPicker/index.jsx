@@ -36,15 +36,13 @@ export const ColorPicker = ({
       };
 
   // outside clickHandler
-  const outsideClickHandler = (e) => {
-    e.preventDefault();
+  const outsideClickHandler = () => {
     if (show) setShow(false); // hide colorPicker
   };
 
   useOutsideAlerter(wrapperRef, outsideClickHandler);
 
-  const toggleHideHandler = (e) => {
-    e.stopPropagation();
+  const toggleHideHandler = () => {
     setShow(!show);
   };
 

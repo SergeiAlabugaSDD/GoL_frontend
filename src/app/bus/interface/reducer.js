@@ -16,7 +16,7 @@ const initialState = {
     top: 20,
     left: innerWidth / 2 - 40,
     width: innerWidth / 2,
-    height: 200,
+    height: 100,
     toggleConfig: true,
   },
   themeBar: {
@@ -25,6 +25,10 @@ const initialState = {
     show: false,
     height: innerHeight / 2 - 100,
     width: 100,
+  },
+  rules: {
+    born: [0, 0, 0, 1, 0, 0, 0, 0],
+    alive: [2, 3],
   },
 };
 
@@ -83,11 +87,34 @@ export const interfaceReducer = createReducer(initialState, (builder) => {
         return state;
       }
     })
+    .addCase(actions.setBorn, (state, { payload }) => {
+      try {
+        return update(state, {
+          rules: {
+            born: { $set: payload },
+          },
+        });
+      } catch (error) {
+        return state;
+      }
+    })
+    .addCase(actions.setAlive, (state, { payload }) => {
+      try {
+        return update(state, {
+          rules: {
+            alive: { $set: payload },
+          },
+        });
+      } catch (error) {
+        return state;
+      }
+    })
     .addDefaultCase((state) => state);
 });
 
 // selectors
 export const interfaceSelectors = {
   getInterface: (state) => state.userInterface,
-  getUserView: (state) => state.userInterface.userView,
+  getUserView: ({ userInterface }) => userInterface.userView,
+  getRules: ({ userInterface }) => userInterface.rules,
 };

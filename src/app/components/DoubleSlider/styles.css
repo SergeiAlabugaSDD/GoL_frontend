@@ -1,0 +1,42 @@
+.double-slider {
+  padding: 0px;
+  width: 90%;
+}
+
+.double-slider_rail {
+  position: absolute;
+  width: 100%;
+  height: 10px;
+  border-radius: 2px;
+  background: var(--main-font-color);
+}
+
+.double-slider_handle {
+  position: absolute;
+  z-index: 2;
+  bottom: 13px;
+  width: 26px;
+  height: 26px;
+  marginleft: -13px;
+  border: 0;
+  text-align: center;
+  cursor: pointer;
+  border-radius: 3px;
+  background: var(--radio-btn-color);
+  color: var(--main-font-color);
+}
+
+.double-slider_value {
+  font-size: 16px;
+  color: var(--main-font-color);
+}
+
+.double-slider_track {
+  position: absolute;
+  height: 10px;
+  bottom: 21px;
+  z-index: 1;
+  background: var(--radio-btn-color);
+  border-radius: 2px;
+  cursor: pointer;
+}
