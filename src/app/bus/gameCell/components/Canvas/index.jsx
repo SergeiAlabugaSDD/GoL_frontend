@@ -1,3 +1,5 @@
+/* eslint-disable no-debugger */
+/* eslint-disable no-continue */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
@@ -11,7 +13,7 @@ import { create2DArray } from '../../reducer';
 // we need pure mutating JS for better perfomance
 let currentField = [];
 
-export const Canvas = ({ gameCell, field, rules }) => {
+export const Canvas = ({ gameCell, field, rules, innerHeight, innerWidth }) => {
   const [mousePressed, setMousePressed] = useState(false);
 
   const dispatch = useDispatch();
@@ -21,7 +23,7 @@ export const Canvas = ({ gameCell, field, rules }) => {
     rows,
     colors,
     waitTime,
-    zoom: { cellSpace, cellSize },
+    zoom: { cellSpace, cellSize, resized },
     running,
     changed,
     clear,
@@ -31,9 +33,6 @@ export const Canvas = ({ gameCell, field, rules }) => {
   } = gameCell;
   const { born, alive } = rules;
   const currentBorn = born.indexOf(1) + 1;
-
-  const width = columns * cellSpace + columns * cellSize;
-  const height = rows * cellSpace + rows * cellSize;
 
   // handlers
   const mousePosition = (e) => {
@@ -111,50 +110,71 @@ export const Canvas = ({ gameCell, field, rules }) => {
       for (let j = -1; j < 2; j += 1) {
         const col = (x + i + columns) % columns; // Замыкает плоскость в тор
         const row = (y + j + rows) % rows;
-        sum += currentField[col][row];
+        if (currentField[col] && currentField[col][row] !== undefined)
+          sum += currentField[col][row];
+        continue;
       }
     }
-
-    if (currentField[x][y] === 1) {
+    if (currentField[x] && currentField[x][y] === 1) {
       sum -= 1;
     }
 
     return sum;
   };
 
-  // calculate next generation
-  const tick = () => {
-    const next = create2DArray(columns, rows);
+  // resize canvas
+  const resize = () => {
+    const nextGeneration = create2DArray(columns, rows);
 
     for (let i = 0; i < columns; i += 1) {
       for (let j = 0; j < rows; j += 1) {
-        const neighbors = countLiveNeighbors(i, j);
-
-        if (neighbors < alive[0] || neighbors > alive[1]) {
-          // die
-          next[i][j] = 0;
-        } else if (currentField[i][j] === 0 && neighbors === currentBorn) {
-          // born
-          next[i][j] = 1;
-        } else if (
-          currentField[i][j] === 1 &&
-          (neighbors <= alive[1] || neighbors >= alive[0])
-        ) {
-          // keep alive
-          next[i][j] = 1;
-        } else next[i][j] = 0;
+        nextGeneration[i][j] =
+          currentField[i] && currentField[i][j] ? currentField[i][j] : 0;
       }
     }
 
-    currentField = next;
-
-    if (running) {
-      // triggering for rerender component
-      dispatch(gameActions.setTriger());
-    }
+    currentField = nextGeneration;
   };
 
-  const throttleTick = throttle(tick, waitTime, { leading: false });
+  // calculate next generation
+  const tick = throttle(
+    () => {
+      if (resized) {
+        dispatch(gameActions.setResizedFalse());
+        return;
+      }
+      const next = create2DArray(columns, rows);
+
+      for (let i = 0; i < columns; i += 1) {
+        if (currentField[i] === undefined) {
+          return;
+        }
+        for (let j = 0; j < rows; j += 1) {
+          const neighbors = countLiveNeighbors(i, j);
+
+          if (neighbors < alive[0] || neighbors > alive[1]) {
+            // die
+            next[i][j] = 0;
+          } else if (currentField[i][j] === 0 && neighbors === currentBorn) {
+            // born
+            next[i][j] = 1;
+          } else if (
+            currentField[i][j] === 1 &&
+            (neighbors <= alive[1] || neighbors >= alive[0])
+          ) {
+            // keep alive
+            next[i][j] = 1;
+          } else next[i][j] = 0;
+        }
+      }
+
+      currentField = next;
+      // triggering for rerender component
+      dispatch(gameActions.setTriger());
+    },
+    waitTime,
+    { leading: false }
+  );
 
   useEffect(() => {
     if (!running && changed) {
@@ -181,6 +201,11 @@ export const Canvas = ({ gameCell, field, rules }) => {
     }
     const context = canvasRef.current.getContext('2d');
 
+    if (resized) {
+      context.clearRect(0, 0, innerWidth, innerHeight);
+      resize();
+      // dispatch(gameActions.setResizedFalse());
+    }
     // render canvas
     for (let i = 0; i < currentField.length; i += 1) {
       for (let j = 0; j < currentField[i].length; j += 1) {
@@ -198,10 +223,10 @@ export const Canvas = ({ gameCell, field, rules }) => {
     }
     if (running) {
       // check flag "running"
-      throttleTick();
+      tick();
       return;
     }
-    if (goOneStep) {
+    if (goOneStep && !resized) {
       // flag for just one step
       tick();
       dispatch(gameActions.goOneStep());
@@ -216,15 +241,15 @@ export const Canvas = ({ gameCell, field, rules }) => {
     dispatch,
     cellSpace,
     cellSize,
-    throttleTick,
+    resized,
   ]);
   return (
     <canvas
       id="canvas"
       className="canvas-game"
       ref={canvasRef}
-      width={width}
-      height={height}
+      width={innerWidth}
+      height={innerHeight}
       onMouseDown={mouseDownHandler}
       onMouseMove={mouseMoveHandler}
       onMouseUp={mouseUpHandler}
@@ -237,4 +262,6 @@ Canvas.propTypes = {
   gameCell: PropTypes.shape().isRequired,
   field: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   rules: PropTypes.shape().isRequired,
+  innerHeight: PropTypes.number.isRequired,
+  innerWidth: PropTypes.number.isRequired,
 };

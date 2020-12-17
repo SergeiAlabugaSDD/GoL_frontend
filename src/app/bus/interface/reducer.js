@@ -115,6 +115,5 @@ export const interfaceReducer = createReducer(initialState, (builder) => {
 // selectors
 export const interfaceSelectors = {
   getInterface: (state) => state.userInterface,
-  getUserView: ({ userInterface }) => userInterface.userView,
   getRules: ({ userInterface }) => userInterface.rules,
 };

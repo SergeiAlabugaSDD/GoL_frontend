@@ -25,7 +25,7 @@ const initRows = Math.floor(innerHeight / 21);
 const initialState = {
   columns: initColumns, // grid columns
   rows: initRows, // grid rows
-  waitTime: 0, // time of next step
+  waitTime: 50, // time of next step
   generation: 0, // counter of generations
   running: false, // playing or not
   goOneStep: false, // this flag we use in Canvas component for checking events
@@ -40,6 +40,7 @@ const initialState = {
   zoom: {
     cellSize: 20,
     cellSpace: 1,
+    resized: false,
   },
 
   // Cell colors
@@ -132,13 +133,32 @@ export const gameCellReducer = createReducer(initialState, (builder) => {
         triger: state.triger + 1,
       };
     })
-    .addCase(gameActions.setZoom, (state, { payload }) => {
+    .addCase(gameActions.setSize, (state, { payload }) => {
       try {
+        const currentSellSize = payload
+          ? state.zoom.cellSize + 1
+          : state.zoom.cellSize - 1;
+        if (currentSellSize <= 9 || currentSellSize >= 30) return state;
         return update(state, {
+          columns: { $set: Math.floor(innerWidth / currentSellSize) },
+          rows: { $set: Math.floor(innerHeight / currentSellSize) },
           running: { $set: false },
           zoom: {
-            cellSize: { $set: payload.cellSize },
-            cellSpace: { $set: payload.cellSpace },
+            cellSize: {
+              $set: currentSellSize,
+            },
+            resized: { $set: true },
+          },
+        });
+      } catch (error) {
+        return state;
+      }
+    })
+    .addCase(gameActions.setResizedFalse, (state) => {
+      try {
+        return update(state, {
+          zoom: {
+            resized: { $set: false },
           },
         });
       } catch (error) {
