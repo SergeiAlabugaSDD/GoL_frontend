@@ -40,7 +40,7 @@ export const Interface = () => {
   const {
     gameBar,
     themeBar,
-    userView: { innerHeight, innerWidth },
+    userView: { innerWidth },
   } = useSelector(interfaceSelectors.getInterface);
 
   const { running } = useSelector(gameCellSelectors.getCellConfig);
@@ -232,12 +232,10 @@ export const Interface = () => {
       <div
         className="grid_game"
         style={{
-          height: `${innerHeight - 30}px`,
-          width: `${innerWidth - 30}px`,
           zIndex: `${isDragging ? '-1' : 'auto'} `,
         }}
       >
-        <GameCell width={innerWidth - 30} height={innerHeight - 30} />
+        <GameCell />
       </div>
     </div>
   );

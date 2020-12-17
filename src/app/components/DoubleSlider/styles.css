@@ -1,6 +1,12 @@
 .double-slider {
-  padding: 0px;
+  margin: 20px 0;
   width: 90%;
+
+  &:hover {
+    & div {
+      box-shadow: 0 0 6px var(--main-font-color);
+    }
+  }
 }
 
 .double-slider_rail {
@@ -9,21 +15,26 @@
   height: 10px;
   border-radius: 2px;
   background: var(--main-font-color);
+  cursor: pointer;
 }
 
 .double-slider_handle {
   position: absolute;
   z-index: 2;
-  bottom: 13px;
+  top: 50%;
+  transform: translateY(-50%);
   width: 26px;
   height: 26px;
-  marginleft: -13px;
   border: 0;
   text-align: center;
   cursor: pointer;
   border-radius: 3px;
   background: var(--radio-btn-color);
   color: var(--main-font-color);
+
+  &:hover {
+    box-shadow: 0 0 6px var(--main-font-color);
+  }
 }
 
 .double-slider_value {
@@ -34,7 +45,7 @@
 .double-slider_track {
   position: absolute;
   height: 10px;
-  bottom: 21px;
+  bottom: 1px;
   z-index: 1;
   background: var(--radio-btn-color);
   border-radius: 2px;

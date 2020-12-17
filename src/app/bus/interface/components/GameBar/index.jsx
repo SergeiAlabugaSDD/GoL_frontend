@@ -69,8 +69,11 @@ export const GameBar = ({
         {!displayPreview && (
           <Motion
             style={{
-              transform: spring(toggleConfig ? 0 : -height, presets.stiff),
-              opacity: spring(toggleConfig ? 1 : 0, presets.stiff),
+              transform: spring(
+                toggleConfig && !canDrag ? 0 : -height,
+                presets.stiff
+              ),
+              opacity: spring(toggleConfig && !canDrag ? 1 : 0, presets.stiff),
             }}
           >
             {(value) => {

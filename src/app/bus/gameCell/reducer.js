@@ -19,8 +19,8 @@ export function create2DArray(x, y, type) {
   return res;
 }
 
-const initColumns = Math.round((innerWidth - 35) / 21);
-const initRows = Math.round((innerHeight - 32) / 21);
+const initColumns = Math.floor(innerWidth / 21);
+const initRows = Math.floor(innerHeight / 21);
 
 const initialState = {
   columns: initColumns, // grid columns

@@ -27,7 +27,7 @@ const initialState = {
     width: 100,
   },
   rules: {
-    born: [0, 0, 0, 1, 0, 0, 0, 0],
+    born: [0, 0, 1, 0, 0, 0, 0, 0],
     alive: [2, 3],
   },
 };

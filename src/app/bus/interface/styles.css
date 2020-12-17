@@ -12,16 +12,12 @@
 
 .grid_game {
   position: relative;
-  overflow: auto;
   will-change: transform;
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
+  width: fit-content;
+  height: fit-content;
+  margin: auto auto;
 }
 
 .game_wrapper {
   position: relative;
-  padding: 15px;
-  overflow: hidden;
 }

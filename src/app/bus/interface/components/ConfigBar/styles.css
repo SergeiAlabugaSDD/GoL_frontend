@@ -1,6 +1,6 @@
 .config_bar {
   padding: 10px;
-  width: calc(100% / 3);
+  width: 50%;
   border-right: 1px solid var(--main-font-color);
 }
 

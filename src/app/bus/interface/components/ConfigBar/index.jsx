@@ -14,6 +14,12 @@ import { RadioButton, DoubleSlider } from '../../../../components';
 
 import './styles.css';
 
+// generate uniq ids for radioButton
+const keys = new Array(8).fill(0);
+keys.forEach((item, index) => {
+  keys[index] = nanoid(6);
+});
+
 export const ConfigBar = React.memo(() => {
   const dispatch = useDispatch();
   const { born, alive } = useSelector(interfaceSelectors.getRules);
@@ -38,7 +44,7 @@ export const ConfigBar = React.memo(() => {
           {born.map((item, index) => {
             return (
               <RadioButton
-                key={nanoid(4)}
+                key={keys[index]}
                 id={`born_${index + 1}`}
                 label={index + 1}
                 name="born"

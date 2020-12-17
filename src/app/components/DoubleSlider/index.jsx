@@ -13,7 +13,7 @@ function Handle({ handle: { id, value, percent }, getHandleProps }) {
       }}
       {...getHandleProps(id)}
     >
-      <div className="double-slider_value">{value}</div>
+      <span className="double-slider_value">{value}</span>
     </div>
   );
 }
