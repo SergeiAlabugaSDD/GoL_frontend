@@ -9,4 +9,5 @@ export const gameCellTypes = {
   GO_ONE_STEP: 'GO_ONE_STEP',
   TOGGLE_ALIVE: 'TOGGLE_ALIVE',
   SET_CHANGED_FALSE: 'SET_CHANGED_FALSE',
+  SET_ZOOM: 'SET_ZOOM',
 };

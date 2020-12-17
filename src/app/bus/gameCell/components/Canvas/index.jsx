@@ -11,7 +11,7 @@ import { create2DArray } from '../../reducer';
 // we need pure mutating JS for better perfomance
 let currentField = [];
 
-export const Canvas = ({ gameCell, field }) => {
+export const Canvas = ({ gameCell, field, rules }) => {
   const [mousePressed, setMousePressed] = useState(false);
 
   const dispatch = useDispatch();
@@ -28,8 +28,9 @@ export const Canvas = ({ gameCell, field }) => {
     random,
     goOneStep,
     triger,
-    rules: { born, alive },
   } = gameCell;
+  const { born, alive } = rules;
+  const currentBorn = born.indexOf(1) + 1;
 
   const width = columns * cellSpace + columns * cellSize;
   const height = rows * cellSpace + rows * cellSize;
@@ -80,20 +81,18 @@ export const Canvas = ({ gameCell, field }) => {
     dispatch(gameActions.setTriger());
   };
 
-  const mouseDownHandler = (e) => {
-    e.stopPropagation();
+  const mouseDownHandler = () => {
+    if (running) dispatch(gameActions.toggleRun());
     setMousePressed(true);
   };
 
-  const mouseUpHandler = (e) => {
-    e.stopPropagation();
+  const mouseUpHandler = () => {
     setMousePressed(false);
     dispatch(gameActions.fillField(currentField));
   };
 
   const mouseMoveHandler = throttle(
     (e) => {
-      e.stopPropagation();
       if (mousePressed) {
         const [column, row] = mousePosition(e);
         currentField[column][row] = 1;
@@ -134,7 +133,7 @@ export const Canvas = ({ gameCell, field }) => {
         if (neighbors < alive[0] || neighbors > alive[1]) {
           // die
           next[i][j] = 0;
-        } else if (currentField[i][j] === 0 && neighbors === born) {
+        } else if (currentField[i][j] === 0 && neighbors === currentBorn) {
           // born
           next[i][j] = 1;
         } else if (
@@ -237,4 +236,5 @@ export const Canvas = ({ gameCell, field }) => {
 Canvas.propTypes = {
   gameCell: PropTypes.shape().isRequired,
   field: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  rules: PropTypes.shape().isRequired,
 };

@@ -13,6 +13,7 @@ export const GameCell = () => {
   const { innerWidth, innerHeight } = useSelector(
     interfaceSelectors.getUserView
   );
+  const rules = useSelector(interfaceSelectors.getRules);
 
   return (
     <div className="full_h full_w">
@@ -21,6 +22,7 @@ export const GameCell = () => {
         innerHeight={innerHeight}
         gameCell={gameCell}
         field={field}
+        rules={rules}
       />
     </div>
   );

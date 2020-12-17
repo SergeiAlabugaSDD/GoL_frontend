@@ -23,7 +23,7 @@ export const LoginForm = () => {
 
   return (
     <form
-      className="flex d-column"
+      className="flex d_column"
       onSubmit={handleSubmit(onLoginSubmit, onLoginError)}
     >
       <div className="relative">

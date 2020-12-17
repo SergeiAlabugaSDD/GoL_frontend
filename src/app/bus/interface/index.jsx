@@ -48,28 +48,28 @@ export const Interface = () => {
   const colorPickerShowRight =
     themeBar.width + 250 + themeBar.left < innerWidth;
 
-  const toggleOptionsHandler = (e) => {
-    e.stopPropagation();
+  // handlers
+  const toggleThemeBarHandler = () => {
     dispatch(actions.toggleThemeBarAction());
   };
 
-  const randomClickHandler = (e) => {
-    e.stopPropagation();
+  const toggleConfigHandler = () => {
+    dispatch(actions.toggleConfigBar());
+  };
+
+  const randomClickHandler = () => {
     dispatch(gameActions.generateRandomAction());
   };
 
-  const clearClickHandler = (e) => {
-    e.stopPropagation();
+  const clearClickHandler = () => {
     dispatch(gameActions.clearField());
   };
 
-  const nextStepHandler = (e) => {
-    e.stopPropagation();
+  const nextStepHandler = () => {
     dispatch(gameActions.goOneStep());
   };
 
-  const runHandler = (e) => {
-    e.stopPropagation();
+  const runHandler = () => {
     dispatch(gameActions.toggleRun());
   };
 
@@ -148,7 +148,7 @@ export const Interface = () => {
           className="btn_interface"
           riple
           description="Colors"
-          onClick={toggleOptionsHandler}
+          onClick={toggleThemeBarHandler}
         >
           <ColorsPaleteSVG
             width="80%"
@@ -161,6 +161,7 @@ export const Interface = () => {
           className="btn_interface"
           riple
           description="Options"
+          onClick={toggleConfigHandler}
         >
           <OptionsSVG width="80%" height="80%" fill="var(--main-font-color)" />
         </Button>
@@ -174,7 +175,7 @@ export const Interface = () => {
         </Button>
       </GameBar>
       {themeBar.show && (
-        <ThemeBar {...themeBar} closeHandler={toggleOptionsHandler}>
+        <ThemeBar {...themeBar} closeHandler={toggleThemeBarHandler}>
           <ColorPicker
             colors={[
               '#b31449bf',

@@ -1,0 +1,9 @@
+.config_bar {
+  padding: 10px;
+  width: calc(100% / 3);
+  border-right: 1px solid var(--main-font-color);
+}
+
+.config_bar_title {
+  letter-spacing: 3px;
+}
