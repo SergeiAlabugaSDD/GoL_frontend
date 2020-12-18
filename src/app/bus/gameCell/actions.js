@@ -14,4 +14,5 @@ export const gameActions = {
   setChangedFalse: createAction(gameCellTypes.SET_CHANGED_FALSE),
   setSize: createAction(gameCellTypes.SET_SIZE),
   setResizedFalse: createAction(gameCellTypes.SET_RESIZED_FALSE),
+  setWaitTime: createAction(gameCellTypes.SET_WAIT_TIME),
 };

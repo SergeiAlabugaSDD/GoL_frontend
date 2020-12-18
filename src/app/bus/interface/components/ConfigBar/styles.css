@@ -18,8 +18,14 @@
 }
 
 .config_bar_descr {
+  position: absolute;
+  top: 0;
+  right: 0;
   width: 65%;
-  padding-left: 7px;
+  z-index: 20;
+  background: #575757;
+  padding: 3px 7px;
+  border-radius: 4px;
   text-transform: none;
   letter-spacing: 0.1px;
   font-size: var(--mini-fz);

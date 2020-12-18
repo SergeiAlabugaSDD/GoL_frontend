@@ -7,9 +7,11 @@ import PropTypes from 'prop-types';
 
 // selectors
 import { interfaceSelectors } from '../../reducer';
+import { gameCellSelectors } from '../../../gameCell/reducer';
 
 // actions
 import { actions } from '../../actions';
+import { gameActions } from '../../../gameCell/actions';
 
 // common component
 import { RadioButton, DoubleSlider } from '../../../../components';
@@ -25,11 +27,17 @@ keys.forEach((item, index) => {
 
 export const ConfigBar = React.memo(() => {
   const dispatch = useDispatch();
-  const [showBornDescr, setShowBornDescr] = useState(false);
-  const [showAliveDescr, setShowAliveDescr] = useState(false);
+  // state for question description
+  const [showDescr, setShowDescr] = useState([false, false, false]);
+
+  // data from store
   const { born, alive } = useSelector(interfaceSelectors.getRules);
+  const { waitTime } = useSelector(gameCellSelectors.getCellConfig);
+
+  // subscribe for changing radio-buttons values
   const { register, handleSubmit } = useForm({ mode: 'onChange' });
 
+  // radio button handlers
   const changeHandler = (data) => {
     const newBorn = born.map((item, index) => {
       const newItem = Number(data.born) === index + 1 ? 1 : 0;
@@ -38,38 +46,44 @@ export const ConfigBar = React.memo(() => {
     dispatch(actions.setBorn(newBorn));
   };
 
+  // slider change handlers
   const aliveChangeHandler = (newAlive) => {
     dispatch(actions.setAlive(newAlive));
   };
+  const waitTimeChangeHandler = (newWait) => {
+    dispatch(gameActions.setWaitTime(newWait[0]));
+  };
 
-  const mouseOverHandler = () => setShowBornDescr(true);
-  const mouseOutHandler = () => setShowBornDescr(false);
+  // mouse Over-Out handlers
+  const mouseOverHandler = (e, id) => {
+    const newShowArr = [...showDescr];
+    newShowArr[id] = true;
+    setShowDescr(newShowArr);
+  };
+  const mouseOutHandler = () => setShowDescr([false, false, false]);
 
-  const mouseAliveOverHandler = () => setShowAliveDescr(true);
-  const mouseAliveOutHandler = () => setShowAliveDescr(false);
   return (
-    <div onChange={handleSubmit(changeHandler)} className="flex full_w full_h">
+    <div className="flex full_w full_h">
       <div className="config_bar flex d_column">
-        <div className="config_bar_title flex a_c">
+        <div className="config_bar_title flex a_c relative">
           <span>Born</span>
           <Question
             width="30px"
             height="16px"
             fill="var(--main-font-color)"
-            onMouseOverCapture={mouseOverHandler}
-            onFocus={mouseOverHandler}
+            onMouseOverCapture={(e) => mouseOverHandler(e, 0)}
+            onFocus={(e) => mouseOverHandler(e, 0)}
             onMouseOut={mouseOutHandler}
             onBlur={mouseOutHandler}
           />
-          {showBornDescr && (
+          {showDescr[0] && (
             <ConfigDescription
-              key={keys[8]}
-              text="Count of alive cells, needed to transform dead to alive."
+              text="Counts of alive cells around a dead, needed to transform it to alive."
               show
             />
           )}
         </div>
-        <ul className="flex full_h j_b">
+        <ul onChange={handleSubmit(changeHandler)} className="flex full_h j_b">
           {born.map((item, index) => {
             return (
               <RadioButton
@@ -85,25 +99,47 @@ export const ConfigBar = React.memo(() => {
         </ul>
       </div>
       <div className="config_bar flex d_column">
-        <div className="config_bar_title flex a_c">
+        <div className="config_bar_title flex a_c relative">
           <span>Alive</span>
           <Question
             width="30px"
             height="16px"
             fill="var(--main-font-color)"
-            onMouseOver={mouseAliveOverHandler}
-            onFocus={mouseAliveOverHandler}
-            onMouseLeave={mouseAliveOutHandler}
-            onBlur={mouseAliveOutHandler}
+            onMouseOver={(e) => mouseOverHandler(e, 1)}
+            onFocus={(e) => mouseOverHandler(e, 1)}
+            onMouseLeave={mouseOutHandler}
+            onBlur={mouseOutHandler}
           />
-          {showAliveDescr && (
-            <ConfigDescription text="Count of alive cells, needed to keep cell alive." />
+          {showDescr[1] && (
+            <ConfigDescription text="Counts of alive cells, needed to keep cell alive." />
           )}
         </div>
         <DoubleSlider
           domain={[1, 8]}
           values={alive}
           changeHandler={aliveChangeHandler}
+        />
+      </div>
+      <div className="config_bar flex d_column">
+        <div className="config_bar_title flex a_c relative">
+          <span>Wait</span>
+          <Question
+            width="30px"
+            height="16px"
+            fill="var(--main-font-color)"
+            onMouseOver={(e) => mouseOverHandler(e, 2)}
+            onFocus={(e) => mouseOverHandler(e, 2)}
+            onMouseLeave={mouseOutHandler}
+            onBlur={mouseOutHandler}
+          />
+          {showDescr[2] && (
+            <ConfigDescription text='Time in "ms", before next generation will born.' />
+          )}
+        </div>
+        <DoubleSlider
+          domain={[0, 1000]}
+          values={[waitTime]}
+          changeHandler={waitTimeChangeHandler}
         />
       </div>
     </div>
