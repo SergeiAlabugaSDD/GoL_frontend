@@ -3,6 +3,7 @@ body {
   --main-font-color: #d9d9d9;
   --radio-btn-color: #ff5252;
   --main-fz: calc(14px + (18 - 14) * ((100vw - 400px) / (1920 - 400)));
+  --mini-fz: calc(10px + (14 - 10) * ((100vw - 400px) / (1920 - 400)));
   --title-fz: calc(30px + (20 - 30) * ((100vw - 400px) / (1920 - 400)));
   --subtitle-fz: calc(22px + (20 - 22) * ((100vw - 400px) / (1920 - 400)));
   --transition-base: all 0.3s;

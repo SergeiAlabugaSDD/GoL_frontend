@@ -144,28 +144,46 @@ export const Canvas = ({ gameCell, field, rules, innerHeight, innerWidth }) => {
         return;
       }
       const next = create2DArray(columns, rows);
+      if (alive[0] !== alive[1]) {
+        for (let i = 0; i < columns; i += 1) {
+          if (currentField[i] === undefined) {
+            dispatch(gameActions.setTriger());
+            return;
+          }
+          for (let j = 0; j < rows; j += 1) {
+            const neighbors = countLiveNeighbors(i, j);
 
-      for (let i = 0; i < columns; i += 1) {
-        if (currentField[i] === undefined) {
-          dispatch(gameActions.setTriger());
-          return;
+            if (neighbors < alive[0] || neighbors > alive[1]) {
+              // die
+              next[i][j] = 0;
+            } else if (currentField[i][j] === 0 && neighbors === currentBorn) {
+              // born
+              next[i][j] = 1;
+            } else if (
+              currentField[i][j] === 1 &&
+              (neighbors <= alive[1] || neighbors >= alive[0])
+            ) {
+              // keep alive
+              next[i][j] = 1;
+            } else next[i][j] = 0;
+          }
         }
-        for (let j = 0; j < rows; j += 1) {
-          const neighbors = countLiveNeighbors(i, j);
-
-          if (neighbors < alive[0] || neighbors > alive[1]) {
-            // die
-            next[i][j] = 0;
-          } else if (currentField[i][j] === 0 && neighbors === currentBorn) {
-            // born
-            next[i][j] = 1;
-          } else if (
-            currentField[i][j] === 1 &&
-            (neighbors <= alive[1] || neighbors >= alive[0])
-          ) {
-            // keep alive
-            next[i][j] = 1;
-          } else next[i][j] = 0;
+      } else {
+        for (let i = 0; i < columns; i += 1) {
+          if (currentField[i] === undefined) {
+            dispatch(gameActions.setTriger());
+            return;
+          }
+          for (let j = 0; j < rows; j += 1) {
+            const neighbors = countLiveNeighbors(i, j);
+            if (currentField[i][j] === 0 && neighbors === currentBorn) {
+              // born
+              next[i][j] = 1;
+            } else if (currentField[i][j] === 1 && neighbors === alive[1]) {
+              // keep alive
+              next[i][j] = 1;
+            } else next[i][j] = 0;
+          }
         }
       }
 
