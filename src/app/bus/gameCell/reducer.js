@@ -165,6 +165,15 @@ export const gameCellReducer = createReducer(initialState, (builder) => {
         return state;
       }
     })
+    .addCase(gameActions.setWaitTime, (state, { payload }) => {
+      try {
+        return update(state, {
+          waitTime: { $set: payload },
+        });
+      } catch (error) {
+        return state;
+      }
+    })
     .addDefaultCase((state) => state);
 });
 
