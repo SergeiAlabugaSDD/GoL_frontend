@@ -23,8 +23,19 @@ export const GameBar = ({
   id,
   children,
   displayPreview,
+  innerHeight,
 }) => {
   const [canDrag, toggleCanDrag] = useState(false);
+  const slideConfigToTop = 2 * height + top + 50 > innerHeight;
+
+  const getTransform = () => {
+    let verticalPos;
+    if (slideConfigToTop) {
+      verticalPos = -2 * height;
+    } else verticalPos = 0;
+
+    return toggleConfig ? verticalPos : -height;
+  };
 
   const canDragHandler = () => {
     toggleCanDrag(!canDrag);
@@ -69,10 +80,7 @@ export const GameBar = ({
         {!displayPreview && (
           <Motion
             style={{
-              transform: spring(
-                toggleConfig && !canDrag ? 0 : -height,
-                presets.stiff
-              ),
+              transform: spring(getTransform(), presets.stiff),
               opacity: spring(toggleConfig && !canDrag ? 1 : 0, presets.stiff),
             }}
           >
@@ -85,7 +93,6 @@ export const GameBar = ({
                     transform: `translateY(${value.transform}px)`,
                     zIndex: `${toggleConfig ? 0 : -1}`,
                     opacity: value.opacity,
-                    borderTop: 'none',
                   }}
                 >
                   <ConfigBar />
@@ -106,6 +113,7 @@ GameBar.propTypes = {
   toggleConfig: PropTypes.bool,
   left: PropTypes.number.isRequired,
   top: PropTypes.number.isRequired,
+  innerHeight: PropTypes.number,
   id: PropTypes.string,
   transform: PropTypes.string,
   children: PropTypes.oneOfType([
@@ -119,4 +127,5 @@ GameBar.defaultProps = {
   transform: 'none',
   displayPreview: false,
   toggleConfig: false,
+  innerHeight: 0,
 };
