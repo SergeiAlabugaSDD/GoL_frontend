@@ -2,12 +2,12 @@ body {
   --main-bg-color: #1f1f1fbf;
   --main-font-color: #d9d9d9;
   --radio-btn-color: #ff5252;
-  --main-fz: 0.9em;
-  --phone-fz: 0.7em;
-  --desktopS-fz: 0.8em;
-  --title-fz: 2.4em;
-  --subtitle-fz: 1.7em;
+  --main-fz: calc(14px + (18 - 14) * ((100vw - 400px) / (1920 - 400)));
+  --title-fz: calc(30px + (20 - 30) * ((100vw - 400px) / (1920 - 400)));
+  --subtitle-fz: calc(22px + (20 - 22) * ((100vw - 400px) / (1920 - 400)));
   --transition-base: all 0.3s;
+  --btn-size: calc(30px + (70 - 30) * ((100vw - 400px) / (1920 - 400)));
+  --wrapper-padding: calc(10px + (25 - 10) * ((100vw - 400px) / (1920 - 400)));
   color: var(--main-font-color);
 }
 

@@ -98,7 +98,7 @@ export const Canvas = ({ gameCell, field, rules, innerHeight, innerWidth }) => {
         dispatch(gameActions.setTriger());
       }
     },
-    20,
+    16,
     { leading: false }
   );
 
@@ -147,6 +147,7 @@ export const Canvas = ({ gameCell, field, rules, innerHeight, innerWidth }) => {
 
       for (let i = 0; i < columns; i += 1) {
         if (currentField[i] === undefined) {
+          dispatch(gameActions.setTriger());
           return;
         }
         for (let j = 0; j < rows; j += 1) {
@@ -254,6 +255,9 @@ export const Canvas = ({ gameCell, field, rules, innerHeight, innerWidth }) => {
       onMouseMove={mouseMoveHandler}
       onMouseUp={mouseUpHandler}
       onClick={clickHandler}
+      onTouchStart={mouseDownHandler}
+      onTouchMove={mouseMoveHandler}
+      onTouchEnd={mouseUpHandler}
     />
   );
 };

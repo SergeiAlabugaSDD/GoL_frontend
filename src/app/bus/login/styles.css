@@ -1,5 +1,5 @@
 .input_text {
-  width: 300px;
+  width: calc(260px + (350 - 260) * ((100vw - 400px) / (1920 - 400)));
   height: 35px;
   background: transparent;
   border: none;
@@ -15,35 +15,25 @@
 }
 
 .input_error {
-  position: absolute;
-  padding: 10px 20px;
-  right: -20px;
-  top: 50%;
+  padding: calc(6px + (12 - 6) * ((100vw - 400px) / (1920 - 400)));
   display: flex;
   align-items: center;
   justify-content: center;
-  transform: translate(100%, -50%);
   background-color: #cccccc;
   color: #000000eb;
-  max-width: 300px;
+  width: calc(260px + (350 - 260) * ((100vw - 400px) / (1920 - 400)));
   border: none;
   height: fit-content;
   border-radius: 4px;
   z-index: 0;
+  font-size: var(--main-fz);
+  position: relative;
+  margin: 0 auto;
+  transform: translate(0, 0);
+  top: 0;
+  right: 0;
 
   @media (--tabletPortrait) {
-    position: relative;
-    margin: 0 auto;
-    transform: translate(0, 0);
-    top: 0;
-    right: 0;
-    font-size: var(--phone-fz);
-    padding: 5px 10px;
-  }
-
-  @media (--desktopS) {
-    font-size: var(--desktopS-fz);
-    padding: 5px 10px;
   }
 
   &:before {
@@ -53,15 +43,10 @@
     background-color: #cccccc;
     width: 10px;
     height: 10px;
-    left: -2px;
-    transform: rotateZ(45deg);
     z-index: -1;
-
-    @media (--tabletPortrait) {
-      transform: translate(-50%, 0) rotateZ(45deg);
-      top: -3px;
-      left: 50%;
-    }
+    transform: translate(-50%, 0) rotateZ(45deg);
+    top: -3px;
+    left: 50%;
   }
 }
 
@@ -76,7 +61,7 @@
   border: none;
   transition: all 0.4s;
   text-transform: uppercase;
-  margin-top: 20px;
+  margin-top: var(--wrapper-padding);
   text-decoration: none;
   color: #000000eb;
   flex-shrink: 0;
@@ -89,8 +74,6 @@
   }
 
   @media (--tabletPortrait) {
-    width: 70%;
-    margin: 20px auto 0;
     height: 30px;
   }
 }

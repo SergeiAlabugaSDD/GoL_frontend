@@ -1,13 +1,18 @@
 .btn_interface {
   border: 1px solid var(--main-font-color);
-  height: 70px;
-  width: 70px;
+  height: var(--btn-size);
+  width: var(--btn-size);
   background: none;
   border-radius: 0.2em;
 
   &:hover {
     box-shadow: 0 0px 10px var(--main-font-color);
   }
+
+  /* @media (--desktopM) {
+    width: 40px;
+    height: 40px;
+  } */
 }
 
 .grid_game {
