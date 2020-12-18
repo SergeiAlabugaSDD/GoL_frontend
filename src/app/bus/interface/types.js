@@ -4,4 +4,5 @@ export const interfaceTypes = {
   TOGGLE_CONFIG_BAR: 'TOGGLE_CONFIG_BAR',
   SET_BORN: 'SET_BORN',
   SET_ALIVE: 'SET_ALIVE',
+  SET_USER_VIEW: 'SET_USER_VIEW',
 };

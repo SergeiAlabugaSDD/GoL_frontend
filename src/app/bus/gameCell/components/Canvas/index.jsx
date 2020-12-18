@@ -43,21 +43,10 @@ export const Canvas = ({ gameCell, field, rules, innerHeight, innerWidth }) => {
     let left = 0;
     const rectWidth = cellSpace + cellSize;
 
-    if (e.pageX || e.pageY) {
-      posx = e.pageX;
-      posy = e.pageY;
-    } else if (e.clientX || e.clientY) {
-      posx =
-        e.clientX +
-        document.body.scrollLeft +
-        document.documentElement.scrollLeft;
-      posy =
-        e.clientY +
-        document.body.scrollTop +
-        document.documentElement.scrollTop;
-    }
+    posx = e.pageX;
+    posy = e.pageY;
 
-    domObject = e.target || e.srcElement;
+    domObject = e.target;
 
     while (domObject.offsetParent) {
       left += domObject.offsetLeft;
@@ -75,18 +64,24 @@ export const Canvas = ({ gameCell, field, rules, innerHeight, innerWidth }) => {
   };
 
   const clickHandler = (e) => {
+    setMousePressed(false);
     const [column, row] = mousePosition(e);
-    currentField[column][row] = currentField[column][row] === 1 ? 0 : 1;
-    dispatch(gameActions.setTriger());
+    if (!mousePressed) {
+      if (currentField[column]) {
+        currentField[column][row] = 1;
+      }
+    } else if (currentField[column]) {
+      currentField[column][row] = currentField[column][row] === 1 ? 0 : 1;
+      dispatch(gameActions.setTriger());
+    }
   };
 
-  const mouseDownHandler = () => {
+  const mouseDownHandler = (e) => {
     if (running) dispatch(gameActions.toggleRun());
-    setMousePressed(true);
+    if (e.button !== 2) setTimeout(() => setMousePressed(true), 10);
   };
 
   const mouseUpHandler = () => {
-    setMousePressed(false);
     dispatch(gameActions.fillField(currentField));
   };
 
@@ -94,11 +89,13 @@ export const Canvas = ({ gameCell, field, rules, innerHeight, innerWidth }) => {
     (e) => {
       if (mousePressed) {
         const [column, row] = mousePosition(e);
-        currentField[column][row] = 1;
+        if (currentField[column]) {
+          currentField[column][row] = 1;
+        } else return;
         dispatch(gameActions.setTriger());
       }
     },
-    16,
+    10,
     { leading: false }
   );
 
@@ -144,46 +141,27 @@ export const Canvas = ({ gameCell, field, rules, innerHeight, innerWidth }) => {
         return;
       }
       const next = create2DArray(columns, rows);
-      if (alive[0] !== alive[1]) {
-        for (let i = 0; i < columns; i += 1) {
-          if (currentField[i] === undefined) {
-            dispatch(gameActions.setTriger());
-            return;
-          }
-          for (let j = 0; j < rows; j += 1) {
-            const neighbors = countLiveNeighbors(i, j);
-
-            if (neighbors < alive[0] || neighbors > alive[1]) {
-              // die
-              next[i][j] = 0;
-            } else if (currentField[i][j] === 0 && neighbors === currentBorn) {
-              // born
-              next[i][j] = 1;
-            } else if (
-              currentField[i][j] === 1 &&
-              (neighbors <= alive[1] || neighbors >= alive[0])
-            ) {
-              // keep alive
-              next[i][j] = 1;
-            } else next[i][j] = 0;
-          }
+      for (let i = 0; i < columns; i += 1) {
+        if (currentField[i] === undefined) {
+          dispatch(gameActions.setTriger());
+          return;
         }
-      } else {
-        for (let i = 0; i < columns; i += 1) {
-          if (currentField[i] === undefined) {
-            dispatch(gameActions.setTriger());
-            return;
-          }
-          for (let j = 0; j < rows; j += 1) {
-            const neighbors = countLiveNeighbors(i, j);
-            if (currentField[i][j] === 0 && neighbors === currentBorn) {
-              // born
-              next[i][j] = 1;
-            } else if (currentField[i][j] === 1 && neighbors === alive[1]) {
-              // keep alive
-              next[i][j] = 1;
-            } else next[i][j] = 0;
-          }
+        for (let j = 0; j < rows; j += 1) {
+          const neighbors = countLiveNeighbors(i, j);
+
+          if (neighbors < alive[0] || neighbors > alive[1]) {
+            // die
+            next[i][j] = 0;
+          } else if (currentField[i][j] === 0 && neighbors === currentBorn) {
+            // born
+            next[i][j] = 1;
+          } else if (
+            currentField[i][j] === 1 &&
+            (neighbors <= alive[1] || neighbors >= alive[0])
+          ) {
+            // keep alive
+            next[i][j] = 1;
+          } else next[i][j] = 0;
         }
       }
 

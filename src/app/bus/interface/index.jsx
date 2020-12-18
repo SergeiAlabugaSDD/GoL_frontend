@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { debounce } from 'lodash-es';
 
 // drag'n'drop
 import { useDrop } from 'react-dnd';
@@ -21,18 +22,20 @@ import { Button } from '../../components';
 import { GameCell } from '../gameCell';
 
 // assets
-import { ReactComponent as PresetSVG } from './assets/icons/presets.svg';
-import { ReactComponent as OptionsSVG } from './assets/icons/config.svg';
-import { ReactComponent as ProfileSVG } from './assets/icons/profile.svg';
-import { ReactComponent as AliveSVG } from './assets/icons/alive.svg';
-import { ReactComponent as DeadSVG } from './assets/icons/skull.svg';
-import { ReactComponent as ColorsPaleteSVG } from './assets/icons/pick_color.svg';
-import { ReactComponent as RandomSVG } from './assets/icons/random.svg';
-import { ReactComponent as RunSVG } from './assets/icons/pixels_run.svg';
-import { ReactComponent as StopSVG } from './assets/icons/pixels_stop.svg';
-import { ReactComponent as StepSVG } from './assets/icons/next_step.svg';
-import { ReactComponent as ThemeSVG } from './assets/icons/theme.svg';
-import { ReactComponent as ClearSVG } from './assets/icons/pixels_clear.svg';
+import {
+  PresetSVG,
+  OptionsSVG,
+  ProfileSVG,
+  AliveSVG,
+  DeadSVG,
+  ColorsPaleteSVG,
+  RandomSVG,
+  RunSVG,
+  StopSVG,
+  StepSVG,
+  ThemeSVG,
+  ClearSVG,
+} from './assets/icons';
 
 export const Interface = () => {
   // redux hooks
@@ -40,7 +43,7 @@ export const Interface = () => {
   const {
     gameBar,
     themeBar,
-    userView: { innerWidth },
+    userView: { innerWidth, innerHeight },
   } = useSelector(interfaceSelectors.getInterface);
 
   const { running } = useSelector(gameCellSelectors.getCellConfig);
@@ -88,13 +91,29 @@ export const Interface = () => {
     }),
   });
 
+  const resizeHandler = debounce(
+    () => {
+      dispatch(
+        actions.setUserView({
+          height: window.innerHeight,
+          width: window.innerWidth,
+        })
+      );
+    },
+    100,
+    { leading: false }
+  );
+
   useEffect(() => {
     if (running && isDragging) dispatch(gameActions.toggleRun());
-  }, [running, isDragging, dispatch]);
+
+    window.addEventListener('resize', resizeHandler);
+    return () => window.removeEventListener('resize', resizeHandler);
+  }, [running, isDragging, dispatch, resizeHandler]);
 
   return (
     <div ref={drop} className="game_wrapper">
-      <GameBar {...gameBar}>
+      <GameBar {...gameBar} innerHeight={innerHeight}>
         <Button
           tooltip="RUN"
           className="btn_interface"

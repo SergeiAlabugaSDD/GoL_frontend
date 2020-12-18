@@ -17,7 +17,7 @@ const initialState = {
     left: innerWidth / 2 - 40,
     width: innerWidth / 2,
     height: 100,
-    toggleConfig: true,
+    toggleConfig: false,
   },
   themeBar: {
     top: 240,
@@ -109,6 +109,18 @@ export const interfaceReducer = createReducer(initialState, (builder) => {
         return state;
       }
     })
+    .addCase(actions.setUserView, (state, { payload: { height, width } }) => {
+      try {
+        return update(state, {
+          userView: {
+            innerWidth: { $set: width },
+            innerHeight: { $set: height },
+          },
+        });
+      } catch (error) {
+        return state;
+      }
+    })
     .addDefaultCase((state) => state);
 });
 
@@ -116,4 +128,5 @@ export const interfaceReducer = createReducer(initialState, (builder) => {
 export const interfaceSelectors = {
   getInterface: (state) => state.userInterface,
   getRules: ({ userInterface }) => userInterface.rules,
+  getView: ({ userInterface }) => userInterface.userView,
 };
