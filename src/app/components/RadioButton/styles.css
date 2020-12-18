@@ -12,6 +12,10 @@
     cursor: pointer;
     color: var(--main-font-color);
 
+    & span.text {
+      font-size: var(--mini-fz);
+    }
+
     &:hover {
       color: var(--radio-btn-color);
 
@@ -57,12 +61,6 @@
   transition: 0.6s;
 }
 
-/* .text */
-/* .radio-button .text {
-  color: var(--main-font-color);
-  font-weight: bold;
-} */
-
 .radio-button input:checked + .design:after {
   opacity: 0.1;
   transform: scale(2);
@@ -78,7 +76,3 @@
 .radio-button input:focus + .design:before {
   background: var(--radio-btn-color);
 }
-
-/* .radio-button input:hover ~ .text {
-  color: var(--radio-btn-color);
-} */

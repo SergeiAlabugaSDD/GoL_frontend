@@ -25,7 +25,7 @@ const initRows = Math.floor(innerHeight / 21);
 const initialState = {
   columns: initColumns, // grid columns
   rows: initRows, // grid rows
-  waitTime: 50, // time of next step
+  waitTime: 0, // time of next step
   generation: 0, // counter of generations
   running: false, // playing or not
   goOneStep: false, // this flag we use in Canvas component for checking events
@@ -142,7 +142,7 @@ export const gameCellReducer = createReducer(initialState, (builder) => {
         return update(state, {
           columns: { $set: Math.floor(innerWidth / currentSellSize) },
           rows: { $set: Math.floor(innerHeight / currentSellSize) },
-          running: { $set: false },
+          // running: { $set: false },
           zoom: {
             cellSize: {
               $set: currentSellSize,

@@ -1,7 +1,7 @@
 .btn_interface {
   border: 1px solid var(--main-font-color);
-  height: 70px;
-  width: 70px;
+  height: var(--btn-size);
+  width: var(--btn-size);
   background: none;
   border-radius: 0.2em;
 

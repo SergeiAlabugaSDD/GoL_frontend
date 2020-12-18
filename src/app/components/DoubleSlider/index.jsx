@@ -31,14 +31,14 @@ function Track({ source, target, getTrackProps }) {
   );
 }
 
-export const DoubleSlider = ({ alive, changeHandler }) => {
+export const DoubleSlider = ({ values, changeHandler, domain }) => {
   return (
     <Slider
-      className="double-slider relative a_c flex full_h"
-      domain={[1, 8]}
-      values={alive}
+      className="double-slider relative a_c flex"
+      domain={domain}
+      values={values}
       step={1}
-      mode={2}
+      mode={1}
       onChange={changeHandler}
     >
       <Rail>
@@ -78,6 +78,6 @@ export const DoubleSlider = ({ alive, changeHandler }) => {
 };
 
 DoubleSlider.propTypes = {
-  alive: PropTypes.arrayOf(PropTypes.number).isRequired,
+  values: PropTypes.arrayOf(PropTypes.number).isRequired,
   changeHandler: PropTypes.func.isRequired,
 };
