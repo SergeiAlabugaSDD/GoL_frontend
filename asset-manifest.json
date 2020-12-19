@@ -1,0 +1,39 @@
+{
+  "files": {
+    "main.css": "/GoL_frontend/static/css/main.8c1a6100.chunk.css",
+    "main.js": "/GoL_frontend/static/js/main.0fc218e0.chunk.js",
+    "main.js.map": "/GoL_frontend/static/js/main.0fc218e0.chunk.js.map",
+    "runtime-main.js": "/GoL_frontend/static/js/runtime-main.008ac4cc.js",
+    "runtime-main.js.map": "/GoL_frontend/static/js/runtime-main.008ac4cc.js.map",
+    "static/js/2.96926acf.chunk.js": "/GoL_frontend/static/js/2.96926acf.chunk.js",
+    "static/js/2.96926acf.chunk.js.map": "/GoL_frontend/static/js/2.96926acf.chunk.js.map",
+    "static/js/3.845287ca.chunk.js": "/GoL_frontend/static/js/3.845287ca.chunk.js",
+    "static/js/3.845287ca.chunk.js.map": "/GoL_frontend/static/js/3.845287ca.chunk.js.map",
+    "index.html": "/GoL_frontend/index.html",
+    "static/css/main.8c1a6100.chunk.css.map": "/GoL_frontend/static/css/main.8c1a6100.chunk.css.map",
+    "static/js/2.96926acf.chunk.js.LICENSE.txt": "/GoL_frontend/static/js/2.96926acf.chunk.js.LICENSE.txt",
+    "static/media/able_to_drag.b3a08103.svg": "/GoL_frontend/static/media/able_to_drag.b3a08103.svg",
+    "static/media/alive.9f6565f6.svg": "/GoL_frontend/static/media/alive.9f6565f6.svg",
+    "static/media/bg_video.cf4c4bb2.mp4": "/GoL_frontend/static/media/bg_video.cf4c4bb2.mp4",
+    "static/media/can_drag.90cdabb3.svg": "/GoL_frontend/static/media/can_drag.90cdabb3.svg",
+    "static/media/config.479e7fea.svg": "/GoL_frontend/static/media/config.479e7fea.svg",
+    "static/media/logo.6aba6442.png": "/GoL_frontend/static/media/logo.6aba6442.png",
+    "static/media/next_step.324a6a0e.svg": "/GoL_frontend/static/media/next_step.324a6a0e.svg",
+    "static/media/pick_color.4f549259.svg": "/GoL_frontend/static/media/pick_color.4f549259.svg",
+    "static/media/pixels_clear.48f199f0.svg": "/GoL_frontend/static/media/pixels_clear.48f199f0.svg",
+    "static/media/pixels_run.6eca7913.svg": "/GoL_frontend/static/media/pixels_run.6eca7913.svg",
+    "static/media/pixels_stop.d725d725.svg": "/GoL_frontend/static/media/pixels_stop.d725d725.svg",
+    "static/media/presets.b06c06a9.svg": "/GoL_frontend/static/media/presets.b06c06a9.svg",
+    "static/media/profile.5916a684.svg": "/GoL_frontend/static/media/profile.5916a684.svg",
+    "static/media/question.8127231e.svg": "/GoL_frontend/static/media/question.8127231e.svg",
+    "static/media/random.da95fc75.svg": "/GoL_frontend/static/media/random.da95fc75.svg",
+    "static/media/skull.5b7270c7.svg": "/GoL_frontend/static/media/skull.5b7270c7.svg",
+    "static/media/theme.ff626128.svg": "/GoL_frontend/static/media/theme.ff626128.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.008ac4cc.js",
+    "static/js/2.96926acf.chunk.js",
+    "static/css/main.8c1a6100.chunk.css",
+    "static/js/main.0fc218e0.chunk.js"
+  ]
+}
