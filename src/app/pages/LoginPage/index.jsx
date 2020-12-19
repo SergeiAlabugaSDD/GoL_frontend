@@ -6,6 +6,9 @@ import { Link } from 'react-router-dom';
 // components
 import { BGvideo, Logo, Button } from '../../components';
 
+// book
+import { book } from '../../routes/book';
+
 // styles
 import './styles.css';
 
@@ -84,7 +87,7 @@ export const LoginPage = () => {
           )}
 
           <span className="or_insert">or</span>
-          <Link className="button_primary" to="/game">
+          <Link className="button_primary" to={book.game}>
             Try it Now!
           </Link>
         </div>

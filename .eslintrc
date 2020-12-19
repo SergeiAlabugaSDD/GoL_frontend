@@ -30,6 +30,7 @@
     "__ENV__": "readonly",
     "__STAGE__": "readonly",
     "__PROD__": "readonly",
-    "__URI__": "readonly"
+    "__URI__": "readonly",
+    "REACT_APP_GH": "readonly"
   }
 }

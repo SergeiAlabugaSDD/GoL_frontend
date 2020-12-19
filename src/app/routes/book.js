@@ -1,4 +1,5 @@
+const root = process.env.REACT_APP_GH ? '/GoL_frontend/' : '/';
 export const book = Object.freeze({
-  login: '/',
-  game: '/game',
+  login: `${root}`,
+  game: `${root}game`,
 });
