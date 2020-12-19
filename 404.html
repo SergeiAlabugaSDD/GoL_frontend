@@ -1,0 +1,52 @@
+<!-- <!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Game Of Life</title>
+    <script type="text/javascript">
+      var segmentCount = 1;
+
+      var l = window.location;
+      l.replace(
+        l.protocol +
+          '//' +
+          l.hostname +
+          (l.port ? ':' + l.port : '') +
+          l.pathname
+            .split('/')
+            .slice(0, 1 + segmentCount)
+            .join('/') +
+          '/?p=/' +
+          l.pathname
+            .slice(1)
+            .split('/')
+            .slice(segmentCount)
+            .join('/')
+            .replace(/&/g, '~and~') +
+          (l.search ? '&q=' + l.search.slice(1).replace(/&/g, '~and~') : '') +
+          l.hash
+      );
+    </script>
+  </head>
+  <body></body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="GoL" content="Game of Life" />
+    <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo.png" />
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <title>Game of Life</title>
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root" class="layout"></div>
+  </body>
+</html>
