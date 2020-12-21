@@ -2,7 +2,7 @@
   "name": "react_gol_game",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://SergeiAlabugaSDD.github.io/GoL_frontend",
+  "homepage": ".",
   "dependencies": {
     "@craco/craco": "^5.8.0",
     "@reduxjs/toolkit": "^1.4.0",
@@ -40,7 +40,8 @@
     "eject": "react-scripts eject",
     "lint": "eslint ./src",
     "predeploy": "set \"REACT_APP_GH=true\" && npm run build",
-    "deploy": "rm -rf node_modules/gh-pages/.cache && gh-pages -d build"
+    "deploy": "rm -rf node_modules/gh-pages/.cache && gh-pages -d build",
+    "serve": "serve -s build -l 4000"
   },
   "eslintConfig": {
     "extends": [

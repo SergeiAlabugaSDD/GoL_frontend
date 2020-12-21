@@ -12,14 +12,12 @@ import { interfaceSelectors } from '../interface/reducer';
 // actions
 import { gameActions } from './actions';
 
-// info
-import { innerWidth, innerHeight } from '../../init/clientBrowser';
-
 export const GameCell = () => {
   const dispatch = useDispatch();
   const gameCell = useSelector(gameCellSelectors.getCellConfig);
   const field = useSelector(gameCellSelectors.getField);
   const rules = useSelector(interfaceSelectors.getRules);
+  const { innerWidth, innerHeight } = useSelector(interfaceSelectors.getView);
 
   const onScrollHandler = debounce(
     (e) => {
