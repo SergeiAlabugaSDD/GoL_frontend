@@ -24,8 +24,9 @@ const initialState = {
     top: 240,
     left: 140,
     show: false,
-    height: 500,
+    height: 400,
     width: 100,
+    tablet: false,
   },
   rules: {
     born: [0, 0, 1, 0, 0, 0, 0, 0],
@@ -122,17 +123,17 @@ export const interfaceReducer = createReducer(initialState, (builder) => {
       (state, { payload: { newHeight, newWidth } }) => {
         try {
           const { left, top, width } = state.gameBar;
-          // const { innerWidth } = state.userView;
-          const center = newWidth <= 960;
+
+          const tablet = newWidth <= 960;
           const getWidth = () => {
-            if (center) return newWidth;
+            if (tablet) return newWidth;
             return 800;
           };
           const getHeight = () => {
-            return center ? 60 : 100;
+            return tablet ? 60 : 100;
           };
           const getLeft = () => {
-            return center
+            return tablet
               ? 0
               : Math.round(width + left > newWidth ? newWidth - width : left);
           };
@@ -151,7 +152,7 @@ export const interfaceReducer = createReducer(initialState, (builder) => {
               height: {
                 $set: getHeight(),
               },
-              centered: { $set: center },
+              centered: { $set: tablet },
               left: {
                 $set: getLeft(),
               },
@@ -159,6 +160,15 @@ export const interfaceReducer = createReducer(initialState, (builder) => {
               top: {
                 $set: getTop(),
               },
+            },
+            themeBar: {
+              top: {
+                $set: tablet ? newHeight - 250 : state.themeBar.top,
+              },
+              left: { $set: tablet ? 0 : state.themeBar.left },
+              height: { $set: tablet ? 250 : 400 },
+              width: { $set: tablet ? 60 : 100 },
+              tablet: { $set: tablet },
             },
             userView: {
               innerWidth: { $set: newWidth },

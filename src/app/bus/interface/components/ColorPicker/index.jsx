@@ -22,6 +22,7 @@ export const ColorPicker = ({
   onChange,
   canvas,
   children,
+  tablet,
 }) => {
   const dispatch = useDispatch();
   const wrapperRef = useRef(null);
@@ -71,8 +72,8 @@ export const ColorPicker = ({
           <CirclePicker
             colors={colors}
             onChange={changeHandler}
-            circleSize={40}
-            circleSpacing={10}
+            circleSize={tablet ? 20 : 40}
+            circleSpacing={tablet ? 5 : 10}
           />
         </div>
       )}
@@ -87,6 +88,7 @@ ColorPicker.propTypes = {
   showRight: PropTypes.bool,
   onChange: PropTypes.func,
   canvas: PropTypes.bool,
+  tablet: PropTypes.bool,
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,
@@ -98,4 +100,5 @@ ColorPicker.defaultProps = {
   onChange: () => {},
   canvas: false,
   children: null,
+  tablet: false,
 };

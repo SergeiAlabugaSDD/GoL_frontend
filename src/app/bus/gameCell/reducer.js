@@ -22,6 +22,8 @@ export function create2DArray(x, y, type) {
 const initColumns = Math.floor(innerWidth / 21);
 const initRows = Math.floor(innerHeight / 21);
 
+const tablet = innerWidth <= 960;
+
 const initialState = {
   columns: initColumns, // grid columns
   rows: initRows, // grid rows
@@ -38,7 +40,7 @@ const initialState = {
 
   // Zoom level
   zoom: {
-    cellSize: 20,
+    cellSize: tablet ? 10 : 20,
     cellSpace: 1,
     resized: false,
   },

@@ -36,7 +36,8 @@
   font-size: var(--mini-fz);
 
   @media (--desktopS) {
-    transform: translate(100%, 50%);
+    top: 50%;
+    transform: translate(100%, -50%);
     width: 300%;
   }
 }

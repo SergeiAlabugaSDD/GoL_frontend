@@ -75,6 +75,11 @@ export const ConfigBar = React.memo(({ centered }) => {
     newShowArr[id] = true;
     setShowDescr(newShowArr);
   };
+  const toggleClickHandler = (e, id) => {
+    const newShowArr = [...showDescr];
+    newShowArr[id] = !showDescr[id];
+    setShowDescr(newShowArr);
+  };
   const mouseOutHandler = () => setShowDescr([false, false, false]);
 
   return (
@@ -90,6 +95,7 @@ export const ConfigBar = React.memo(({ centered }) => {
             onFocus={(e) => mouseOverHandler(e, 0)}
             onMouseOut={mouseOutHandler}
             onBlur={mouseOutHandler}
+            onTouchEnd={(e) => toggleClickHandler(e, 0)}
           />
           {showDescr[0] && (
             <ConfigDescription
@@ -124,6 +130,7 @@ export const ConfigBar = React.memo(({ centered }) => {
             onFocus={(e) => mouseOverHandler(e, 1)}
             onMouseLeave={mouseOutHandler}
             onBlur={mouseOutHandler}
+            onTouchEnd={(e) => toggleClickHandler(e, 1)}
           />
           {showDescr[1] && (
             <ConfigDescription text="Counts of alive cells, needed to keep cell alive." />
@@ -146,6 +153,7 @@ export const ConfigBar = React.memo(({ centered }) => {
             onFocus={(e) => mouseOverHandler(e, 2)}
             onMouseLeave={mouseOutHandler}
             onBlur={mouseOutHandler}
+            onTouchEnd={(e) => toggleClickHandler(e, 2)}
           />
           {showDescr[2] && (
             <ConfigDescription text='Time in "ms", before next generation will born.' />

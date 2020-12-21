@@ -208,6 +208,7 @@ export const Interface = () => {
       {themeBar.show && (
         <ThemeBar {...themeBar} closeHandler={toggleThemeBarHandler}>
           <ColorPicker
+            tablet={themeBar.tablet}
             colors={[
               '#b31449bf',
               '#9c27b0bf',
@@ -227,6 +228,7 @@ export const Interface = () => {
             <ThemeSVG width="80%" height="80%" fill="var(--main-font-color)" />
           </ColorPicker>
           <ColorPicker
+            tablet={themeBar.tablet}
             colors={['#5b1084', '#0f41a3', '#7d540c', '#1f1f1f', '#8b272b']}
             variableOfTheme="dead"
             tooltip="Dead Color"
@@ -237,6 +239,7 @@ export const Interface = () => {
             <DeadSVG width="80%" height="80%" fill="var(--main-font-color)" />
           </ColorPicker>
           <ColorPicker
+            tablet={themeBar.tablet}
             colors={[
               '#ff7a7a',
               '#a8a8a8',
