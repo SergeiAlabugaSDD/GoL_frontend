@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
+import classnames from 'classnames';
 import { nanoid } from 'nanoid';
 import { useForm } from 'react-hook-form';
 import { useSelector, useDispatch } from 'react-redux';
@@ -25,7 +26,7 @@ keys.forEach((item, index) => {
   keys[index] = nanoid(6);
 });
 
-export const ConfigBar = React.memo(() => {
+export const ConfigBar = React.memo(({ centered }) => {
   const dispatch = useDispatch();
   // state for question description
   const [showDescr, setShowDescr] = useState([false, false, false]);
@@ -34,6 +35,20 @@ export const ConfigBar = React.memo(() => {
   const { born, alive } = useSelector(interfaceSelectors.getRules);
   const { waitTime } = useSelector(gameCellSelectors.getCellConfig);
 
+  // styles
+  const wrapperStyles = classnames('flex full_w full_h', {
+    d_column: centered,
+  });
+  const barStyles = classnames('config_bar flex', {
+    d_column: !centered,
+    j_b: centered,
+  });
+  const radioBTNStyles = classnames('flex full_h', {
+    j_b: !centered,
+    j_a: centered,
+    a_c: centered,
+    full_w: centered,
+  });
   // subscribe for changing radio-buttons values
   const { register, handleSubmit } = useForm({ mode: 'onChange' });
 
@@ -63,8 +78,8 @@ export const ConfigBar = React.memo(() => {
   const mouseOutHandler = () => setShowDescr([false, false, false]);
 
   return (
-    <div className="flex full_w full_h">
-      <div className="config_bar flex d_column">
+    <div className={wrapperStyles}>
+      <div className={barStyles}>
         <div className="config_bar_title flex a_c relative">
           <span>Born</span>
           <Question
@@ -83,7 +98,7 @@ export const ConfigBar = React.memo(() => {
             />
           )}
         </div>
-        <ul onChange={handleSubmit(changeHandler)} className="flex full_h j_b">
+        <ul onChange={handleSubmit(changeHandler)} className={radioBTNStyles}>
           {born.map((item, index) => {
             return (
               <RadioButton
@@ -98,7 +113,7 @@ export const ConfigBar = React.memo(() => {
           })}
         </ul>
       </div>
-      <div className="config_bar flex d_column">
+      <div className={barStyles}>
         <div className="config_bar_title flex a_c relative">
           <span>Alive</span>
           <Question
@@ -120,7 +135,7 @@ export const ConfigBar = React.memo(() => {
           changeHandler={aliveChangeHandler}
         />
       </div>
-      <div className="config_bar flex d_column">
+      <div className={barStyles}>
         <div className="config_bar_title flex a_c relative">
           <span>Wait</span>
           <Question
@@ -145,6 +160,10 @@ export const ConfigBar = React.memo(() => {
     </div>
   );
 });
+
+ConfigBar.propTypes = {
+  centered: PropTypes.bool.isRequired,
+};
 
 const ConfigDescription = React.memo(({ text }) => {
   return <span className="config_bar_descr">{text}</span>;

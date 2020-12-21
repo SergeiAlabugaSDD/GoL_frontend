@@ -36,6 +36,10 @@
   margin: 0 7px;
 
   position: relative;
+
+  @media (--desktopS) {
+    margin: 10px 7px 7px;
+  }
 }
 
 .design .checked {

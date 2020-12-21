@@ -95,9 +95,12 @@ export const Interface = () => {
     () => {
       dispatch(
         actions.setUserView({
-          height: window.innerHeight,
-          width: window.innerWidth,
+          newHeight: window.innerHeight,
+          newWidth: window.innerWidth,
         })
+      );
+      dispatch(
+        actions.moveItemOfInterface({ left: gameBar.left, top: gameBar.top })
       );
     },
     100,
@@ -110,6 +113,15 @@ export const Interface = () => {
     window.addEventListener('resize', resizeHandler);
     return () => window.removeEventListener('resize', resizeHandler);
   }, [running, isDragging, dispatch, resizeHandler]);
+
+  useEffect(() => {
+    dispatch(
+      actions.setUserView({
+        newHeight: window.innerHeight,
+        newWidth: window.innerWidth,
+      })
+    );
+  }, [dispatch]);
 
   return (
     <div ref={drop} className="game_wrapper">

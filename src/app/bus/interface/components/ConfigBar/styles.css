@@ -2,6 +2,11 @@
   padding: 10px;
   width: calc(100% / 3);
   border-right: 1px solid var(--main-font-color);
+
+  @media (--desktopS) {
+    width: 100%;
+    padding: 0 5px;
+  }
 }
 
 .config_bar_title {
@@ -29,4 +34,9 @@
   text-transform: none;
   letter-spacing: 0.1px;
   font-size: var(--mini-fz);
+
+  @media (--desktopS) {
+    transform: translate(100%, 50%);
+    width: 300%;
+  }
 }

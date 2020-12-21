@@ -41,6 +41,10 @@ body {
   justify-content: space-between;
 }
 
+.a_b {
+  align-items: baseline;
+}
+
 .j_a {
   justify-content: space-around;
 }

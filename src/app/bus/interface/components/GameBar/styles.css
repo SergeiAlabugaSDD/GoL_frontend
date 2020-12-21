@@ -5,6 +5,10 @@
 
   & .game_bar_wrapper {
     padding: 10px 50px;
+
+    @media (--desktopS) {
+      padding: 0 40px;
+    }
   }
 }
 
