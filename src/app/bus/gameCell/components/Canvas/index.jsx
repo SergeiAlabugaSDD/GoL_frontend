@@ -200,7 +200,6 @@ export const Canvas = ({ gameCell, field, rules, innerHeight, innerWidth }) => {
     if (resized) {
       context.clearRect(0, 0, innerWidth, innerHeight);
       resize();
-      // dispatch(gameActions.setResizedFalse());
     }
     // render canvas
     for (let i = 0; i < currentField.length; i += 1) {
@@ -238,6 +237,7 @@ export const Canvas = ({ gameCell, field, rules, innerHeight, innerWidth }) => {
     cellSpace,
     cellSize,
     resized,
+    columns,
   ]);
   return (
     <canvas

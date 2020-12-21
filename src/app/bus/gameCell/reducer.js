@@ -22,6 +22,8 @@ export function create2DArray(x, y, type) {
 const initColumns = Math.floor(innerWidth / 21);
 const initRows = Math.floor(innerHeight / 21);
 
+const tablet = innerWidth <= 960;
+
 const initialState = {
   columns: initColumns, // grid columns
   rows: initRows, // grid rows
@@ -38,7 +40,7 @@ const initialState = {
 
   // Zoom level
   zoom: {
-    cellSize: 20,
+    cellSize: tablet ? 10 : 20,
     cellSpace: 1,
     resized: false,
   },
@@ -140,8 +142,16 @@ export const gameCellReducer = createReducer(initialState, (builder) => {
           : state.zoom.cellSize - 1;
         if (currentSellSize <= 9 || currentSellSize >= 30) return state;
         return update(state, {
-          columns: { $set: Math.floor(innerWidth / currentSellSize) },
-          rows: { $set: Math.floor(innerHeight / currentSellSize) },
+          columns: {
+            $set: Math.floor(
+              (state.columns * state.zoom.cellSize) / currentSellSize
+            ),
+          },
+          rows: {
+            $set: Math.floor(
+              (state.rows * state.zoom.cellSize) / currentSellSize
+            ),
+          },
           // running: { $set: false },
           zoom: {
             cellSize: {
@@ -174,6 +184,30 @@ export const gameCellReducer = createReducer(initialState, (builder) => {
         return state;
       }
     })
+    .addCase(
+      gameActions.setColumnsAndRows,
+      (state, { payload: { currentHeight, currentWidth } }) => {
+        try {
+          return update(state, {
+            columns: {
+              $set: Math.floor(
+                currentWidth / (state.zoom.cellSize + state.zoom.cellSpace)
+              ),
+            },
+            rows: {
+              $set: Math.floor(
+                currentHeight / (state.zoom.cellSize + state.zoom.cellSpace)
+              ),
+            },
+            zoom: {
+              resized: { $set: true },
+            },
+          });
+        } catch (error) {
+          return state;
+        }
+      }
+    )
     .addDefaultCase((state) => state);
 });
 

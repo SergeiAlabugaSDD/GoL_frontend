@@ -1,6 +1,10 @@
 .radio-button {
   max-width: 30px;
 
+  @media (--desktopS) {
+    max-width: 25px;
+  }
+
   & input {
     opacity: 0;
     position: absolute;
@@ -36,6 +40,10 @@
   margin: 0 7px;
 
   position: relative;
+
+  @media (--desktopS) {
+    margin: 10px 7px 7px;
+  }
 }
 
 .design .checked {

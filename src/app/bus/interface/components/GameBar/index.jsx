@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useDrag } from 'react-dnd';
 import { Motion, spring, presets } from 'react-motion';
 import PropTypes from 'prop-types';
@@ -18,6 +18,7 @@ export const GameBar = ({
   height,
   left,
   top,
+  centered,
   toggleConfig,
   transform,
   id,
@@ -31,10 +32,10 @@ export const GameBar = ({
   const getTransform = () => {
     let verticalPos;
     if (slideConfigToTop) {
-      verticalPos = -2 * height;
+      verticalPos = -2 * (centered ? height * 2 : height);
     } else verticalPos = 0;
 
-    return toggleConfig ? verticalPos : -height;
+    return toggleConfig ? verticalPos : -(centered ? height * 3 : height);
   };
 
   const canDragHandler = () => {
@@ -89,13 +90,13 @@ export const GameBar = ({
                 <div
                   className="game_bar_bg full_w relative flex a_c j_c"
                   style={{
-                    height: `${height}px`,
+                    height: `${centered ? height * 3 : height}px`,
                     transform: `translateY(${value.transform}px)`,
                     zIndex: `${toggleConfig ? 0 : -1}`,
                     opacity: value.opacity,
                   }}
                 >
-                  <ConfigBar />
+                  <ConfigBar centered={centered} />
                 </div>
               );
             }}
@@ -111,6 +112,7 @@ GameBar.propTypes = {
   height: PropTypes.number.isRequired,
   displayPreview: PropTypes.bool,
   toggleConfig: PropTypes.bool,
+  centered: PropTypes.bool,
   left: PropTypes.number.isRequired,
   top: PropTypes.number.isRequired,
   innerHeight: PropTypes.number,
@@ -128,4 +130,5 @@ GameBar.defaultProps = {
   displayPreview: false,
   toggleConfig: false,
   innerHeight: 0,
+  centered: false,
 };

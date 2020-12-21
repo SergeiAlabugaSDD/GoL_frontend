@@ -35,6 +35,15 @@ export const GameCell = () => {
     };
   }, [dispatch, onScrollHandler]);
 
+  useEffect(() => {
+    dispatch(
+      gameActions.setColumnsAndRows({
+        currentHeight: innerHeight,
+        currentWidth: innerWidth,
+      })
+    );
+  }, [dispatch, innerWidth, innerHeight]);
+
   return (
     <div className="full_h full_w">
       <Canvas
