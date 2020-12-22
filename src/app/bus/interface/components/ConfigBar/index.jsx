@@ -15,7 +15,7 @@ import { actions } from '../../actions';
 import { gameActions } from '../../../gameCell/actions';
 
 // common component
-import { RadioButton, DoubleSlider } from '../../../../components';
+import { RadioButton, DoubleSlider, Checkbox } from '../../../../components';
 
 import './styles.css';
 import { ReactComponent as Question } from '../../assets/icons/question.svg';

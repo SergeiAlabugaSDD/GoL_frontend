@@ -32,10 +32,10 @@ export const GameBar = ({
   const getTransform = () => {
     let verticalPos;
     if (slideConfigToTop) {
-      verticalPos = -2 * (centered ? height * 2 : height);
+      verticalPos = -2 * (centered ? height * 2 - 20 : height);
     } else verticalPos = 0;
 
-    return toggleConfig ? verticalPos : -(centered ? height * 3 : height);
+    return toggleConfig ? verticalPos : -(centered ? height * 3 - 40 : height);
   };
 
   const canDragHandler = () => {
@@ -90,7 +90,7 @@ export const GameBar = ({
                 <div
                   className="game_bar_bg full_w relative flex a_c j_c"
                   style={{
-                    height: `${centered ? height * 3 : height}px`,
+                    height: `${centered ? height * 3 - 40 : height}px`,
                     transform: `translateY(${value.transform}px)`,
                     opacity: value.opacity,
                     display: `${toggleConfig ? 'flex' : 'none'}`,

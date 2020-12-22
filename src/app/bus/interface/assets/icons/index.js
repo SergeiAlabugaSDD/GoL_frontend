@@ -10,3 +10,5 @@ export { ReactComponent as StopSVG } from './pixels_stop.svg';
 export { ReactComponent as StepSVG } from './next_step.svg';
 export { ReactComponent as ThemeSVG } from './theme.svg';
 export { ReactComponent as ClearSVG } from './pixels_clear.svg';
+export { ReactComponent as SphereSVG } from './sphere.svg';
+export { ReactComponent as FieldSVG } from './axis.svg';

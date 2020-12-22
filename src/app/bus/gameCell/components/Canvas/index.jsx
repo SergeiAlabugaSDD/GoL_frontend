@@ -29,6 +29,7 @@ export const Canvas = ({ gameCell, field, rules, innerHeight, innerWidth }) => {
     random,
     goOneStep,
     triger,
+    limited,
   } = gameCell;
   const { born, alive } = rules;
   const currentBorn = born.indexOf(1) + 1;
@@ -99,13 +100,34 @@ export const Canvas = ({ gameCell, field, rules, innerHeight, innerWidth }) => {
   );
 
   // helper for algorithm
-  const countLiveNeighbors = (x, y) => {
+  const countLiveNeighborsInfinity = (x, y) => {
+    // торообразная плоскость
     let sum = 0;
 
     for (let i = -1; i < 2; i += 1) {
       for (let j = -1; j < 2; j += 1) {
         const col = (x + i + columns) % columns; // Замыкает плоскость в тор
         const row = (y + j + rows) % rows;
+        if (currentField[col] && currentField[col][row] !== undefined)
+          sum += currentField[col][row];
+        continue;
+      }
+    }
+    if (currentField[x] && currentField[x][y] === 1) {
+      sum -= 1;
+    }
+
+    return sum;
+  };
+
+  const countLiveNeighborsLimited = (x, y) => {
+    // конечное поле
+    let sum = 0;
+
+    for (let i = -1; i < 2; i += 1) {
+      for (let j = -1; j < 2; j += 1) {
+        const col = x + i;
+        const row = y + j;
         if (currentField[col] && currentField[col][row] !== undefined)
           sum += currentField[col][row];
         continue;
@@ -139,6 +161,9 @@ export const Canvas = ({ gameCell, field, rules, innerHeight, innerWidth }) => {
         dispatch(gameActions.setResizedFalse());
         return;
       }
+      const neighborsCalc = limited
+        ? countLiveNeighborsLimited
+        : countLiveNeighborsInfinity;
       const next = create2DArray(columns, rows);
       for (let i = 0; i < columns; i += 1) {
         if (currentField[i] === undefined) {
@@ -146,7 +171,7 @@ export const Canvas = ({ gameCell, field, rules, innerHeight, innerWidth }) => {
           return;
         }
         for (let j = 0; j < rows; j += 1) {
-          const neighbors = countLiveNeighbors(i, j);
+          const neighbors = neighborsCalc(i, j);
 
           if (neighbors < alive[0] || neighbors > alive[1]) {
             // die

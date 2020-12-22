@@ -51,7 +51,7 @@ export const GameCell = () => {
   }, [dispatch, innerWidth, innerHeight]);
 
   return (
-    <div className="full_h full_w">
+    <div className="full_h full_w relative">
       <Canvas
         gameCell={gameCell}
         field={field}

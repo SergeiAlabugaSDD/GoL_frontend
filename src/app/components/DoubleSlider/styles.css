@@ -12,7 +12,7 @@
   @media (--desktopS) {
     margin: 0 15px 0 0;
     width: 60%;
-    height: 50px;
+    height: 40px;
   }
 }
 
@@ -23,6 +23,10 @@
   border-radius: 2px;
   background: var(--main-font-color);
   cursor: pointer;
+
+  @media (--desktopS) {
+    height: 7px;
+  }
 }
 
 .double-slider_handle {
@@ -44,8 +48,8 @@
   }
 
   @media (--desktopS) {
-    width: 24px;
-    height: 24px;
+    width: 22px;
+    height: 22px;
   }
 }
 
@@ -56,7 +60,7 @@
 
 .double-slider_track {
   position: absolute;
-  height: 13px;
+  height: 10px;
   bottom: 16px;
   z-index: 1;
   background: var(--radio-btn-color);
@@ -64,6 +68,6 @@
   cursor: pointer;
 
   @media (--desktopS) {
-    bottom: 18px;
+    bottom: 15px;
   }
 }
