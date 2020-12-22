@@ -20,6 +20,10 @@
     height: 16px;
     cursor: pointer;
   }
+
+  @media (--desktopS) {
+    height: 40px;
+  }
 }
 
 .config_bar_descr {

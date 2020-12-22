@@ -1,0 +1,65 @@
+.checkbox {
+  --disabledColor: #999999;
+  --boxshadowColor: rgba(0, 0, 0, 0.3);
+  --checkbox: '✔';
+  position: relative;
+  padding-left: 0.35rem;
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+
+  & * {
+    pointer-events: none;
+  }
+
+  & input {
+    position: absolute;
+    z-index: -1;
+    opacity: 0;
+    width: 1.26rem;
+    height: 1.26rem;
+    top: -1px;
+    left: -3px;
+  }
+
+  & label {
+    margin: 0.5rem 1rem 0.5rem 0;
+    user-select: none;
+  }
+
+  & span {
+    position: relative;
+    top: 0.2rem;
+    left: -0.35rem;
+    display: inline-block;
+    width: 1.2rem;
+    height: 1rem;
+    border: 1px solid;
+    border-radius: 0.2rem;
+  }
+
+  & input:checked ~ span:after {
+    content: var(--checkbox);
+    position: relative;
+    top: -0.2rem;
+    left: 0.2rem;
+  }
+  & input:focus {
+    outline-color: transparent;
+  }
+
+  & input:focus ~ span {
+    box-shadow: 1px 1px var(--boxshadowColor);
+  }
+  & input:focus ~ label {
+    text-shadow: 0px 1px var(--boxshadowColor);
+  }
+  & input:disabled ~ span {
+    box-shadow: none;
+    color: var--(disabledColor);
+    border-color: currentColor;
+  }
+  & input:disabled ~ label {
+    color: var(--disabledColor);
+  }
+}

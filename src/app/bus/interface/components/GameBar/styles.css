@@ -7,7 +7,7 @@
     padding: 10px 50px;
 
     @media (--desktopS) {
-      padding: 0 40px;
+      padding: 0 40px 0 10px;
     }
   }
 }

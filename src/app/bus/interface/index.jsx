@@ -35,6 +35,8 @@ import {
   StepSVG,
   ThemeSVG,
   ClearSVG,
+  SphereSVG,
+  FieldSVG,
 } from './assets/icons';
 
 export const Interface = () => {
@@ -46,12 +48,16 @@ export const Interface = () => {
     userView: { innerWidth, innerHeight },
   } = useSelector(interfaceSelectors.getInterface);
 
-  const { running } = useSelector(gameCellSelectors.getCellConfig);
+  const { running, limited } = useSelector(gameCellSelectors.getCellConfig);
 
   const colorPickerShowRight =
     themeBar.width + 250 + themeBar.left < innerWidth;
 
   // handlers
+  const toggleLimitedHandler = () => {
+    dispatch(gameActions.toggleLimitedField());
+  };
+
   const toggleThemeBarHandler = () => {
     dispatch(actions.toggleThemeBarAction());
   };
@@ -127,7 +133,7 @@ export const Interface = () => {
     <div ref={drop} className="game_wrapper">
       <GameBar {...gameBar} innerHeight={innerHeight}>
         <Button
-          tooltip="RUN"
+          tooltip={`${running ? 'STOP' : 'RUN'}`}
           className="btn_interface"
           riple
           description="RUN"
@@ -173,6 +179,19 @@ export const Interface = () => {
           onClick={clearClickHandler}
         >
           <ClearSVG width="80%" height="80%" fill="var(--main-font-color)" />
+        </Button>
+        <Button
+          tooltip={`${limited ? 'SPHERE' : 'FIELD'}`}
+          className="btn_interface absolute"
+          riple
+          description="TOGGLE_SPHERE"
+          onClick={toggleLimitedHandler}
+        >
+          {limited ? (
+            <SphereSVG width="80%" height="80%" fill="var(--main-font-color)" />
+          ) : (
+            <FieldSVG width="80%" height="80%" fill="var(--main-font-color)" />
+          )}
         </Button>
         <Button
           tooltip="Colors"

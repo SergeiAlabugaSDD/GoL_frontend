@@ -36,6 +36,7 @@ const initialState = {
   random: false, // this flag we use in Canvas component for checking events
   clear: false, // flag for record field to state
   triger: 0,
+  limited: true,
 
   field: create2DArray(initColumns, initRows, 'random'),
 
@@ -186,6 +187,15 @@ export const gameCellReducer = createReducer(initialState, (builder) => {
         return state;
       }
     })
+    .addCase(gameActions.toggleLimitedField, (state) => {
+      try {
+        return update(state, {
+          limited: { $set: !state.limited },
+        });
+      } catch (error) {
+        return state;
+      }
+    })
     .addDefaultCase((state) => state);
 });
 
@@ -205,6 +215,7 @@ export const gameCellSelectors = {
       goOneStep,
       generation,
       triger,
+      limited,
     },
   }) => {
     return {
@@ -220,6 +231,7 @@ export const gameCellSelectors = {
       goOneStep,
       generation,
       triger,
+      limited,
     };
   },
   getField: ({ gameCell }) => {
