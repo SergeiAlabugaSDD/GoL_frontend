@@ -15,7 +15,13 @@ import { gameActions } from '../gameCell/actions';
 import { gameCellSelectors } from '../gameCell/reducer';
 
 // components
-import { ItemPreview, GameBar, ThemeBar, ColorPicker } from './components';
+import {
+  ItemPreview,
+  GameBar,
+  ThemeBar,
+  ColorPicker,
+  PresetsBar,
+} from './components';
 import { Button } from '../../components';
 
 // bus
@@ -42,42 +48,45 @@ import {
 export const Interface = () => {
   // redux hooks
   const dispatch = useDispatch();
+
+  // selectors
   const {
     gameBar,
     themeBar,
+    presetsBar,
     userView: { innerWidth, innerHeight },
   } = useSelector(interfaceSelectors.getInterface);
 
   const { running, limited } = useSelector(gameCellSelectors.getCellConfig);
 
+  // check position of themeBar
   const colorPickerShowRight =
     themeBar.width + 250 + themeBar.left < innerWidth;
 
-  // handlers
-  const toggleLimitedHandler = () => {
-    dispatch(gameActions.toggleLimitedField());
-  };
-
+  // handlers of themeBar
   const toggleThemeBarHandler = () => {
     dispatch(actions.toggleThemeBarAction());
   };
 
+  // handlers of gameBar
+  const toggleLimitedHandler = () => {
+    dispatch(gameActions.toggleLimitedField());
+  };
   const toggleConfigHandler = () => {
     dispatch(actions.toggleConfigBar());
   };
-
+  const togglePresetHandler = () => {
+    dispatch(actions.togglePresetBar());
+  };
   const randomClickHandler = () => {
     dispatch(gameActions.generateRandomAction());
   };
-
   const clearClickHandler = () => {
     dispatch(gameActions.clearField());
   };
-
   const nextStepHandler = () => {
     dispatch(gameActions.goOneStep());
   };
-
   const runHandler = () => {
     dispatch(gameActions.toggleRun());
   };
@@ -114,6 +123,7 @@ export const Interface = () => {
   );
 
   useEffect(() => {
+    // stop rendering if user dragging element of interface
     if (running && isDragging) dispatch(gameActions.toggleRun());
 
     window.addEventListener('resize', resizeHandler);
@@ -159,6 +169,7 @@ export const Interface = () => {
           className="btn_interface"
           riple
           description="Presets"
+          onClick={togglePresetHandler}
         >
           <PresetSVG width="80%" height="80%" fill="var(--main-font-color)" />
         </Button>
@@ -281,6 +292,7 @@ export const Interface = () => {
           </ColorPicker>
         </ThemeBar>
       )}
+
       <ItemPreview themeBar={themeBar} gameBar={gameBar} />
       <div
         className="grid_game"
@@ -290,6 +302,7 @@ export const Interface = () => {
       >
         <GameCell />
       </div>
+      <PresetsBar show={presetsBar.show} />
     </div>
   );
 };

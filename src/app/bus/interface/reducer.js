@@ -28,6 +28,9 @@ const initialState = {
     width: 100,
     tablet: false,
   },
+  presetsBar: {
+    show: true,
+  },
   rules: {
     born: [0, 0, 1, 0, 0, 0, 0, 0],
     alive: [2, 3],
@@ -180,6 +183,18 @@ export const interfaceReducer = createReducer(initialState, (builder) => {
         }
       }
     )
+    .addCase(actions.togglePresetBar, (state) => {
+      try {
+        const newData = update(state, {
+          presetsBar: {
+            show: { $set: !state.presetsBar.show },
+          },
+        });
+        return newData;
+      } catch (error) {
+        return state;
+      }
+    })
     .addDefaultCase((state) => state);
 });
 

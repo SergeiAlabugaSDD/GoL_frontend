@@ -9,4 +9,5 @@ export const actions = {
   setBorn: createAction(interfaceTypes.SET_BORN),
   setAlive: createAction(interfaceTypes.SET_ALIVE),
   setUserView: createAction(interfaceTypes.SET_USER_VIEW),
+  togglePresetBar: createAction(interfaceTypes.TOGGLE_PRESET_BAR),
 };
