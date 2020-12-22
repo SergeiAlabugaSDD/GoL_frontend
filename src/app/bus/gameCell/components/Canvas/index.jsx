@@ -200,6 +200,8 @@ export const Canvas = ({ gameCell, field, rules, innerHeight, innerWidth }) => {
     if (resized) {
       context.clearRect(0, 0, innerWidth, innerHeight);
       resize();
+
+      dispatch(gameActions.setResizedFalse());
     }
     // render canvas
     for (let i = 0; i < currentField.length; i += 1) {
@@ -244,8 +246,9 @@ export const Canvas = ({ gameCell, field, rules, innerHeight, innerWidth }) => {
       id="canvas"
       className="canvas-game"
       ref={canvasRef}
-      width={innerWidth}
-      height={innerHeight}
+      width={innerWidth - 10}
+      height={innerHeight - 1}
+      style={{ margin: '0 auto' }}
       onMouseDown={mouseDownHandler}
       onMouseMove={mouseMoveHandler}
       onMouseUp={mouseUpHandler}

@@ -21,7 +21,13 @@ export const GameCell = () => {
 
   const onScrollHandler = debounce(
     (e) => {
-      dispatch(gameActions.setSize(e.deltaY < 0));
+      dispatch(
+        gameActions.setSize({
+          increase: e.deltaY < 0,
+          userWidth: innerWidth,
+          userHeight: innerHeight,
+        })
+      );
     },
     30,
     { leading: false }
@@ -29,7 +35,6 @@ export const GameCell = () => {
 
   useEffect(() => {
     window.addEventListener('wheel', onScrollHandler);
-
     return () => {
       window.removeEventListener('wheel', onScrollHandler);
     };
@@ -37,9 +42,10 @@ export const GameCell = () => {
 
   useEffect(() => {
     dispatch(
-      gameActions.setColumnsAndRows({
-        currentHeight: innerHeight,
-        currentWidth: innerWidth,
+      gameActions.setSize({
+        increase: 'same',
+        userWidth: innerWidth,
+        userHeight: innerHeight,
       })
     );
   }, [dispatch, innerWidth, innerHeight]);

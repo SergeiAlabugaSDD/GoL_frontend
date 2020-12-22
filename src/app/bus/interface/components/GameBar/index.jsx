@@ -92,8 +92,8 @@ export const GameBar = ({
                   style={{
                     height: `${centered ? height * 3 : height}px`,
                     transform: `translateY(${value.transform}px)`,
-                    zIndex: `${toggleConfig ? 0 : -1}`,
                     opacity: value.opacity,
+                    display: `${toggleConfig ? 'flex' : 'none'}`,
                   }}
                 >
                   <ConfigBar centered={centered} />
