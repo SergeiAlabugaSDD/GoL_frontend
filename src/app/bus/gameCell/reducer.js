@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { createReducer } from '@reduxjs/toolkit';
 import update from 'immutability-helper';
 // import { clone } from 'lodash-es';
@@ -135,35 +136,36 @@ export const gameCellReducer = createReducer(initialState, (builder) => {
         triger: state.triger + 1,
       };
     })
-    .addCase(gameActions.setSize, (state, { payload }) => {
-      try {
-        const currentSellSize = payload
-          ? state.zoom.cellSize + 1
-          : state.zoom.cellSize - 1;
-        if (currentSellSize <= 9 || currentSellSize >= 30) return state;
-        return update(state, {
-          columns: {
-            $set: Math.floor(
-              (state.columns * state.zoom.cellSize) / currentSellSize
-            ),
-          },
-          rows: {
-            $set: Math.floor(
-              (state.rows * state.zoom.cellSize) / currentSellSize
-            ),
-          },
-          // running: { $set: false },
-          zoom: {
-            cellSize: {
-              $set: currentSellSize,
+    .addCase(
+      gameActions.setSize,
+      (state, { payload: { increase, userWidth, userHeight } }) => {
+        try {
+          let currentSellSize = increase
+            ? state.zoom.cellSize + 1
+            : state.zoom.cellSize - 1;
+
+          if (increase === 'same') currentSellSize = state.zoom.cellSize;
+
+          if (currentSellSize <= 9 || currentSellSize >= 30) return state;
+          return update(state, {
+            columns: {
+              $set: Math.floor((userWidth - 10) / (currentSellSize + 1)),
             },
-            resized: { $set: true },
-          },
-        });
-      } catch (error) {
-        return state;
+            rows: {
+              $set: Math.floor((userHeight - 10) / (currentSellSize + 1)),
+            },
+            zoom: {
+              cellSize: {
+                $set: currentSellSize,
+              },
+              resized: { $set: true },
+            },
+          });
+        } catch (error) {
+          return state;
+        }
       }
-    })
+    )
     .addCase(gameActions.setResizedFalse, (state) => {
       try {
         return update(state, {
@@ -184,30 +186,6 @@ export const gameCellReducer = createReducer(initialState, (builder) => {
         return state;
       }
     })
-    .addCase(
-      gameActions.setColumnsAndRows,
-      (state, { payload: { currentHeight, currentWidth } }) => {
-        try {
-          return update(state, {
-            columns: {
-              $set: Math.floor(
-                currentWidth / (state.zoom.cellSize + state.zoom.cellSpace)
-              ),
-            },
-            rows: {
-              $set: Math.floor(
-                currentHeight / (state.zoom.cellSize + state.zoom.cellSpace)
-              ),
-            },
-            zoom: {
-              resized: { $set: true },
-            },
-          });
-        } catch (error) {
-          return state;
-        }
-      }
-    )
     .addDefaultCase((state) => state);
 });
 
