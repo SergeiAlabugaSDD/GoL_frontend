@@ -140,6 +140,7 @@ export const ConfigBar = React.memo(({ centered }) => {
           domain={[1, 8]}
           values={alive}
           changeHandler={aliveChangeHandler}
+          step={1}
         />
       </div>
       <div className={barStyles}>
@@ -163,6 +164,7 @@ export const ConfigBar = React.memo(({ centered }) => {
           domain={[0, 1000]}
           values={[waitTime]}
           changeHandler={waitTimeChangeHandler}
+          step={20}
         />
       </div>
     </div>

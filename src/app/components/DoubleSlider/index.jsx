@@ -31,13 +31,13 @@ function Track({ source, target, getTrackProps }) {
   );
 }
 
-export const DoubleSlider = ({ values, changeHandler, domain }) => {
+export const DoubleSlider = ({ values, changeHandler, domain, step }) => {
   return (
     <Slider
       className="double-slider relative a_c flex"
       domain={domain}
       values={values}
-      step={1}
+      step={step}
       mode={1}
       onChange={changeHandler}
     >
@@ -80,4 +80,5 @@ export const DoubleSlider = ({ values, changeHandler, domain }) => {
 DoubleSlider.propTypes = {
   values: PropTypes.arrayOf(PropTypes.number).isRequired,
   changeHandler: PropTypes.func.isRequired,
+  step: PropTypes.number.isRequired,
 };
