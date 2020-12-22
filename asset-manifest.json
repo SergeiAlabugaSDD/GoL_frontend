@@ -1,8 +1,8 @@
 {
   "files": {
-    "main.css": "./static/css/main.626161ec.chunk.css",
-    "main.js": "./static/js/main.c6415e23.chunk.js",
-    "main.js.map": "./static/js/main.c6415e23.chunk.js.map",
+    "main.css": "./static/css/main.92249251.chunk.css",
+    "main.js": "./static/js/main.d40e24ef.chunk.js",
+    "main.js.map": "./static/js/main.d40e24ef.chunk.js.map",
     "runtime-main.js": "./static/js/runtime-main.ae672673.js",
     "runtime-main.js.map": "./static/js/runtime-main.ae672673.js.map",
     "static/js/2.3756bd07.chunk.js": "./static/js/2.3756bd07.chunk.js",
@@ -10,7 +10,7 @@
     "static/js/3.845287ca.chunk.js": "./static/js/3.845287ca.chunk.js",
     "static/js/3.845287ca.chunk.js.map": "./static/js/3.845287ca.chunk.js.map",
     "index.html": "./index.html",
-    "static/css/main.626161ec.chunk.css.map": "./static/css/main.626161ec.chunk.css.map",
+    "static/css/main.92249251.chunk.css.map": "./static/css/main.92249251.chunk.css.map",
     "static/js/2.3756bd07.chunk.js.LICENSE.txt": "./static/js/2.3756bd07.chunk.js.LICENSE.txt",
     "static/media/able_to_drag.54b1acdb.svg": "./static/media/able_to_drag.54b1acdb.svg",
     "static/media/alive.a8f0ae50.svg": "./static/media/alive.a8f0ae50.svg",
@@ -33,7 +33,7 @@
   "entrypoints": [
     "static/js/runtime-main.ae672673.js",
     "static/js/2.3756bd07.chunk.js",
-    "static/css/main.626161ec.chunk.css",
-    "static/js/main.c6415e23.chunk.js"
+    "static/css/main.92249251.chunk.css",
+    "static/js/main.d40e24ef.chunk.js"
   ]
 }
