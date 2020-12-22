@@ -2,7 +2,7 @@
 
 It's a client-side of application, implementing known "Game of Life"
 
-<!-- See deployed version on [heroku.com][df2] -->
+See [LIVE Game of Life][df1]
 
 Tools:
 
@@ -13,8 +13,6 @@ Tools:
 5. redux
 6. redux-saga
 7. eslint-airbnb
-
-<!-- Powered by [DiceBear Avatars][df1] -->
 
 ### To run project locally:
 
@@ -40,5 +38,4 @@ then
 yarn start
 ```
 
-[df1]: https://avatars.dicebear.com/
-[df2]: https://sfxdx-pokemon-test.herokuapp.com/
+[df1]: https://sergeialabugasdd.github.io/GoL_frontend/game
