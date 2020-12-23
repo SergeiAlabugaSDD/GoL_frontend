@@ -1,0 +1,40 @@
+.pattern {
+  padding: 10px;
+  max-width: 400px;
+  cursor: pointer;
+  border: 2px solid #ffffff00;
+  border-radius: 5px;
+  transition: var(--transition-base);
+
+  &:hover {
+    border: 2px solid var(--main-font-color);
+  }
+
+  @media (--desktopS) {
+    max-width: 200px;
+    padding: 2px;
+  }
+}
+
+.pattern_img {
+  display: block;
+  max-height: 200px;
+
+  @media (--desktopS) {
+    max-height: 60px;
+  }
+}
+
+.pattern_descr {
+  text-align: center;
+  font-size: var(--main-fz);
+  color: var(--main-font-color);
+  text-transform: none;
+  padding: 10px 0;
+
+  @media (--desktopS) {
+    padding: 5px 0 0 0;
+    font-size: var(--mini-fz);
+    text-transform: uppercase;
+  }
+}

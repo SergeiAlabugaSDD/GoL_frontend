@@ -30,6 +30,7 @@ export const Canvas = ({ gameCell, field, rules, innerHeight, innerWidth }) => {
     goOneStep,
     triger,
     limited,
+    pattern,
   } = gameCell;
   const { born, alive } = rules;
   const currentBorn = born.indexOf(1) + 1;
@@ -212,6 +213,13 @@ export const Canvas = ({ gameCell, field, rules, innerHeight, innerWidth }) => {
         currentField = nextField;
         dispatch(gameActions.fillField(nextField));
         dispatch(gameActions.generateRandomAction());
+      }
+      if (pattern.length !== 0) {
+        // set pattern
+        const nextField = create2DArray(columns, rows, 'pattern', pattern);
+        currentField = nextField;
+        dispatch(gameActions.fillField(nextField));
+        dispatch(gameActions.setPatternNull());
       }
       // this action set flag changed to false
       dispatch(gameActions.fillField(currentField));

@@ -1,8 +1,6 @@
 import { createReducer } from '@reduxjs/toolkit';
 import update from 'immutability-helper';
 
-// import { innerWidth, innerHeight } from '../../init/clientBrowser';
-
 // actions
 import { actions } from './actions';
 
@@ -13,8 +11,8 @@ const initialState = {
     innerHeight: 1,
   },
   gameBar: {
-    top: 20,
-    left: 40,
+    top: window.innerHeight,
+    left: 500,
     width: 800,
     height: 100,
     toggleConfig: false,
@@ -27,6 +25,9 @@ const initialState = {
     height: 400,
     width: 100,
     tablet: false,
+  },
+  presetsBar: {
+    show: false,
   },
   rules: {
     born: [0, 0, 1, 0, 0, 0, 0, 0],
@@ -143,7 +144,6 @@ export const interfaceReducer = createReducer(initialState, (builder) => {
               newHeight - height < top ? newHeight - height : top
             );
           };
-          // console.log(width + left > newWidth ? newWidth - width : left);
           return update(state, {
             gameBar: {
               width: {
@@ -180,6 +180,18 @@ export const interfaceReducer = createReducer(initialState, (builder) => {
         }
       }
     )
+    .addCase(actions.togglePresetBar, (state) => {
+      try {
+        const newData = update(state, {
+          presetsBar: {
+            show: { $set: !state.presetsBar.show },
+          },
+        });
+        return newData;
+      } catch (error) {
+        return state;
+      }
+    })
     .addDefaultCase((state) => state);
 });
 

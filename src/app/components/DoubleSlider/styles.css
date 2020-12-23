@@ -1,7 +1,7 @@
 .double-slider {
   margin: 0 auto;
   width: 90%;
-  height: 80px;
+  height: 43px;
 
   &:hover {
     & div {

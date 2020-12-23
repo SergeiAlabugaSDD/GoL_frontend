@@ -10,7 +10,7 @@
 }
 
 .config_bar_title {
-  height: 50px;
+  height: 30px;
   text-transform: uppercase;
   letter-spacing: 2px;
   margin-bottom: 5px;
@@ -23,6 +23,16 @@
 
   @media (--desktopS) {
     height: 40px;
+  }
+}
+
+.config_bar_radio_list {
+  height: 62%;
+  width: 100%;
+
+  @media (--desktopS) {
+    height: 100%;
+    width: 70%;
   }
 }
 

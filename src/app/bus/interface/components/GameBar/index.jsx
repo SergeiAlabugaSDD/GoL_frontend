@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useDrag } from 'react-dnd';
 import { Motion, spring, presets } from 'react-motion';
 import PropTypes from 'prop-types';
