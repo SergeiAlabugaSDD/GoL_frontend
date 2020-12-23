@@ -1,0 +1,31 @@
+.pattern {
+  padding: 4px;
+  width: fit-content;
+  max-width: 400px;
+  cursor: pointer;
+
+  &:hover > figcaption {
+    border-right: 2px solid var(--main-font-color);
+    border-left: 2px solid var(--main-font-color);
+    border-bottom: 2px solid var(--main-font-color);
+  }
+}
+
+.pattern_img {
+  display: block;
+  margin: 6px;
+  max-height: 200px;
+}
+
+.pattern_descr {
+  text-align: center;
+  font-size: var(--main-fz);
+  color: var(--main-font-color);
+  text-transform: none;
+  padding: 0 0 10px 0;
+  transition: var(--transition-base);
+  border-right: 2px solid #ffffff00;
+  border-left: 2px solid #ffffff00;
+  border-bottom: 2px solid #ffffff00;
+  border-radius: 0 0 5px 5px;
+}

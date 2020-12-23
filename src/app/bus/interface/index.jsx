@@ -302,7 +302,7 @@ export const Interface = () => {
       >
         <GameCell />
       </div>
-      <PresetsBar show={presetsBar.show} />
+      <PresetsBar show={presetsBar.show} toggleHandler={togglePresetHandler} />
     </div>
   );
 };

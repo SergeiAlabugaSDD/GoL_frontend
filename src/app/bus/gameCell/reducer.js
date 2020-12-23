@@ -49,8 +49,8 @@ const initialState = {
 
   // Cell colors
   colors: {
-    dead: '#4d4d4d',
-    alive: '#3863ff',
+    dead: '#333333',
+    alive: '#38ffa2',
   },
 };
 
