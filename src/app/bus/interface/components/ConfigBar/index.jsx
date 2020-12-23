@@ -43,7 +43,7 @@ export const ConfigBar = React.memo(({ centered }) => {
     d_column: !centered,
     j_b: centered,
   });
-  const radioBTNStyles = classnames('flex full_h', {
+  const radioBTNStyles = classnames('config_bar_radio_list flex', {
     j_b: !centered,
     j_a: centered,
     a_c: centered,

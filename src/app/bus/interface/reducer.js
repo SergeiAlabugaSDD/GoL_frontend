@@ -11,7 +11,7 @@ const initialState = {
     innerHeight: 1,
   },
   gameBar: {
-    top: 20,
+    top: window.innerHeight,
     left: 500,
     width: 800,
     height: 100,
