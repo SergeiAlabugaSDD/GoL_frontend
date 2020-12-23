@@ -6,10 +6,10 @@
   width: 150px;
   user-select: none;
   right: 0;
-  top: 20vh;
+  top: 25vh;
 
   @media (--desktopS) {
-    width: 70px;
+    width: 80px;
   }
 }
 
@@ -25,7 +25,6 @@
 
   @media (--desktopS) {
     height: 30px;
-    font-size: var(--mini-fz);
   }
 }
 
@@ -34,6 +33,10 @@
   background-color: #ffffff00;
   color: var(--main-font-color);
   text-transform: uppercase;
+
+  @media (--desktopS) {
+    font-size: var(--mini-fz);
+  }
 }
 
 .presets_bar_list {

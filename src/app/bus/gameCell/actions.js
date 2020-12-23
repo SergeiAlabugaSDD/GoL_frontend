@@ -16,4 +16,6 @@ export const gameActions = {
   setResizedFalse: createAction(gameCellTypes.SET_RESIZED_FALSE),
   setWaitTime: createAction(gameCellTypes.SET_WAIT_TIME),
   toggleLimitedField: createAction(gameCellTypes.TOGGLE_LIMITED_FIELD),
+  setSinglePattern: createAction(gameCellTypes.SET_SINGLE_PATTERN),
+  setPatternNull: createAction(gameCellTypes.SET_PATTERN_NULL),
 };

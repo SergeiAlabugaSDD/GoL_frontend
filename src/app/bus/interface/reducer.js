@@ -1,8 +1,6 @@
 import { createReducer } from '@reduxjs/toolkit';
 import update from 'immutability-helper';
 
-// import { innerWidth, innerHeight } from '../../init/clientBrowser';
-
 // actions
 import { actions } from './actions';
 
@@ -14,7 +12,7 @@ const initialState = {
   },
   gameBar: {
     top: 20,
-    left: 40,
+    left: 500,
     width: 800,
     height: 100,
     toggleConfig: false,
@@ -29,7 +27,7 @@ const initialState = {
     tablet: false,
   },
   presetsBar: {
-    show: true,
+    show: false,
   },
   rules: {
     born: [0, 0, 1, 0, 0, 0, 0, 0],
@@ -146,7 +144,6 @@ export const interfaceReducer = createReducer(initialState, (builder) => {
               newHeight - height < top ? newHeight - height : top
             );
           };
-          // console.log(width + left > newWidth ? newWidth - width : left);
           return update(state, {
             gameBar: {
               width: {

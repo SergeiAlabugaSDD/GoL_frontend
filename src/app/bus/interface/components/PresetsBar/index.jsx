@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import { nanoid } from 'nanoid';
 import { Motion, spring, presets } from 'react-motion';
@@ -7,6 +8,9 @@ import './styles.css';
 
 // components
 import { Pattern } from '../Pattern';
+
+// actions
+import { gameActions } from '../../../gameCell/actions';
 
 // assets
 import { ReactComponent as ArrowRightSVG } from './assets/right-arrow.svg';
@@ -264,6 +268,12 @@ const typesOfPatterns = [
 
 // render hovered list
 const RenderListOfPatterns = ({ id, style, onMouseOut, onBlur }) => {
+  const dispatch = useDispatch();
+
+  const clickHandler = (data) => {
+    dispatch(gameActions.setSinglePattern(data));
+  };
+
   const { patterns } = typesOfPatterns.filter((item) => item.id === id)[0];
   return (
     <div
@@ -273,7 +283,7 @@ const RenderListOfPatterns = ({ id, style, onMouseOut, onBlur }) => {
       onBlur={onBlur}
     >
       {patterns.map((pattern) => (
-        <Pattern key={pattern.id} pattern={pattern} />
+        <Pattern key={pattern.id} pattern={pattern} onClick={clickHandler} />
       ))}
     </div>
   );
@@ -319,8 +329,8 @@ export const PresetsBar = ({ show, toggleHandler }) => {
                 onClick={toggleHandler}
               >
                 <ArrowRightSVG
-                  width={25}
-                  height={20}
+                  width={20}
+                  height={18}
                   fill="var(--main-font-color)"
                 />
               </button>

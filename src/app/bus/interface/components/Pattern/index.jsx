@@ -1,15 +1,14 @@
 // import { useState } from 'react';
 import PropTypes from 'prop-types';
-// import { Motion, spring, presets } from 'react-motion';
 
 import './styles.css';
 
-export const Pattern = ({ pattern }) => {
+export const Pattern = ({ pattern, onClick }) => {
   const {
     // id,
     name,
     src,
-    // data,
+    data,
   } = pattern;
 
   const gun = src.includes('gun');
@@ -17,6 +16,8 @@ export const Pattern = ({ pattern }) => {
     <div
       style={{ gridColumn: `span ${gun ? '2' : '1'}` }}
       className="flex a_c j_c full_w"
+      onClick={() => onClick(data)}
+      onKeyPress={() => onClick(data)}
     >
       <figure className="pattern flex d_column j_c">
         <img className="pattern_img" src={src} alt={name} />
@@ -33,4 +34,5 @@ Pattern.propTypes = {
     src: PropTypes.string,
     data: PropTypes.arrayOf(PropTypes.array),
   }).isRequired,
+  onClick: PropTypes.func.isRequired,
 };
