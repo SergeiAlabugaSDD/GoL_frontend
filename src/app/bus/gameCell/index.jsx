@@ -33,6 +33,7 @@ export const GameCell = () => {
     { leading: false }
   );
 
+  // effect to check scrolling
   useEffect(() => {
     window.addEventListener('wheel', onScrollHandler);
     return () => {
@@ -40,6 +41,7 @@ export const GameCell = () => {
     };
   }, [dispatch, onScrollHandler]);
 
+  // effect need for rerender canvas with new innerWidth and innerHeight after dispatch SET_USER_VIEW in interface line:135
   useEffect(() => {
     dispatch(
       gameActions.setSize({
@@ -51,7 +53,7 @@ export const GameCell = () => {
   }, [dispatch, innerWidth, innerHeight]);
 
   return (
-    <div className="full_h full_w relative">
+    <div className="full_h full_w">
       <Canvas
         gameCell={gameCell}
         field={field}

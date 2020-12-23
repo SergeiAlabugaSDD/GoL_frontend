@@ -8,7 +8,8 @@ import { innerWidth, innerHeight } from '../../init/clientBrowser';
 // actions
 import { gameActions } from './actions';
 
-export function create2DArray(x, y, type) {
+export function create2DArray(x, y, type, arrayOfPattern) {
+  // x = columns, y = rows
   const res = [];
   for (let i = 0; i < x; i += 1) {
     const nested = new Uint8Array(y);
@@ -17,11 +18,17 @@ export function create2DArray(x, y, type) {
     }
     res[i] = nested;
   }
+  if (Array.isArray(arrayOfPattern)) {
+    arrayOfPattern.forEach((item) => {
+      // item = [index of row, index of column]
+      res[item[1]][item[0]] = 1;
+    });
+  }
   return res;
 }
 
-const initColumns = Math.floor(innerWidth / 21);
-const initRows = Math.floor(innerHeight / 21);
+const initColumns = Math.floor(innerWidth / 18);
+const initRows = Math.floor(innerHeight / 18);
 
 const tablet = innerWidth <= 960;
 
@@ -37,20 +44,21 @@ const initialState = {
   clear: false, // flag for record field to state
   triger: 0,
   limited: true,
+  pattern: [],
 
   field: create2DArray(initColumns, initRows, 'random'),
 
   // Zoom level
   zoom: {
-    cellSize: tablet ? 10 : 20,
+    cellSize: tablet ? 6 : 17,
     cellSpace: 1,
     resized: false,
   },
 
   // Cell colors
   colors: {
-    dead: '#4d4d4d',
-    alive: '#3863ff',
+    dead: '#333333',
+    alive: '#38ffa2',
   },
 };
 
@@ -147,7 +155,7 @@ export const gameCellReducer = createReducer(initialState, (builder) => {
 
           if (increase === 'same') currentSellSize = state.zoom.cellSize;
 
-          if (currentSellSize <= 9 || currentSellSize >= 30) return state;
+          if (currentSellSize <= 4 || currentSellSize >= 25) return state;
           return update(state, {
             columns: {
               $set: Math.floor((userWidth - 10) / (currentSellSize + 1)),
@@ -196,6 +204,26 @@ export const gameCellReducer = createReducer(initialState, (builder) => {
         return state;
       }
     })
+    .addCase(gameActions.setSinglePattern, (state, { payload }) => {
+      try {
+        return update(state, {
+          pattern: { $set: payload },
+          changed: { $set: true },
+          running: { $set: false },
+        });
+      } catch (error) {
+        return state;
+      }
+    })
+    .addCase(gameActions.setPatternNull, (state) => {
+      try {
+        return update(state, {
+          pattern: { $set: [] },
+        });
+      } catch (error) {
+        return state;
+      }
+    })
     .addDefaultCase((state) => state);
 });
 
@@ -216,6 +244,7 @@ export const gameCellSelectors = {
       generation,
       triger,
       limited,
+      pattern,
     },
   }) => {
     return {
@@ -232,6 +261,7 @@ export const gameCellSelectors = {
       generation,
       triger,
       limited,
+      pattern,
     };
   },
   getField: ({ gameCell }) => {

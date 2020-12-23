@@ -5,4 +5,5 @@ export const interfaceTypes = {
   SET_BORN: 'SET_BORN',
   SET_ALIVE: 'SET_ALIVE',
   SET_USER_VIEW: 'SET_USER_VIEW',
+  TOGGLE_PRESET_BAR: 'TOGGLE_PRESET_BAR',
 };
