@@ -11,11 +11,18 @@ export const Pattern = ({ pattern }) => {
     src,
     // data,
   } = pattern;
+
+  const gun = src.includes('gun');
   return (
-    <figure className="pattern flex d_column j_c">
-      <img className="pattern_img" src={src} alt={name} />
-      <figcaption className="pattern_descr">{name}</figcaption>
-    </figure>
+    <div
+      style={{ gridColumn: `span ${gun ? '2' : '1'}` }}
+      className="flex a_c j_c full_w"
+    >
+      <figure className="pattern flex d_column j_c">
+        <img className="pattern_img" src={src} alt={name} />
+        <figcaption className="pattern_descr">{name}</figcaption>
+      </figure>
+    </div>
   );
 };
 
