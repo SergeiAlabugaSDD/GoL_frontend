@@ -28,9 +28,11 @@
 
 .config_bar_radio_list {
   height: 62%;
+  width: 100%;
 
   @media (--desktopS) {
     height: 100%;
+    width: 70%;
   }
 }
 
