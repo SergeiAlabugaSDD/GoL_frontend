@@ -1,12 +1,13 @@
 import { Provider } from 'react-redux';
 import { ConnectedRouter as Router } from 'connected-react-router';
+import { PersistGate } from 'redux-persist/integration/react';
 
 // drag'n'drop
 import { TouchBackend } from 'react-dnd-touch-backend';
 import { DndProvider } from 'react-dnd';
 
 // Instruments
-import { store } from './init/store';
+import { store, persistor } from './init/store';
 import { history } from './init/middleware';
 
 // Routes
@@ -19,10 +20,12 @@ const dndOptions = {
 
 export const App = () => (
   <Provider store={store}>
-    <Router history={history}>
-      <DndProvider backend={TouchBackend} options={dndOptions}>
-        <Routes />
-      </DndProvider>
-    </Router>
+    <PersistGate loading={null} persistor={persistor}>
+      <Router history={history}>
+        <DndProvider backend={TouchBackend} options={dndOptions}>
+          <Routes />
+        </DndProvider>
+      </Router>
+    </PersistGate>
   </Provider>
 );
