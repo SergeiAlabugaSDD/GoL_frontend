@@ -24,13 +24,13 @@ const typesOfPatterns = [
       {
         id: nanoid(6),
         name: 'Simkin gun',
-        src: '/assets/simkin_gun.svg',
+        src: './assets/simkin_gun.svg',
         data: [],
       },
       {
         id: nanoid(6),
         name: 'Glider gun',
-        src: '/assets/glider_gun.svg',
+        src: './assets/glider_gun.svg',
         data: [
           [5, 1],
           [5, 2],
@@ -79,7 +79,7 @@ const typesOfPatterns = [
       {
         id: nanoid(6),
         name: 'Beacon',
-        src: '/assets/beacon_osci.gif',
+        src: './assets/beacon_osci.gif',
         data: [
           [1, 1],
           [1, 2],
@@ -92,7 +92,7 @@ const typesOfPatterns = [
       {
         id: nanoid(6),
         name: 'Blinker',
-        src: '/assets/blinker_osci.gif',
+        src: './assets/blinker_osci.gif',
         data: [
           [1, 1],
           [1, 2],
@@ -102,7 +102,7 @@ const typesOfPatterns = [
       {
         id: nanoid(6),
         name: 'Column',
-        src: '/assets/column_osci.gif',
+        src: './assets/column_osci.gif',
         data: [
           [10, 14],
           [11, 14],
@@ -133,7 +133,7 @@ const typesOfPatterns = [
       {
         id: nanoid(6),
         name: 'Pulsar',
-        src: '/assets/pulsar_osci.gif',
+        src: './assets/pulsar_osci.gif',
         data: [
           [10, 21],
           [10, 22],
@@ -196,7 +196,7 @@ const typesOfPatterns = [
       {
         id: nanoid(6),
         name: 'Toad',
-        src: '/assets/toad_osci.gif',
+        src: './assets/toad_osci.gif',
         data: [
           [1, 2],
           [1, 3],
@@ -215,25 +215,25 @@ const typesOfPatterns = [
       {
         id: nanoid(6),
         name: 'Glider',
-        src: '/assets/glider_ship.gif',
+        src: './assets/glider_ship.gif',
         data: [],
       },
       {
         id: nanoid(6),
         name: 'Light ship',
-        src: '/assets/light_ship.gif',
+        src: './assets/light_ship.gif',
         data: [],
       },
       {
         id: nanoid(6),
         name: 'Middle ship',
-        src: '/assets/middle_ship.gif',
+        src: './assets/middle_ship.gif',
         data: [],
       },
       {
         id: nanoid(6),
         name: 'Heavy ship',
-        src: '/assets/heavy_ship.gif',
+        src: './assets/heavy_ship.gif',
         data: [],
       },
     ],
@@ -245,23 +245,23 @@ const typesOfPatterns = [
       {
         id: nanoid(6),
         name: 'beehive',
-        src: '/assets/beehive_still.svg',
+        src: './assets/beehive_still.svg',
         data: [],
       },
       {
         id: nanoid(6),
         name: 'block',
-        src: '/assets/block_still.svg',
+        src: './assets/block_still.svg',
         data: [],
       },
       { id: nanoid(6), name: 'boat', src: '/assets/boat_still.svg', data: [] },
       {
         id: nanoid(6),
         name: 'flower',
-        src: '/assets/flower_still.svg',
+        src: './assets/flower_still.svg',
         data: [],
       },
-      { id: nanoid(6), name: 'loaf', src: '/assets/loaf_still.svg', data: [] },
+      { id: nanoid(6), name: 'loaf', src: './assets/loaf_still.svg', data: [] },
     ],
   },
 ];
