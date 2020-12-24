@@ -36,7 +36,7 @@ export const Canvas = ({ gameCell, field, rules, innerHeight, innerWidth }) => {
   const currentBorn = born.indexOf(1) + 1;
 
   // handlers
-  const mousePosition = (e) => {
+  const mousePosition = (e, touchX, touchY) => {
     let domObject;
     let posx = 0;
     let posy = 0;
@@ -44,8 +44,8 @@ export const Canvas = ({ gameCell, field, rules, innerHeight, innerWidth }) => {
     let left = 0;
     const rectWidth = cellSpace + cellSize;
 
-    posx = e.pageX;
-    posy = e.pageY;
+    posx = touchX || e.pageX;
+    posy = touchY || e.pageY;
 
     domObject = e.target;
 
@@ -90,6 +90,26 @@ export const Canvas = ({ gameCell, field, rules, innerHeight, innerWidth }) => {
     (e) => {
       if (mousePressed) {
         const [column, row] = mousePosition(e);
+        if (currentField[column]) {
+          currentField[column][row] = 1;
+        } else return;
+        dispatch(gameActions.setTriger());
+      }
+    },
+    10,
+    { leading: false }
+  );
+
+  const touchMoveHandler = throttle(
+    (e) => {
+      let pageX;
+      let pageY;
+      if (e.changedTouches[0]) {
+        pageX = e.changedTouches[0].pageX;
+        pageY = e.changedTouches[0].pageY;
+      }
+      if (mousePressed) {
+        const [column, row] = mousePosition(e, pageX, pageY);
         if (currentField[column]) {
           currentField[column][row] = 1;
         } else return;
@@ -287,7 +307,7 @@ export const Canvas = ({ gameCell, field, rules, innerHeight, innerWidth }) => {
       onMouseUp={mouseUpHandler}
       onClick={clickHandler}
       onTouchStart={mouseDownHandler}
-      onTouchMove={mouseMoveHandler}
+      onTouchMove={touchMoveHandler}
       onTouchEnd={mouseUpHandler}
     />
   );
