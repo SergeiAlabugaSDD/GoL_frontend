@@ -11,6 +11,7 @@ import { Pattern } from '../Pattern';
 
 // actions
 import { gameActions } from '../../../gameCell/actions';
+import { actions } from '../../actions';
 
 // assets
 import { ReactComponent as ArrowRightSVG } from './assets/right-arrow.svg';
@@ -23,14 +24,44 @@ const typesOfPatterns = [
     patterns: [
       {
         id: nanoid(6),
-        name: 'Simkin gun',
-        src: '/assets/simkin_gun.svg',
-        data: [],
+        name: "Simkin's glider gun",
+        src: './assets/simkin_gun.gif',
+        data: [
+          [6, 7],
+          [6, 8],
+          [6, 15],
+          [6, 14],
+          [7, 7],
+          [7, 8],
+          [7, 14],
+          [7, 15],
+          [9, 11],
+          [9, 12],
+          [10, 11],
+          [10, 12],
+          [15, 29],
+          [15, 33],
+          [16, 28],
+          [16, 33],
+          [16, 34],
+          [17, 28],
+          [17, 35],
+          [17, 38],
+          [17, 39],
+          [17, 27],
+          [17, 34],
+          [18, 28],
+          [18, 29],
+          [18, 34],
+          [18, 38],
+          [18, 39],
+          [19, 29],
+        ],
       },
       {
         id: nanoid(6),
         name: 'Glider gun',
-        src: '/assets/glider_gun.svg',
+        src: './assets/glider_gun.gif',
         data: [
           [5, 1],
           [5, 2],
@@ -79,7 +110,7 @@ const typesOfPatterns = [
       {
         id: nanoid(6),
         name: 'Beacon',
-        src: '/assets/beacon_osci.gif',
+        src: './assets/beacon_osci.gif',
         data: [
           [1, 1],
           [1, 2],
@@ -92,7 +123,7 @@ const typesOfPatterns = [
       {
         id: nanoid(6),
         name: 'Blinker',
-        src: '/assets/blinker_osci.gif',
+        src: './assets/blinker_osci.gif',
         data: [
           [1, 1],
           [1, 2],
@@ -102,7 +133,7 @@ const typesOfPatterns = [
       {
         id: nanoid(6),
         name: 'Column',
-        src: '/assets/column_osci.gif',
+        src: './assets/column_osci.gif',
         data: [
           [10, 14],
           [11, 14],
@@ -133,7 +164,7 @@ const typesOfPatterns = [
       {
         id: nanoid(6),
         name: 'Pulsar',
-        src: '/assets/pulsar_osci.gif',
+        src: './assets/pulsar_osci.gif',
         data: [
           [10, 21],
           [10, 22],
@@ -196,7 +227,7 @@ const typesOfPatterns = [
       {
         id: nanoid(6),
         name: 'Toad',
-        src: '/assets/toad_osci.gif',
+        src: './assets/toad_osci.gif',
         data: [
           [1, 2],
           [1, 3],
@@ -215,26 +246,68 @@ const typesOfPatterns = [
       {
         id: nanoid(6),
         name: 'Glider',
-        src: '/assets/glider_ship.gif',
-        data: [],
+        src: './assets/glider_ship.gif',
+        data: [
+          [1, 3],
+          [2, 4],
+          [3, 2],
+          [3, 3],
+          [3, 4],
+        ],
       },
       {
         id: nanoid(6),
         name: 'Light ship',
-        src: '/assets/light_ship.gif',
-        data: [],
+        src: './assets/light_ship.gif',
+        data: [
+          [2, 2],
+          [2, 5],
+          [3, 6],
+          [4, 6],
+          [5, 6],
+          [4, 2],
+          [5, 3],
+          [5, 4],
+          [5, 5],
+        ],
       },
       {
         id: nanoid(6),
         name: 'Middle ship',
-        src: '/assets/middle_ship.gif',
-        data: [],
+        src: './assets/middle_ship.gif',
+        data: [
+          [4, 3],
+          [4, 4],
+          [4, 5],
+          [4, 6],
+          [4, 7],
+          [5, 2],
+          [5, 7],
+          [6, 7],
+          [7, 2],
+          [7, 6],
+          [8, 4],
+        ],
       },
       {
         id: nanoid(6),
         name: 'Heavy ship',
-        src: '/assets/heavy_ship.gif',
-        data: [],
+        src: './assets/heavy_ship.gif',
+        data: [
+          [4, 3],
+          [4, 4],
+          [4, 5],
+          [4, 6],
+          [4, 7],
+          [4, 8],
+          [5, 2],
+          [5, 8],
+          [6, 8],
+          [7, 2],
+          [7, 7],
+          [8, 4],
+          [8, 5],
+        ],
       },
     ],
   },
@@ -245,33 +318,82 @@ const typesOfPatterns = [
       {
         id: nanoid(6),
         name: 'beehive',
-        src: '/assets/beehive_still.svg',
-        data: [],
+        src: './assets/beehive_still.svg',
+        data: [
+          [1, 2],
+          [1, 3],
+          [2, 4],
+          [3, 3],
+          [3, 2],
+          [2, 1],
+        ],
       },
       {
         id: nanoid(6),
         name: 'block',
-        src: '/assets/block_still.svg',
-        data: [],
+        src: './assets/block_still.svg',
+        data: [
+          [1, 1],
+          [1, 2],
+          [2, 1],
+          [2, 2],
+        ],
       },
-      { id: nanoid(6), name: 'boat', src: '/assets/boat_still.svg', data: [] },
+      {
+        id: nanoid(6),
+        name: 'boat',
+        src: './assets/boat_still.svg',
+        data: [
+          [1, 1],
+          [1, 2],
+          [2, 1],
+          [2, 3],
+          [3, 2],
+        ],
+      },
       {
         id: nanoid(6),
         name: 'flower',
-        src: '/assets/flower_still.svg',
-        data: [],
+        src: './assets/flower_still.svg',
+        data: [
+          [1, 2],
+          [2, 1],
+          [3, 2],
+          [2, 3],
+        ],
       },
-      { id: nanoid(6), name: 'loaf', src: '/assets/loaf_still.svg', data: [] },
+      {
+        id: nanoid(6),
+        name: 'loaf',
+        src: './assets/loaf_still.svg',
+        data: [
+          [1, 2],
+          [1, 3],
+          [2, 1],
+          [2, 4],
+          [3, 2],
+          [3, 4],
+          [4, 3],
+        ],
+      },
     ],
   },
 ];
+
+const complexSetPatternThunk = (values) => {
+  return (dispatch) => {
+    dispatch(actions.setBorn([0, 0, 1, 0, 0, 0, 0, 0]));
+    dispatch(actions.setAlive([2, 3]));
+    dispatch(gameActions.setSinglePattern(values));
+  };
+};
 
 // render hovered list
 const RenderListOfPatterns = ({ id, style, onMouseOut, onBlur }) => {
   const dispatch = useDispatch();
 
   const clickHandler = (data) => {
-    dispatch(gameActions.setSinglePattern(data));
+    dispatch(complexSetPatternThunk(data));
   };
 
   const { patterns } = typesOfPatterns.filter((item) => item.id === id)[0];

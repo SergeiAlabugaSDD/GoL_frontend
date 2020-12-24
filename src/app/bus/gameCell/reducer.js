@@ -210,6 +210,7 @@ export const gameCellReducer = createReducer(initialState, (builder) => {
           pattern: { $set: payload },
           changed: { $set: true },
           running: { $set: false },
+          waitTime: { $set: 40 },
         });
       } catch (error) {
         return state;
