@@ -24,11 +24,6 @@ const typesOfPatterns = [
     patterns: [
       {
         id: nanoid(6),
-<<<<<<< HEAD
-        name: 'Simkin gun',
-        src: './assets/simkin_gun.svg',
-        data: [],
-=======
         name: "Simkin's glider gun",
         src: './assets/simkin_gun.gif',
         data: [
@@ -62,16 +57,11 @@ const typesOfPatterns = [
           [18, 39],
           [19, 29],
         ],
->>>>>>> dev
       },
       {
         id: nanoid(6),
         name: 'Glider gun',
-<<<<<<< HEAD
-        src: './assets/glider_gun.svg',
-=======
         src: './assets/glider_gun.gif',
->>>>>>> dev
         data: [
           [5, 1],
           [5, 2],
@@ -257,9 +247,6 @@ const typesOfPatterns = [
         id: nanoid(6),
         name: 'Glider',
         src: './assets/glider_ship.gif',
-<<<<<<< HEAD
-        data: [],
-=======
         data: [
           [1, 3],
           [2, 4],
@@ -267,15 +254,11 @@ const typesOfPatterns = [
           [3, 3],
           [3, 4],
         ],
->>>>>>> dev
       },
       {
         id: nanoid(6),
         name: 'Light ship',
         src: './assets/light_ship.gif',
-<<<<<<< HEAD
-        data: [],
-=======
         data: [
           [2, 2],
           [2, 5],
@@ -287,15 +270,11 @@ const typesOfPatterns = [
           [5, 4],
           [5, 5],
         ],
->>>>>>> dev
       },
       {
         id: nanoid(6),
         name: 'Middle ship',
         src: './assets/middle_ship.gif',
-<<<<<<< HEAD
-        data: [],
-=======
         data: [
           [4, 3],
           [4, 4],
@@ -309,15 +288,11 @@ const typesOfPatterns = [
           [7, 6],
           [8, 4],
         ],
->>>>>>> dev
       },
       {
         id: nanoid(6),
         name: 'Heavy ship',
         src: './assets/heavy_ship.gif',
-<<<<<<< HEAD
-        data: [],
-=======
         data: [
           [4, 3],
           [4, 4],
@@ -333,7 +308,6 @@ const typesOfPatterns = [
           [8, 4],
           [8, 5],
         ],
->>>>>>> dev
       },
     ],
   },
@@ -345,9 +319,6 @@ const typesOfPatterns = [
         id: nanoid(6),
         name: 'beehive',
         src: './assets/beehive_still.svg',
-<<<<<<< HEAD
-        data: [],
-=======
         data: [
           [1, 2],
           [1, 3],
@@ -356,15 +327,11 @@ const typesOfPatterns = [
           [3, 2],
           [2, 1],
         ],
->>>>>>> dev
       },
       {
         id: nanoid(6),
         name: 'block',
         src: './assets/block_still.svg',
-<<<<<<< HEAD
-        data: [],
-=======
         data: [
           [1, 1],
           [1, 2],
@@ -383,17 +350,11 @@ const typesOfPatterns = [
           [2, 3],
           [3, 2],
         ],
->>>>>>> dev
       },
       {
         id: nanoid(6),
         name: 'flower',
         src: './assets/flower_still.svg',
-<<<<<<< HEAD
-        data: [],
-      },
-      { id: nanoid(6), name: 'loaf', src: './assets/loaf_still.svg', data: [] },
-=======
         data: [
           [1, 2],
           [2, 1],
@@ -415,7 +376,6 @@ const typesOfPatterns = [
           [4, 3],
         ],
       },
->>>>>>> dev
     ],
   },
 ];
