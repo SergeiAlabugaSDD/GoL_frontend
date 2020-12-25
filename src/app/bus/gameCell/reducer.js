@@ -1,7 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { createReducer } from '@reduxjs/toolkit';
 import update from 'immutability-helper';
-// import { clone } from 'lodash-es';
 
 import { innerWidth, innerHeight } from '../../init/clientBrowser';
 
@@ -39,14 +38,14 @@ const initialState = {
   generation: 0, // counter of generations
   running: false, // playing or not
   goOneStep: false, // this flag we use in Canvas component for checking events
-  changed: false, // this flag we use in Canvas component for checking events
+  changed: false, // flag for record field to state
   random: false, // this flag we use in Canvas component for checking events
-  clear: false, // flag for record field to state
+  clear: false, // this flag we use in Canvas component for checking events
   triger: 0,
-  limited: true,
+  limited: true, // flag that show field is flat or like tor object
   pattern: [],
 
-  field: create2DArray(initColumns, initRows, 'random'),
+  field: create2DArray(initColumns, initRows, 'random'), // array of life and dead
 
   // Zoom level
   zoom: {
@@ -149,14 +148,13 @@ export const gameCellReducer = createReducer(initialState, (builder) => {
       gameActions.setSize,
       (state, { payload: { increase, userWidth, userHeight } }) => {
         try {
-          let currentSellSize = increase
-            ? state.zoom.cellSize + 1
-            : state.zoom.cellSize - 1;
+          let currentSellSize = increase + state.zoom.cellSize;
 
           if (increase === 'same') currentSellSize = state.zoom.cellSize;
 
           if (currentSellSize <= 4 || currentSellSize >= 25) return state;
           return update(state, {
+            running: { $set: false },
             columns: {
               $set: Math.floor((userWidth - 10) / (currentSellSize + 1)),
             },
@@ -204,18 +202,21 @@ export const gameCellReducer = createReducer(initialState, (builder) => {
         return state;
       }
     })
-    .addCase(gameActions.setSinglePattern, (state, { payload }) => {
-      try {
-        return update(state, {
-          pattern: { $set: payload },
-          changed: { $set: true },
-          running: { $set: false },
-          waitTime: { $set: 40 },
-        });
-      } catch (error) {
-        return state;
+    .addCase(
+      gameActions.setSinglePattern,
+      (state, { payload: { pattern, gun } }) => {
+        try {
+          return update(state, {
+            pattern: { $set: pattern },
+            changed: { $set: true },
+            running: { $set: false },
+            waitTime: { $set: 40 },
+          });
+        } catch (error) {
+          return state;
+        }
       }
-    })
+    )
     .addCase(gameActions.setPatternNull, (state) => {
       try {
         return update(state, {

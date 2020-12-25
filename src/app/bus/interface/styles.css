@@ -21,3 +21,23 @@
 .game_wrapper {
   position: relative;
 }
+
+.fullscreen-btn {
+  position: absolute;
+  bottom: 8px;
+  right: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+
+  & svg {
+    stroke: var(--main-font-color);
+    stroke-width: 3px;
+  }
+
+  @media (--desktopS) {
+    bottom: 4px;
+    display: flex;
+    align-items: center;
+  }
+}

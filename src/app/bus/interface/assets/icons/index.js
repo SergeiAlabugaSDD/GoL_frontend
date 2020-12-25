@@ -12,3 +12,5 @@ export { ReactComponent as ThemeSVG } from './theme.svg';
 export { ReactComponent as ClearSVG } from './pixels_clear.svg';
 export { ReactComponent as SphereSVG } from './sphere.svg';
 export { ReactComponent as FieldSVG } from './axis.svg';
+export { ReactComponent as FullscreenSVG } from './fullscreen.svg';
+export { ReactComponent as ExitFullscreenSVG } from './exit_fullscreen.svg';

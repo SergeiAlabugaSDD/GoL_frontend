@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { debounce } from 'lodash-es';
 
@@ -12,15 +12,7 @@ import { interfaceSelectors } from '../interface/reducer';
 // actions
 import { gameActions } from './actions';
 
-// helpers
-import { exitFullscreen, requestFullscreen } from '../interface/helpers';
-
-// assets
-import { ReactComponent as FullscreenSVG } from './assets/fullscreen.svg';
-import { ReactComponent as ExitFullscreenSVG } from './assets/exit_fullscreen.svg';
-
 export const GameCell = () => {
-  const [fullScreen, setFullScreen] = useState(false);
   const dispatch = useDispatch();
   const gameCell = useSelector(gameCellSelectors.getCellConfig);
   const field = useSelector(gameCellSelectors.getField);
@@ -29,9 +21,10 @@ export const GameCell = () => {
 
   const onScrollHandler = debounce(
     (e) => {
+      const zoomer = e.deltaY < 0 ? -1 : 1;
       dispatch(
         gameActions.setSize({
-          increase: e.deltaY < 0,
+          increase: zoomer,
           userWidth: innerWidth,
           userHeight: innerHeight,
         })
@@ -40,17 +33,6 @@ export const GameCell = () => {
     30,
     { leading: false }
   );
-
-  const toggleFullScreenHandler = () => {
-    if (fullScreen) {
-      exitFullscreen();
-      setFullScreen(false);
-      return undefined;
-    }
-    requestFullscreen(document.documentElement);
-    setFullScreen(true);
-    return undefined;
-  };
 
   const clickZoomHandler = (increse) => {
     dispatch(
@@ -94,7 +76,7 @@ export const GameCell = () => {
         <button
           className="zoom-btn"
           type="button"
-          onClick={() => clickZoomHandler(true)}
+          onClick={() => clickZoomHandler(1)}
         >
           +
         </button>
@@ -102,26 +84,11 @@ export const GameCell = () => {
         <button
           className="zoom-btn"
           type="button"
-          onClick={() => clickZoomHandler(false)}
+          onClick={() => clickZoomHandler(-1)}
         >
           -
         </button>
       </div>
-      <button
-        className="zoom-btn fullscreen-btn"
-        type="button"
-        onClick={toggleFullScreenHandler}
-      >
-        {fullScreen ? (
-          <ExitFullscreenSVG
-            width={15}
-            height={15}
-            fill="var(--main-font-color)"
-          />
-        ) : (
-          <FullscreenSVG width={15} height={15} fill="var(--main-font-color)" />
-        )}
-      </button>
     </div>
   );
 };

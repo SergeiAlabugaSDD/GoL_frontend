@@ -35,15 +35,3 @@
   font-size: var(--mini-fz);
   text-transform: uppercase;
 }
-
-.fullscreen-btn {
-  display: none;
-  position: absolute;
-  top: 10px;
-  left: 10px;
-
-  @media (--desktopS) {
-    display: flex;
-    align-items: center;
-  }
-}

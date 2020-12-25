@@ -74,7 +74,7 @@ export const GameBar = ({
             show={displayPreview}
             clickHandler={canDragHandler}
             canDrag={canDrag}
-            top={8}
+            top={centered ? 2 : 8}
             right={4}
           />
         </div>

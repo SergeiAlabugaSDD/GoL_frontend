@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { debounce } from 'lodash-es';
 
@@ -43,9 +43,15 @@ import {
   ClearSVG,
   SphereSVG,
   FieldSVG,
+  FullscreenSVG,
+  ExitFullscreenSVG,
 } from './assets/icons';
 
+// helpers
+import { exitFullscreen, requestFullscreen } from './helpers';
+
 export const Interface = () => {
+  const [fullScreen, setFullScreen] = useState(false);
   // redux hooks
   const dispatch = useDispatch();
 
@@ -69,6 +75,16 @@ export const Interface = () => {
   };
 
   // handlers of gameBar
+  const toggleFullScreenHandler = () => {
+    if (fullScreen) {
+      exitFullscreen();
+      setFullScreen(false);
+      return undefined;
+    }
+    requestFullscreen(document.documentElement);
+    setFullScreen(true);
+    return undefined;
+  };
   const toggleLimitedHandler = () => {
     dispatch(gameActions.toggleLimitedField());
   };
@@ -142,6 +158,25 @@ export const Interface = () => {
   return (
     <div ref={drop} className="game_wrapper">
       <GameBar {...gameBar} innerHeight={innerHeight}>
+        <button
+          className="fullscreen-btn"
+          type="button"
+          onClick={toggleFullScreenHandler}
+        >
+          {fullScreen ? (
+            <ExitFullscreenSVG
+              width={22}
+              height={22}
+              fill="var(--main-font-color)"
+            />
+          ) : (
+            <FullscreenSVG
+              width={20}
+              height={20}
+              fill="var(--main-font-color)"
+            />
+          )}
+        </button>
         <Button
           tooltip={`${running ? 'STOP' : 'RUN'}`}
           className="btn_interface"

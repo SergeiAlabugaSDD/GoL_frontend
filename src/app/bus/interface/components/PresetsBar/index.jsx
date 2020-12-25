@@ -384,7 +384,7 @@ const complexSetPatternThunk = (values) => {
   return (dispatch) => {
     dispatch(actions.setBorn([0, 0, 1, 0, 0, 0, 0, 0]));
     dispatch(actions.setAlive([2, 3]));
-    dispatch(gameActions.setSinglePattern(values));
+    dispatch(gameActions.setSinglePattern({ pattern: values }));
   };
 };
 
