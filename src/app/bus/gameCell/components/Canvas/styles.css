@@ -1,0 +1,49 @@
+.canvas-game {
+  touch-action: none;
+  overflow-y: hidden;
+}
+
+* {
+  touch-action: none;
+}
+
+.canvas-game_setsize {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: none;
+  width: fit-content;
+
+  & span {
+    border-left: none;
+    border-right: none;
+  }
+
+  @media (--desktopS) {
+    display: flex;
+    align-items: center;
+  }
+}
+
+.zoom-btn {
+  padding: 0 10px;
+  border: 1px solid var(--main-font-color);
+  height: 25px;
+  width: fit-content;
+  background-color: var(--main-bg-color);
+  color: var(--main-font-color);
+  font-size: var(--mini-fz);
+  text-transform: uppercase;
+}
+
+.fullscreen-btn {
+  display: none;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+
+  @media (--desktopS) {
+    display: flex;
+    align-items: center;
+  }
+}

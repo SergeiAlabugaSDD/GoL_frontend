@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { debounce } from 'lodash-es';
 
@@ -12,7 +12,15 @@ import { interfaceSelectors } from '../interface/reducer';
 // actions
 import { gameActions } from './actions';
 
+// helpers
+import { exitFullscreen, requestFullscreen } from '../interface/helpers';
+
+// assets
+import { ReactComponent as FullscreenSVG } from './assets/fullscreen.svg';
+import { ReactComponent as ExitFullscreenSVG } from './assets/exit_fullscreen.svg';
+
 export const GameCell = () => {
+  const [fullScreen, setFullScreen] = useState(false);
   const dispatch = useDispatch();
   const gameCell = useSelector(gameCellSelectors.getCellConfig);
   const field = useSelector(gameCellSelectors.getField);
@@ -32,6 +40,27 @@ export const GameCell = () => {
     30,
     { leading: false }
   );
+
+  const toggleFullScreenHandler = () => {
+    if (fullScreen) {
+      exitFullscreen();
+      setFullScreen(false);
+      return undefined;
+    }
+    requestFullscreen(document.documentElement);
+    setFullScreen(true);
+    return undefined;
+  };
+
+  const clickZoomHandler = (increse) => {
+    dispatch(
+      gameActions.setSize({
+        increase: increse,
+        userWidth: innerWidth,
+        userHeight: innerHeight,
+      })
+    );
+  };
 
   // effect to check scrolling
   useEffect(() => {
@@ -61,6 +90,38 @@ export const GameCell = () => {
         innerHeight={innerHeight}
         innerWidth={innerWidth}
       />
+      <div className="flex canvas-game_setsize">
+        <button
+          className="zoom-btn"
+          type="button"
+          onClick={() => clickZoomHandler(true)}
+        >
+          +
+        </button>
+        <span className="zoom-btn flex a_c j_c">zoom</span>
+        <button
+          className="zoom-btn"
+          type="button"
+          onClick={() => clickZoomHandler(false)}
+        >
+          -
+        </button>
+      </div>
+      <button
+        className="zoom-btn fullscreen-btn"
+        type="button"
+        onClick={toggleFullScreenHandler}
+      >
+        {fullScreen ? (
+          <ExitFullscreenSVG
+            width={15}
+            height={15}
+            fill="var(--main-font-color)"
+          />
+        ) : (
+          <FullscreenSVG width={15} height={15} fill="var(--main-font-color)" />
+        )}
+      </button>
     </div>
   );
 };

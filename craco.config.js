@@ -1,4 +1,5 @@
 /* eslint-disable import/no-extraneous-dependencies */
+// const { whenDev } = require('@craco/craco');
 const { DefinePlugin } = require('webpack');
 
 const { NODE_ENV } = process.env;
@@ -30,6 +31,12 @@ module.exports = {
         },
       },
     },
+  },
+  devServer: {
+    disableHostCheck: true,
+    inline: true,
+    host: '0.0.0.0',
+    port: 80,
   },
   webpack: {
     plugins: [

@@ -9,6 +9,9 @@ import { throttle } from 'lodash-es';
 import { gameActions } from '../../actions';
 import { create2DArray } from '../../reducer';
 
+// styles
+import './styles.css';
+
 // we need pure mutating JS for better perfomance
 let currentField = [];
 
@@ -102,13 +105,9 @@ export const Canvas = ({ gameCell, field, rules, innerHeight, innerWidth }) => {
 
   const touchMoveHandler = throttle(
     (e) => {
-      let pageX;
-      let pageY;
-      if (e.changedTouches[0]) {
-        pageX = e.changedTouches[0].pageX;
-        pageY = e.changedTouches[0].pageY;
-      }
-      if (mousePressed) {
+      if (e.touches.length === 1) {
+        const { pageX } = e.touches[0];
+        const { pageY } = e.touches[0];
         const [column, row] = mousePosition(e, pageX, pageY);
         if (currentField[column]) {
           currentField[column][row] = 1;
@@ -116,7 +115,7 @@ export const Canvas = ({ gameCell, field, rules, innerHeight, innerWidth }) => {
         dispatch(gameActions.setTriger());
       }
     },
-    10,
+    20,
     { leading: false }
   );
 
@@ -236,10 +235,14 @@ export const Canvas = ({ gameCell, field, rules, innerHeight, innerWidth }) => {
       }
       if (pattern.length !== 0) {
         // set pattern
-        const nextField = create2DArray(columns, rows, 'pattern', pattern);
-        currentField = nextField;
-        dispatch(gameActions.fillField(nextField));
-        dispatch(gameActions.setPatternNull());
+        try {
+          const nextField = create2DArray(columns, rows, 'pattern', pattern);
+          currentField = nextField;
+          dispatch(gameActions.fillField(nextField));
+          dispatch(gameActions.setPatternNull());
+        } catch (error) {
+          dispatch(gameActions.setPatternNull());
+        }
       }
       // this action set flag changed to false
       dispatch(gameActions.fillField(currentField));
@@ -295,21 +298,23 @@ export const Canvas = ({ gameCell, field, rules, innerHeight, innerWidth }) => {
     columns,
   ]);
   return (
-    <canvas
-      id="canvas"
-      className="canvas-game"
-      ref={canvasRef}
-      width={innerWidth - 10}
-      height={innerHeight - 1}
-      style={{ margin: '0 auto' }}
-      onMouseDown={mouseDownHandler}
-      onMouseMove={mouseMoveHandler}
-      onMouseUp={mouseUpHandler}
-      onClick={clickHandler}
-      onTouchStart={mouseDownHandler}
-      onTouchMove={touchMoveHandler}
-      onTouchEnd={mouseUpHandler}
-    />
+    <>
+      <canvas
+        id="canvas"
+        className="canvas-game"
+        ref={canvasRef}
+        width={innerWidth - 10}
+        height={innerHeight - 1}
+        style={{ margin: '0 auto' }}
+        onMouseDown={mouseDownHandler}
+        onMouseMove={mouseMoveHandler}
+        onMouseUp={mouseUpHandler}
+        onClick={clickHandler}
+        // onTouchStart={mouseDownHandler}
+        onTouchMove={touchMoveHandler}
+        // onTouchEnd={mouseUpHandler}
+      />
+    </>
   );
 };
 

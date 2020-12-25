@@ -163,7 +163,7 @@ export const interfaceReducer = createReducer(initialState, (builder) => {
             },
             themeBar: {
               top: {
-                $set: tablet ? newHeight - 250 : state.themeBar.top,
+                $set: tablet ? 100 : state.themeBar.top,
               },
               left: { $set: tablet ? 0 : state.themeBar.left },
               height: { $set: tablet ? 250 : 400 },
