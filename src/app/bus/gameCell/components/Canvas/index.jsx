@@ -220,6 +220,24 @@ export const Canvas = ({ gameCell, field, rules, innerHeight, innerWidth }) => {
     { leading: false }
   );
 
+  // canvas render function
+  function renderRect(context) {
+    for (let i = 0; i < currentField.length; i += 1) {
+      for (let j = 0; j < currentField[i].length; j += 1) {
+        if (currentField[i][j] === 1) {
+          context.fillStyle = colors.alive;
+        } else context.fillStyle = colors.dead;
+
+        context.fillRect(
+          cellSpace + cellSpace * i + cellSize * i,
+          cellSpace + cellSpace * j + cellSize * j,
+          cellSize,
+          cellSize
+        );
+      }
+    }
+  }
+
   useEffect(() => {
     if (!running && changed) {
       if (clear) {
@@ -262,6 +280,8 @@ export const Canvas = ({ gameCell, field, rules, innerHeight, innerWidth }) => {
       // init current field from store
       currentField = field;
     }
+
+    // get context of canvas
     const context = canvasRef.current.getContext('2d');
 
     if (resized) {
@@ -271,22 +291,10 @@ export const Canvas = ({ gameCell, field, rules, innerHeight, innerWidth }) => {
       dispatch(gameActions.setResizedFalse());
     }
     // render canvas
-    for (let i = 0; i < currentField.length; i += 1) {
-      for (let j = 0; j < currentField[i].length; j += 1) {
-        if (currentField[i][j] === 1) {
-          context.fillStyle = colors.alive;
-        } else context.fillStyle = colors.dead;
+    renderRect(context);
 
-        context.fillRect(
-          cellSpace + cellSpace * i + cellSize * i,
-          cellSpace + cellSpace * j + cellSize * j,
-          cellSize,
-          cellSize
-        );
-      }
-    }
+    // check flag "running"
     if (running) {
-      // check flag "running"
       tick();
       return;
     }

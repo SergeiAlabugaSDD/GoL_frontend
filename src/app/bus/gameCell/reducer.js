@@ -188,6 +188,7 @@ export const gameCellReducer = createReducer(initialState, (builder) => {
       try {
         return update(state, {
           waitTime: { $set: payload },
+          running: { $set: false },
         });
       } catch (error) {
         return state;
