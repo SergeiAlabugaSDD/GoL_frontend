@@ -7,6 +7,9 @@ import { throttle } from 'lodash-es';
 
 // actions
 import { gameActions } from '../../actions';
+import { errorActions } from '../../../error/actions';
+
+// helpers
 import { create2DArray } from '../../reducer';
 
 // styles
@@ -241,7 +244,15 @@ export const Canvas = ({ gameCell, field, rules, innerHeight, innerWidth }) => {
           dispatch(gameActions.fillField(nextField));
           dispatch(gameActions.setPatternNull());
         } catch (error) {
-          dispatch(gameActions.setPatternNull());
+          dispatch(
+            errorActions.setError({
+              error: true,
+              message:
+                "Please, change zoom smaller. The pattern doesn't fit in current field",
+              type: error.name,
+              description: error.message,
+            })
+          );
         }
       }
       // this action set flag changed to false

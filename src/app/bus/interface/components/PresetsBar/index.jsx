@@ -394,6 +394,7 @@ const RenderListOfPatterns = ({ id, style, onMouseOut, onBlur }) => {
 
   const clickHandler = (data) => {
     dispatch(complexSetPatternThunk(data));
+    onMouseOut();
   };
 
   const { patterns } = typesOfPatterns.filter((item) => item.id === id)[0];

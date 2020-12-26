@@ -33,9 +33,6 @@
   top: 0;
   right: 0;
 
-  @media (--tabletPortrait) {
-  }
-
   &:before {
     content: '';
     display: block;

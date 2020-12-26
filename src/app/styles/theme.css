@@ -2,6 +2,7 @@ body {
   --main-bg-color: #1f1f1fbf;
   --main-font-color: #d9d9d9;
   --radio-btn-color: #ff5252;
+  --error-color: #ff0a0a;
   --main-fz: calc(14px + (18 - 14) * ((100vw - 400px) / (1920 - 400)));
   --mini-fz: calc(10px + (14 - 10) * ((100vw - 400px) / (1920 - 400)));
   --title-fz: calc(30px + (20 - 30) * ((100vw - 400px) / (1920 - 400)));

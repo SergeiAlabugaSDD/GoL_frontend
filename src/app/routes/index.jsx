@@ -6,6 +6,9 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import { LoginPage, GamePage } from '../pages';
 import { Loader } from '../components';
 
+// bus
+import { Error } from '../bus/error';
+
 // book
 import { book } from './book';
 
@@ -27,6 +30,8 @@ export const Routes = () => {
           <Redirect to={book.login} />
         </Switch>
       )}
+
+      <Error />
     </>
   );
 };
