@@ -1,6 +1,6 @@
 # GoL_Frontend
 
-It's a client-side of application, implementing known "Game of Life"
+It's a client-side of application, implementing known ["Game of Life"][df2]
 
 See [LIVE Game of Life][df1]
 
@@ -39,3 +39,4 @@ yarn start
 ```
 
 [df1]: https://sergeialabugasdd.github.io/GoL_frontend/game
+[df2]: https://en.wikipedia.org/wiki/Conway's_Game_of_Life

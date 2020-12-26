@@ -48,7 +48,7 @@ import {
 } from './assets/icons';
 
 // helpers
-import { exitFullscreen, requestFullscreen } from './helpers';
+import { exitFullscreen, requestFullscreen } from '../../helpers';
 
 export const Interface = () => {
   const [fullScreen, setFullScreen] = useState(false);
@@ -139,7 +139,7 @@ export const Interface = () => {
   );
 
   useEffect(() => {
-    // stop rendering if user dragging element of interface
+    // stop rendering canvas if user dragging element of interface
     if (running && isDragging) dispatch(gameActions.toggleRun());
 
     window.addEventListener('resize', resizeHandler);

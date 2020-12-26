@@ -6,7 +6,7 @@ import { CirclePicker } from 'react-color';
 import './styles.css';
 
 // helpers
-import { setTheme } from '../../helpers';
+import { setTheme } from '../../../../helpers';
 
 // hooks
 import { useOutsideAlerter } from '../../hooks';

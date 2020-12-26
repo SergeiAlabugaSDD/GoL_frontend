@@ -32,4 +32,37 @@ function exitFullscreen() {
   return undefined;
 }
 
-export { setTheme, exitFullscreen, requestFullscreen };
+function universalSyncThunk(arrOfActions, arrOfPayloads) {
+  return (dispatch) => {
+    arrOfActions.forEach((action, index) =>
+      dispatch(action(arrOfPayloads[index]))
+    );
+  };
+}
+
+function create2DArray(x, y, type, arrayOfPattern) {
+  // x = columns, y = rows
+  const res = [];
+  for (let i = 0; i < x; i += 1) {
+    const nested = new Uint8Array(y);
+    for (let j = 0; j < y; j += 1) {
+      nested[j] = type === 'random' ? Math.round(Math.random()) : 0;
+    }
+    res[i] = nested;
+  }
+  if (Array.isArray(arrayOfPattern)) {
+    arrayOfPattern.forEach((item) => {
+      // item = [index of row, index of column]
+      res[item[1]][item[0]] = 1;
+    });
+  }
+  return res;
+}
+
+export {
+  setTheme,
+  exitFullscreen,
+  requestFullscreen,
+  universalSyncThunk,
+  create2DArray,
+};

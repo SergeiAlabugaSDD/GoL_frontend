@@ -16,6 +16,9 @@ import { actions } from '../../actions';
 // assets
 import { ReactComponent as ArrowRightSVG } from './assets/right-arrow.svg';
 
+// helpers
+import { universalSyncThunk } from '../../../../helpers';
+
 // mock
 const typesOfPatterns = [
   {
@@ -380,20 +383,17 @@ const typesOfPatterns = [
   },
 ];
 
-const complexSetPatternThunk = (values) => {
-  return (dispatch) => {
-    dispatch(actions.setBorn([0, 0, 1, 0, 0, 0, 0, 0]));
-    dispatch(actions.setAlive([2, 3]));
-    dispatch(gameActions.setSinglePattern({ pattern: values }));
-  };
-};
-
 // render hovered list
 const RenderListOfPatterns = ({ id, style, onMouseOut, onBlur }) => {
   const dispatch = useDispatch();
 
   const clickHandler = (data) => {
-    dispatch(complexSetPatternThunk(data));
+    dispatch(
+      universalSyncThunk(
+        [actions.setBorn, actions.setAlive, gameActions.setSinglePattern],
+        [[0, 0, 1, 0, 0, 0, 0, 0], [2, 3], { pattern: data }]
+      )
+    );
     onMouseOut();
   };
 
@@ -450,6 +450,7 @@ export const PresetsBar = ({ show, toggleHandler }) => {
                 className="preset_bar_close"
                 type="button"
                 onClick={toggleHandler}
+                onKeyPress={toggleHandler}
               >
                 <ArrowRightSVG
                   width={20}

@@ -3,14 +3,10 @@
   background-color: var(--main-bg-color);
   border: 1px solid var(--main-font-color);
   height: fit-content;
-  width: 150px;
+  width: calc(80px + (150 - 80) * ((100vw - 320px) / (1920 - 320)));
   user-select: none;
   right: 0;
-  top: 25vh;
-
-  @media (--desktopS) {
-    width: 80px;
-  }
+  top: 30vh;
 }
 
 .presets_bar_item {

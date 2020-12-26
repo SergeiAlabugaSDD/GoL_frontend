@@ -1,6 +1,4 @@
-/* eslint-disable no-continue */
-/* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import { throttle } from 'lodash-es';
@@ -10,7 +8,7 @@ import { gameActions } from '../../actions';
 import { errorActions } from '../../../error/actions';
 
 // helpers
-import { create2DArray } from '../../reducer';
+import { universalSyncThunk, create2DArray } from '../../../../helpers';
 
 // styles
 import './styles.css';
@@ -122,7 +120,7 @@ export const Canvas = ({ gameCell, field, rules, innerHeight, innerWidth }) => {
     { leading: false }
   );
 
-  // helper for algorithm
+  // helpers for algorithm
   const countLiveNeighborsInfinity = (x, y) => {
     // торообразная плоскость
     let sum = 0;
@@ -142,7 +140,6 @@ export const Canvas = ({ gameCell, field, rules, innerHeight, innerWidth }) => {
 
     return sum;
   };
-
   const countLiveNeighborsLimited = (x, y) => {
     // конечное поле
     let sum = 0;
@@ -164,7 +161,7 @@ export const Canvas = ({ gameCell, field, rules, innerHeight, innerWidth }) => {
   };
 
   // resize canvas
-  const resize = () => {
+  const resize = useCallback(() => {
     const nextGeneration = create2DArray(columns, rows);
 
     for (let i = 0; i < columns; i += 1) {
@@ -175,7 +172,7 @@ export const Canvas = ({ gameCell, field, rules, innerHeight, innerWidth }) => {
     }
 
     currentField = nextGeneration;
-  };
+  }, [columns, rows]);
 
   // calculate next generation
   const tick = throttle(
@@ -220,47 +217,60 @@ export const Canvas = ({ gameCell, field, rules, innerHeight, innerWidth }) => {
     { leading: false }
   );
 
-  // canvas render function
-  function renderRect(context) {
-    for (let i = 0; i < currentField.length; i += 1) {
-      for (let j = 0; j < currentField[i].length; j += 1) {
-        if (currentField[i][j] === 1) {
-          context.fillStyle = colors.alive;
-        } else context.fillStyle = colors.dead;
+  useEffect(() => {
+    // canvas render function
+    function renderRect(context) {
+      for (let i = 0; i < currentField.length; i += 1) {
+        for (let j = 0; j < currentField[i].length; j += 1) {
+          if (currentField[i][j] === 1) {
+            context.fillStyle = colors.alive;
+          } else context.fillStyle = colors.dead;
 
-        context.fillRect(
-          cellSpace + cellSpace * i + cellSize * i,
-          cellSpace + cellSpace * j + cellSize * j,
-          cellSize,
-          cellSize
-        );
+          context.fillRect(
+            cellSpace + cellSpace * i + cellSize * i,
+            cellSpace + cellSpace * j + cellSize * j,
+            cellSize,
+            cellSize
+          );
+        }
       }
     }
-  }
-
-  useEffect(() => {
     if (!running && changed) {
       if (clear) {
         // clear field
         const nextField = create2DArray(columns, rows);
         currentField = nextField;
-        dispatch(gameActions.fillField(nextField));
-        dispatch(gameActions.clearField());
+        dispatch(
+          universalSyncThunk(
+            [gameActions.fillField, gameActions.clearField],
+            [nextField, null]
+          )
+        );
+        return;
       }
       if (random) {
         // generate random
         const nextField = create2DArray(columns, rows, 'random');
         currentField = nextField;
-        dispatch(gameActions.fillField(nextField));
-        dispatch(gameActions.generateRandomAction());
+        dispatch(
+          universalSyncThunk(
+            [gameActions.fillField, gameActions.generateRandomAction],
+            [nextField, null]
+          )
+        );
+        return;
       }
       if (pattern.length !== 0) {
         // set pattern
         try {
           const nextField = create2DArray(columns, rows, 'pattern', pattern);
           currentField = nextField;
-          dispatch(gameActions.fillField(nextField));
-          dispatch(gameActions.setPatternNull());
+          dispatch(
+            universalSyncThunk(
+              [gameActions.fillField, gameActions.setPatternNull],
+              [nextField, null]
+            )
+          );
         } catch (error) {
           dispatch(
             errorActions.setError({
@@ -272,6 +282,7 @@ export const Canvas = ({ gameCell, field, rules, innerHeight, innerWidth }) => {
             })
           );
         }
+        return;
       }
       // this action set flag changed to false
       dispatch(gameActions.fillField(currentField));
@@ -315,6 +326,14 @@ export const Canvas = ({ gameCell, field, rules, innerHeight, innerWidth }) => {
     cellSize,
     resized,
     columns,
+    clear,
+    innerHeight,
+    innerWidth,
+    pattern,
+    random,
+    resize,
+    rows,
+    tick,
   ]);
   return (
     <>
@@ -329,9 +348,7 @@ export const Canvas = ({ gameCell, field, rules, innerHeight, innerWidth }) => {
         onMouseMove={mouseMoveHandler}
         onMouseUp={mouseUpHandler}
         onClick={clickHandler}
-        // onTouchStart={mouseDownHandler}
         onTouchMove={touchMoveHandler}
-        // onTouchEnd={mouseUpHandler}
       />
     </>
   );
